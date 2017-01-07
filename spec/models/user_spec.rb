@@ -29,13 +29,13 @@ RSpec.describe User, type: :model do
     expect(user).to respond_to(:role)
   end
 
-  it "is not valid without an email" do
-    expect(User.new(username: "user", password: "password")).not_to be_valid
-  end
+  # it "is not valid without an email" do
+  #   expect(User.new(username: "user", password: "password")).not_to be_valid
+  # end
 
-  it "is not valid without a password" do
-    expect(User.new(username: "user", email: "user@test.com")).not_to be_valid
-  end
+  # it "is not valid without a password" do
+  #   expect(User.new(username: "user", email: "user@test.com")).not_to be_valid
+  # end
 
   it "can have activities" do
     new_activity = Activity.create(:description => "Eating at amazing pizzeria", :rating => 4)
