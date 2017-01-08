@@ -6,7 +6,8 @@ RSpec.describe User, type: :model do
     User.create(
       :username => "james",
       :email => "user@test.com",
-      :role => "user"
+      :role => "user",
+      :password => "password"
     )
   }
 
@@ -22,9 +23,15 @@ RSpec.describe User, type: :model do
     expect(james.role).to eq("user")
   end
 
+  it "has a password" do
+    expect(james).to respond_to(:password)
+  end
+
   it {should have_many (:experiences)}
   it {should have_many (:activities)}
   it {should have_many (:boards)}
+  it {should have_many (:friendships)}
+  it {should have_many (:friends)}
 
   # it "is not valid without an email" do
   #   expect(User.new(username: "user", password: "password")).not_to be_valid
