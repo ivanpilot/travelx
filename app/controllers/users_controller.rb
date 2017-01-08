@@ -12,7 +12,6 @@ class UsersController < ApplicationController
       flash[:success] = "You have successfully signed up"
       redirect_to user_path(@user)
     else
-      flas.short[:alert] = "There was an issue during the sign up process"
       render :new
     end
   end

@@ -1,18 +1,39 @@
-<h1>Sign Up</h1>
+<h1>Sign Up</h1><br>
 
-<%=form_for @user do |f|%>
-  <%= f.label :username %>
-  <%= f.text_field :username %><br>
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <% if @user.errors.any?%>
+      <div id="error_explanation">
+        <div class="alert alert-danger">
+          The form contains <%= pluralize(@user.errors.count, "error") %>.
+        </div>
 
-  <%= f.label :email %>
-  <%= f.text_field :email %><br>
+        <ul>
+          <% @user.errors.full_messages.each do |msg|%>
+            <li><%=msg%></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
 
-  <%= f.label :password %>
-  <%= f.password_field :password %><br>
 
-  <%= f.label :password_confirmation %>
-  <%= f.password_field :password_confirmation %><br>
+    <%=form_for @user  do |f|%>
+      <div class="field <%="field_with_errors" if @user.errors[:username].any?%>">
+        <%= f.label :username, class: "form-group" %>
+        <%= f.text_field :username, class: "form-control" %><br>
+      </div>
 
-  <%= f.submit 'Sign Up'%>
+      <%= f.label :email, class: "form-group" %>
+      <%= f.text_field :email, class: "form-control" %><br>
 
-<% end %>
+      <%= f.label :password, class: "form-group" %>
+      <%= f.password_field :password, class: "form-control" %><br>
+
+      <%= f.label :password_confirmation, class: "form-group" %>
+      <%= f.password_field :password_confirmation, class: "form-control" %><br>
+
+      <%= f.submit 'Sign Up', class: 'btn btn-primary'%>
+
+    <% end %>
+  </div>
+</div>
