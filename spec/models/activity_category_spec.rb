@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe ActivityCategory, type: :model do
 
-  let(:activity_category) {
+  let(:categorization) {
     ActivityCategory.create(
       :activity_id => 1,
       :category_id => 1
@@ -10,12 +10,14 @@ RSpec.describe ActivityCategory, type: :model do
   }
 
   it "has an activity_id" do
-    expect(activity_category).to respond_to(:activity_id)
+    expect(categorization.activity_id).to eq(1)
   end
 
   it "has a category_id" do
-    expect(activity_category).to respond_to(:category_id)
+    expect(categorization.category_id).to eq(1)
   end
 
+  it {should belong_to(:activity)}
+  it {should belong_to(:category)}
 
 end

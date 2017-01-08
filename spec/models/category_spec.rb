@@ -2,16 +2,17 @@ require 'rails_helper'
 
 RSpec.describe Category, type: :model do
 
-  let(:category) {
+  let(:sport) {
     Category.create(
       :name => "Sport"
     )
   }
 
   it "has a name" do
-    expect(category).to respond_to(:name)
+    expect(sport.name).to eq("Sport")
   end
 
-
+  it {should have_many(:activity_categories)}
+  it {should have_many(:categories)}
 
 end

@@ -10,12 +10,15 @@ RSpec.describe Experience, type: :model do
   }
 
   it "has an activity_id" do
-    expect(experience).to respond_to(:activity_id)
+    expect(experience.activity_id).to eq(1)
   end
 
   it "has a user_id" do
-    expect(experience).to respond_to(:user_id)
+    expect(experience.user_id).to eq(1)
   end
+
+  it {should belong_to(:user)}
+  it {should belong_to(:activity)}
 
 
 
