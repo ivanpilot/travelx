@@ -1,7 +1,9 @@
 class User < ApplicationRecord
 
+  before_save :email_downcase
   validates :username, presence: true, uniqueness: true
-  validates :email, presence: true, uniqueness: true
+  VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
+  validates :email, presence: true, format: { with: VALID_EMAIL_REGEX }, uniqueness: { case_sensitive: false }
   validates :password, presence: true, confirmation: true
   validates :password_confirmation, presence: true
 
@@ -15,6 +17,10 @@ class User < ApplicationRecord
   has_many :inversed_friendships, :class_name => "Friendship", :foreign_key => "friend_id", dependent: :destroy
   has_many :inversed_friends, through: :inversed_friendships, source: :user
 
+  private
 
+  def email_downcase
+    self.email = self.email.downcase
+  end
 
 end

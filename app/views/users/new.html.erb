@@ -16,24 +16,28 @@
       </div>
     <% end %>
 
-
     <%=form_for @user  do |f|%>
       <div class="field <%="field_with_errors" if @user.errors[:username].any?%>">
         <%= f.label :username, class: "form-group" %>
         <%= f.text_field :username, class: "form-control" %><br>
       </div>
 
+      <div class="field <%="field_with_errors" if @user.errors[:username].any?%>">
       <%= f.label :email, class: "form-group" %>
       <%= f.text_field :email, class: "form-control" %><br>
+      </div>
 
+      <div class="field <%="field_with_errors" if @user.errors[:username].any?%>">
       <%= f.label :password, class: "form-group" %>
       <%= f.password_field :password, class: "form-control" %><br>
+      </div>
 
+      <div class="field <%="field_with_errors" if @user.errors[:username].any?%>">
       <%= f.label :password_confirmation, class: "form-group" %>
       <%= f.password_field :password_confirmation, class: "form-control" %><br>
+      </div>
 
       <%= f.submit 'Sign Up', class: 'btn btn-primary'%>
-
     <% end %>
   </div>
 </div>
