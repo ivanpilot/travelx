@@ -20,13 +20,13 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-        <a class="navbar-brand" href="<%= root_url %>"/>Home</a>
+        <a class="navbar-brand" href="<%= home(current_user) %>"/>Home</a>
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li><%= link_to "Sign Up", sign_up_path %></li>
-            <li><%= link_to "Sign In", sign_in_path %></li>
-            <li><%= link_to 'Log Out', logout_path, method: :delete %></li>
+            <li><%= link_to "Sign Up", sign_up_path unless current_user %></li>
+            <li><%= link_to "Sign In", sign_in_path unless current_user %></li>
+            <li><%= link_to 'Log Out', logout_path, method: :delete if current_user %></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
