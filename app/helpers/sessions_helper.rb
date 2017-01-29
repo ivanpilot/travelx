@@ -4,12 +4,8 @@ module SessionsHelper
     session[:user_id] = user.id
   end
 
-  def is_logged_in?(user)
-    !!user
-  end
-
   def log_out
-    session.delete(:user_id)
+    session.delete(:user_id) if session.include?(:user_id)
     @current_user = nil
   end
 

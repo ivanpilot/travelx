@@ -5,14 +5,18 @@ class ApplicationController < ActionController::Base
   include UsersHelper
 
   def authenticate_user
-    unless is_logged_in?(current_user)
+    unless is_logged_in?
       flash[:warning] = "Please sign in."
       redirect_to sign_in_path
     end
   end
 
+  def is_logged_in?
+    !!current_user
+  end
+
   def current_user
-    @current_user ||= User.find_by(id: params[:id]) if session.include?(:user_id)
+    @current_user ||= User.find_by(id: session[:user_id]) if session.include?(:user_id)
   end
   helper_method :current_user
 
