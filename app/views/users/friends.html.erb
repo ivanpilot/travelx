@@ -1,6 +1,7 @@
 <h2>Add a new friend</h2><br>
 
 <%= form_for current_user.friendships.build do |f|%>
+  <%= f.hidden_field :user_id%>
   <%= f.label :friend, 'New Friend'%>
   <%= f.text_field :friend, list:"friends_autocomplete" %>
   <datalist id="friends_autocomplete">
