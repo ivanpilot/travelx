@@ -1,0 +1,26 @@
+<h2>Add a new friend</h2><br>
+
+<%= form_for current_user.friendships.build do |f|%>
+  <%= f.label :friend, 'New Friend'%>
+  <%= f.text_field :friend, list:"friends_autocomplete" %>
+  <datalist id="friends_autocomplete">
+    <% User.where.not(id: current_user.id).each do |friend|%>
+      <option value="<%= friend.username %>"></option>
+    <% end %>
+  </datalist>
+  <%= f.submit "Add friend"%>
+<% end %>
+
+<h2>Your friends are</h2><br>
+
+<div class="row">
+  <div class="col-md-9 ">
+
+      <%= generate_table({
+        :collection => current_user.friends,
+        :headers => ["Friends","Since","Not Friends?"],
+        :fields => ["username", "created_at","username"]
+      }) %>
+
+</div>
+</div>

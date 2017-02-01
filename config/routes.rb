@@ -6,13 +6,18 @@ Rails.application.routes.draw do
   post '/sign_in', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
 
-  resources :users, only:[:index, :new, :create, :show]
+  resources :users, only:[:index, :new, :create, :show] do
+    member do
+      get :friends
+      # post :friends
+    end
+  end
 
   # resources :boards
   # resources :activities
 
 
-  # resources :friendships
+  resources :friendships, only: [:create]
   # resources :experiences
   # resources :board_activities
   # resources :activity_categories

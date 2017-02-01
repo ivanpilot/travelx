@@ -4,7 +4,7 @@ class UsersController < ApplicationController
 
   def index
   end
-  
+
   def new
     @user = User.new
   end
@@ -22,6 +22,9 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find_by(id: params[:id])
+  end
+
+  def friends
   end
 
   private
