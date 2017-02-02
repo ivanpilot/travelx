@@ -17,6 +17,19 @@ class User < ApplicationRecord
   has_many :inversed_friendships, :class_name => "Friendship", :foreign_key => "friend_id", dependent: :destroy
   has_many :inversed_friends, through: :inversed_friendships, source: :user
 
+  def connections
+    self.friends + self.inversed_friends
+  end
+
+  def potential_friends
+    User.all_other_users(self) - self.connections
+  end
+
+  def self.all_other_users(user)
+    where.not(id: user.id)
+  end
+
+
   private
 
   def email_downcase

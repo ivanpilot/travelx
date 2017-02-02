@@ -3,25 +3,24 @@
 <%= form_for current_user.friendships.build do |f|%>
   <%= f.hidden_field :user_id%>
   <%= f.label :friend, 'New Friend'%>
-  <%= f.text_field :friend, list:"friends_autocomplete" %>
+  <%= f.text_field :friend, placeholder: "Username", list:"friends_autocomplete", autocomplete:"off"%>
   <datalist id="friends_autocomplete">
-    <% User.where.not(id: current_user.id).each do |friend|%>
+    <% current_user.potential_friends.each do |friend| %>
       <option value="<%= friend.username %>"></option>
     <% end %>
   </datalist>
   <%= f.submit "Add friend"%>
 <% end %>
 
-<h2>Your friends are</h2><br>
+<h2>You are currently friends with</h2>
+<p>You have <%= current_user.connections.count %> friend(s).</p><br>
 
 <div class="row">
   <div class="col-md-9 ">
-
       <%= generate_table({
-        :collection => current_user.friends,
+        :collection => current_user.connections,
         :headers => ["Friends","Since","Not Friends?"],
         :fields => ["username", "created_at","username"]
       }) %>
-
-</div>
+  </div>
 </div>

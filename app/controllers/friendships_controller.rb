@@ -2,15 +2,12 @@ class FriendshipsController < ApplicationController
   before_action :authenticate_user
 
   def create
-    # raise params.inspect
     new_friend = User.find_by(username: friendship_params[:friend])
-    if new_friend
-      new_friendship = Friendship.new(user_id: current_user.id, friend_id: new_friend.id)
-      if new_friendship.save
-        flash[:success] = "you added a new friend"
-      else
-        flash[:warning] = "there was an error"
-      end
+    if new_friend && current_user.potential_friends.include?(new_friend)
+      new_friendship = Friendship.create(user_id: current_user.id, friend_id: new_friend.id)
+      flash[:success] = "You are now friends with #{new_friend.username}."
+    else
+      flash[:warning] = "There was an error."
     end
     redirect_to friends_user_path(current_user)
   end
