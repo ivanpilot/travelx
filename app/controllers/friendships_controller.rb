@@ -13,7 +13,14 @@ class FriendshipsController < ApplicationController
   end
 
   def destroy
-    raise params
+    # raise params
+    friendship = Friendship.find_by(id: params[:id])
+    if friendship and current_user.all_relationships.include?(friendship)
+      friendship.delete
+      # flash[:success] = "You are not friend with #{new_friend.username}."
+      friendship = nil
+      redirect_to friends_user_path(current_user)
+    end
   end
 
   private
