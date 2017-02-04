@@ -1,1 +1,8 @@
-<h1>Welcome User</h1>
+<h1>Welcome <%= current_user.username %></h1><br>
+
+<h3>Existing Boards</h3>
+<ul>
+  <% @boards.each do |board| %>
+    <li><%= board.title %></li>
+  <% end %>
+</ul>

@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
-
+  helper_method :current_user, :is_logged_in?
   include SessionsHelper
   include UsersHelper
   include FriendshipsHelper
@@ -16,9 +16,10 @@ class ApplicationController < ActionController::Base
     !!current_user
   end
 
+
   def current_user
     @current_user ||= User.find_by(id: session[:user_id]) if session.include?(:user_id)
   end
-  helper_method :current_user
+
 
 end

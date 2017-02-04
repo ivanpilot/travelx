@@ -1,21 +1,25 @@
 <h2>Add a new friend</h2><br>
-<%= form_for current_user.friendships.build do |f|%>
-  <%= f.hidden_field :user_id%>
-  <%= f.label :friend, 'New Friend'%>
-  <%= f.text_field :friend, placeholder: "Username", list:"friends_autocomplete", autocomplete:"off"%>
-  <datalist id="friends_autocomplete">
-    <% current_user.potential_friends.each do |friend| %>
-      <option value="<%= friend.username %>"></option>
+<div class="form-inline">
+  <div class="form-group">
+    <%= form_for current_user.friendships.build do |f|%>
+      <%= f.hidden_field :user_id%>
+      <%= f.label :friend, 'New Friend'%>
+      <%= f.text_field :friend, placeholder: "Username", list:"friends_autocomplete", autocomplete:"off", class: "form-control"%>
+      <datalist id="friends_autocomplete">
+        <% current_user.potential_friends.each do |friend| %>
+          <option value="<%= friend.username %>"></option>
+        <% end %>
+      </datalist>
+      <%= f.submit "Add friend", class: "btn btn-primary"%>
     <% end %>
-  </datalist>
-  <%= f.submit "Add friend"%>
-<% end %>
+  </div>
+</div>
 
 
 <h2>You are currently friends with</h2>
 <p>You have <%= current_user.all_relationships.count %> friend(s).</p><br>
 <div class="row">
-  <div class="col-md-9 ">
+  <div class="col-md-9">
       <%= content_tag :table, :class =>"table table-striped" do %>
 
         <%= content_tag(:thead) do %>

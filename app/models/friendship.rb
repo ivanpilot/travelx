@@ -15,10 +15,4 @@ class Friendship < ApplicationRecord
     self.user == current_user ? self.friend.username : self.user.username
   end
 
-
-
-  # def delete_friendship
-  #   link_to 'Delete', friendship_path, method: :delete
-  # end
-
 end

@@ -1,19 +1,19 @@
 Rails.application.routes.draw do
 
-  root to: 'boards#index'
+  root to: 'welcome#index'
   get '/sign_up', to: 'users#new'
   get '/sign_in', to: 'sessions#new'
   post '/sign_in', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
 
   resources :users, only:[:index, :new, :create, :show] do
+    resources :boards, only: [:index]
     member do
       get :friends
-      # post :friends
     end
   end
 
-  # resources :boards
+  # resources :boards, only
   # resources :activities
 
 
