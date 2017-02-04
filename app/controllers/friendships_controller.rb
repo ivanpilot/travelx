@@ -12,6 +12,10 @@ class FriendshipsController < ApplicationController
     redirect_to friends_user_path(current_user)
   end
 
+  def destroy
+    raise params
+  end
+
   private
 
   def friendship_params

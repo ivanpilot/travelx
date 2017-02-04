@@ -4,7 +4,6 @@ module ApplicationHelper
     is_logged_in?(user) ? user_path(user) : root_path
   end
 
-
   def generate_table(collection:, headers:, fields:)
     thead = content_tag(:thead) do
       headers.collect do |head|

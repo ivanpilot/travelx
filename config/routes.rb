@@ -17,7 +17,7 @@ Rails.application.routes.draw do
   # resources :activities
 
 
-  resources :friendships, only: [:create]
+  resources :friendships, only: [:create, :destroy]
   # resources :experiences
   # resources :board_activities
   # resources :activity_categories

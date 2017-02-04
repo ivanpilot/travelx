@@ -17,16 +17,20 @@ class User < ApplicationRecord
   has_many :inversed_friendships, :class_name => "Friendship", :foreign_key => "friend_id", dependent: :destroy
   has_many :inversed_friends, through: :inversed_friendships, source: :user
 
-  def connections
+  def all_friends
     self.friends + self.inversed_friends
   end
 
   def potential_friends
-    User.all_other_users(self) - self.connections
+    User.all_other_users(self) - self.all_friends
   end
 
   def self.all_other_users(user)
     where.not(id: user.id)
+  end
+
+  def all_relationships
+    Friendship.where(user_id: self.id) + Friendship.where(friend_id: self.id)
   end
 
 

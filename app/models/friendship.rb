@@ -7,12 +7,18 @@ class Friendship < ApplicationRecord
     connections = self.where(user_id: user.id) + self.where(friend_id: user.id)
   end
 
+  def friend_of(current_user)
+    self.user == current_user ? self.friend : self.user
+  end
+
   def friend_name_of(current_user)
     self.user == current_user ? self.friend.username : self.user.username
   end
 
-  def delete_friendship
-    self.delete
-  end
+
+
+  # def delete_friendship
+  #   link_to 'Delete', friendship_path, method: :delete
+  # end
 
 end
