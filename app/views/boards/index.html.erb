@@ -1,8 +1,14 @@
-<h1>Welcome <%= current_user.username %></h1><br>
+<h3>Create a new board</h3>
+<%= form_for Board.new do |f|%>
+  <%= f.label :title %>
+  <%= f.text_field :title%>
+  <%= f.submit "Create", class: "btn btn-primary"%>
+<% end %>
 
-<h3>Existing Boards</h3>
+
+<h3>Existing boards</h3>
 <ul>
   <% @boards.each do |board| %>
-    <li><%= link_to board.title, user_board_path(current_user, board) %></li>
+    <li><%= link_to board.title, board_path(board) %></li>
   <% end %>
 </ul>

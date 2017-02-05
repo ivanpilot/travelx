@@ -2,9 +2,19 @@ class BoardsController < ApplicationController
   before_action :authenticate_user
 
   def index
-    if params[:user_id]
-      @boards = User.find_by(id: params[:user_id]).boards
-    end
+    # if params[:user_id]
+    #   @boards = User.find_by(id: params[:user_id]).boards
+    # end
+    @boards = current_user.boards
+  end
+
+  def new
+    # @user = User.new
+    # @board = Board.new
+  end
+
+  def create
+    raise params.inspect
   end
 
   def show
@@ -20,5 +30,10 @@ class BoardsController < ApplicationController
       @board = Board.find_by(id:params[:id])
     end
   end
+
+  # private
+  #
+  # def board_params
+  # end
 
 end
