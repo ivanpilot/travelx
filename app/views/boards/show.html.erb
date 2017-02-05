@@ -1,0 +1,9 @@
+<h1><%= @board.title %></h1>
+Edit board | Delete Board
+<h3>Activities included in that board</h3><br>
+
+<ul>
+  <% @board.activities.each do |activity| %>
+    <li><%= activity.description %></li>
+  <% end %>
+</ul>
