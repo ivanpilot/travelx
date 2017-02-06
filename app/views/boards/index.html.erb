@@ -1,8 +1,17 @@
 <h3>Create a new board</h3>
 <%= form_for([@user, @board]) do |f| %>
-  <%= f.label :title %>
-  <%= f.text_field :title%>
-  <%= f.submit "Create", class: "btn btn-primary"%>
+  <%= f.label :"Board title" %>
+  <%= f.text_field :title%><br>
+
+  <p>Add one activity in your newly created board</p>
+  <%= f.fields_for :activities, @board.activities.build do |activity| %>
+    <%= activity.label :"Activity description" %>
+    <%= activity.text_field :description %>
+    <%= activity.label :"Activity rating" %>
+    <%= activity.text_field :rating %>
+  <% end %><br>
+
+  <%= f.submit "Create Board", class: "btn btn-primary"%>
 <% end %>
 
 

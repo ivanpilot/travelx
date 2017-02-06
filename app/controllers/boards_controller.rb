@@ -1,6 +1,7 @@
 class BoardsController < ApplicationController
   before_action :authenticate_user
 
+
   def index
     if params[:user_id]
       @user = User.find_by(id: params[:user_id])
@@ -54,7 +55,7 @@ class BoardsController < ApplicationController
   private
 
   def board_params
-    params.require(:board).permit(:title)
+    params.require(:board).permit(:title, activities_attributes:[:description, :rating])
   end
 
 end
