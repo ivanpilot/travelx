@@ -8,7 +8,7 @@
 
 <h3>Existing boards</h3>
 <ul>
-  <% @boards.each do |board| %>
+  <% current_user.boards.each do |board| %>
     <li><%= link_to board.title, user_board_path(current_user, board) %></li>
   <% end %>
 </ul>
