@@ -1,7 +1,7 @@
 module ApplicationHelper
 
   def home
-    is_logged_in? ? boards_path : root_path
+    is_logged_in? ? user_boards_path(current_user) : root_path
   end
 
   def generate_table(collection:, headers:, fields:)
