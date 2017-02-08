@@ -1,2 +1,0 @@
-class BoardActivitiesController < ApplicationController
-end
