@@ -1,10 +1,9 @@
 <h1><%= @board.title %></h1>
-Edit
 
 <h3>Activities included in that board</h3><br>
 <ol>
   <% @board.activities.each do |activity| %>
     <li>Description: <%= activity.description %> | Rating: <%= activity.rating %></li>
-    Edit | Delete <br><br>
+    <%=link_to "Edit", edit_activity_path(activity) %> | Delete <br><br>
   <% end %>
 </ol>

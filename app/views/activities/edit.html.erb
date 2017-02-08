@@ -1,0 +1,8 @@
+<%= form_for @activity do |f|%>
+  <%= f.hidden_field current_user%>
+  <%= f.label :"Activity description" %><br>
+  <%= f.text_area :description %>
+  <%= f.label :"Activity rating" %>
+  <%= f.text_field :rating %><br>
+  <%= f.submit "Edit Activity", class: "btn btn-primary"%>
+<% end %>
