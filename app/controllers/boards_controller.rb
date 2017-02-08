@@ -7,6 +7,8 @@ class BoardsController < ApplicationController
       @user = User.find_by(id: params[:user_id])
       @board = Board.new
       # @boards = User.find_by(id: params[:user_id]).boards
+      @activity1 = @board.activities.build
+      @activity2 = @board.activities.build
     else
       @boards = Board.all
     end
@@ -30,9 +32,11 @@ class BoardsController < ApplicationController
       @board = @user.boards.build(board_params)
 
       if @board.save
-        redirect_to user_board_path(@user, @board), success:"New board successfully created."
+        flash[:success] = "New board successfully created."
+        redirect_to user_board_path(@user, @board)
       else
-        redirect_to root_path(@user), alert:"There was an error. The new board couldn't be created."
+        flash[:alert] = "There was an error. The new board couldn't be created."
+        redirect_to root_path(@user)
       end
     end
   end
@@ -41,10 +45,14 @@ class BoardsController < ApplicationController
     if params[:user_id]
       @user = User.find_by(id: params[:user_id])
       if @user.nil?
-        redirect_to root_path(@user), alert:"User not found."
+        flash[:alert] = "User not found."
+        redirect_to root_path(@user)
       else
         @board = @user.boards.find_by(id: params[:id])
-        redirect_to user_boards_path(@user), alert:"Board not found." if @board.nil?
+        if @board.nil?
+          flash[:alert] = "Board not found."
+          redirect_to user_boards_path(@user)
+        end
       end
 
     else
