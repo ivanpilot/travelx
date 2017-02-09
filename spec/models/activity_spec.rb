@@ -5,7 +5,8 @@ RSpec.describe Activity, type: :model do
   let(:trek) {
     Activity.create(
       :description => "Trek in the Alps",
-      :rating => "5"
+      :rating => "5",
+      :board_id => "1"
     )
   }
 
@@ -19,8 +20,7 @@ RSpec.describe Activity, type: :model do
 
   it {should have_many (:experiences)}
   it {should have_many (:users)}
-  it {should have_many (:board_activities)}
-  it {should have_many (:boards)}
+  it {should belong_to (:board)}
   it {should have_many (:activity_categories)}
   it {should have_many (:categories)}
 
