@@ -7,8 +7,8 @@ class BoardsController < ApplicationController
       @user = User.find_by(id: params[:user_id])
       @board = Board.new
       # @boards = User.find_by(id: params[:user_id]).boards
-      @activity1 = @board.activities.build
-      @activity2 = @board.activities.build
+      # @activity1 = @board.activities.build
+      # @activity2 = @board.activities.build
     else
       @boards = Board.all
     end
@@ -28,15 +28,21 @@ class BoardsController < ApplicationController
     # raise params.inspect
     if params[:user_id]
       @user = User.find_by(id: params[:user_id])
-      redirect_to root_path(@user), alert:"User not found." if @user.nil?
-      @board = @user.boards.build(board_params)
 
-      if @board.save
-        flash[:success] = "New board successfully created."
-        redirect_to user_board_path(@user, @board)
+      if @user.nil?
+        flash[:danger] = "User not found."
+        redirect_to sign_in_path
       else
-        flash[:alert] = "There was an error. The new board couldn't be created."
-        redirect_to root_path(@user)
+
+        @board = @user.boards.build(board_params)
+raise params.inspect
+        if @board.save
+          flash[:success] = "New board successfully created."
+          redirect_to user_board_path(@user, @board)
+        else
+          flash[:danger] = "There was an error. The new board couldn't be created."
+          redirect_to user_boards_path(@user)
+        end
       end
     end
   end
@@ -45,12 +51,13 @@ class BoardsController < ApplicationController
     if params[:user_id]
       @user = User.find_by(id: params[:user_id])
       if @user.nil?
-        flash[:alert] = "User not found."
-        redirect_to root_path(@user)
+        flash[:danger] = "User not found."
+        redirect_to sign_in_path
       else
+
         @board = @user.boards.find_by(id: params[:id])
         if @board.nil?
-          flash[:alert] = "Board not found."
+          flash[:danger] = "Board not found."
           redirect_to user_boards_path(@user)
         end
       end

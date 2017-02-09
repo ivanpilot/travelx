@@ -8,10 +8,9 @@ class ActivitiesController < ApplicationController
 
   def update
     @activity = Activity.find_by(id: params[:id])
-    @user = User.find_by(id: "1") #TO BE CHANGEDDDDD
     if @activity.update(activity_params)
       flash[:success] = "Board updated."
-      redirect_to user_boards_path(@user) #TO BE CHANGEDDDDD
+      redirect_to board_path(@activity.board) #TO BE CHANGEDDDDD to maintain url including user
     else
       flash.now[:alert] = "Board couldn't be updated."
       render :edit
