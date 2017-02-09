@@ -35,7 +35,7 @@ class BoardsController < ApplicationController
       else
 
         @board = @user.boards.build(board_params)
-raise params.inspect
+# raise @board.inspect if @board.errors
         if @board.save
           flash[:success] = "New board successfully created."
           redirect_to user_board_path(@user, @board)
@@ -70,7 +70,7 @@ raise params.inspect
   private
 
   def board_params
-    params.require(:board).permit(:title, activities_attributes:[:description, :rating])
+    params.require(:board).permit(:title)
   end
 
 end

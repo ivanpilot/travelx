@@ -1,0 +1,2 @@
+module BoardActivitiesHelper
+end
