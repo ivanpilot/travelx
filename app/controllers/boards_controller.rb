@@ -7,8 +7,8 @@ class BoardsController < ApplicationController
       @user = User.find_by(id: params[:user_id])
       @board = Board.new
       # @boards = User.find_by(id: params[:user_id]).boards
-      # @activity1 = @board.activities.build
-      # @activity2 = @board.activities.build
+      @activity1 = @board.activities.build
+      @activity2 = @board.activities.build
     else
       @boards = Board.all
     end
@@ -70,7 +70,7 @@ class BoardsController < ApplicationController
   private
 
   def board_params
-    params.require(:board).permit(:title)
+    params.require(:board).permit(:title, activities_attributes:[:description, :rating])
   end
 
 end

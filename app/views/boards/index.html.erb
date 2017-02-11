@@ -4,7 +4,7 @@
   <%= f.text_field :title, class: "well well-sm"%><br><br>
 
   <p>Start by adding activities in your newly created board</p>
-  <%= f.fields_for :activities, @board.activities.build do |activity| %>
+  <%= f.fields_for :activities do |activity| %>
     <%= activity.label :"Activity description" %><br>
     <%= activity.text_area :description %>
     <%= activity.label :"Activity rating" %>
