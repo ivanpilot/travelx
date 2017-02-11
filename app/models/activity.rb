@@ -4,7 +4,7 @@ class Activity < ApplicationRecord
 
   # has_many :experiences, dependent: :destroy
   # has_many :users, through: :experiences
-  belongs_to :user
+  belongs_to :user, optional: true
   has_many :activity_categories, dependent: :destroy
   has_many :categories, through: :activity_categories
 
