@@ -5,10 +5,10 @@ class BoardsController < ApplicationController
   def index
     if params[:user_id]
       @user = User.find_by(id: params[:user_id])
-      @board = Board.new
-      # @boards = User.find_by(id: params[:user_id]).boards
-      @activity1 = @board.activities.build
-      @activity2 = @board.activities.build
+      # @board = Board.new
+      # # @boards = User.find_by(id: params[:user_id]).boards
+      # @activity1 = @board.activities.build
+      # @activity2 = @board.activities.build
     else
       @boards = Board.all
     end
