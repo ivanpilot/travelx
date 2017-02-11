@@ -18,7 +18,7 @@ RSpec.describe Board, type: :model do
   end
 
   it {should belong_to(:user)}
-  it {should have_many(:activities)}
+  it {should belong_to(:activity)}
 
 
 end

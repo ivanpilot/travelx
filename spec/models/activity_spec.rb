@@ -20,8 +20,9 @@ RSpec.describe Activity, type: :model do
 
   # it {should have_many (:experiences)}
   it {should belong_to (:user)}
-  it {should have_many (:board_activities)}
+  # it {should have_many (:board_activities)}
   it {should have_many (:boards)}
+  it {should have_many (:participants)}
   it {should have_many (:activity_categories)}
   it {should have_many (:categories)}
 

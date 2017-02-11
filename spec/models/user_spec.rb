@@ -28,8 +28,10 @@ RSpec.describe User, type: :model do
   end
 
   # it {should have_many (:experiences)}
-  it {should have_many (:activities)}
+
   it {should have_many (:boards)}
+  it {should have_many (:activities)}
+  it {should have_many (:tips)}
   it {should have_many (:friendships)}
   it {should have_many (:friends)}
 

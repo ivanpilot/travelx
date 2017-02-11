@@ -11,8 +11,9 @@ class User < ApplicationRecord
 
   # has_many :experiences, dependent: :destroy
   # has_many :activities, through: :experiences
-  has_many :activities
-  has_many :boards
+  has_many :tips, :class_name => "Activity"
+  has_many :boards, dependent: :destroy
+  has_many :activities, through: :boards
   has_many :friendships, dependent: :destroy
   has_many :friends, through: :friendships
   has_many :inversed_friendships, :class_name => "Friendship", :foreign_key => "friend_id", dependent: :destroy
