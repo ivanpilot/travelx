@@ -2,6 +2,7 @@
 <ul>
   <% @activities.each do |activity|%>
     <li>Description: <%= activity.description %> | Rating: <%= activity.rating %></li>
-    <%=link_to "Edit", edit_user_activity_path(current_user, activity) %> | Delete <br><br>
+    <%=link_to "Edit", edit_user_activity_path(current_user, activity) %> |
+    <%=link_to "Delete", user_activity_path(current_user, activity),method: :delete, data: { confirm: 'Are you sure?' }%> <br><br>
   <% end %>
 </ul>

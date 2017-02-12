@@ -50,6 +50,30 @@ class ActivitiesController < ApplicationController
     end
   end
 
+  def destroy
+    # raise params.inspect
+    if params[:user_id]
+      @user = User.find_by(id: params[:user_id])
+
+      if !@user.nil? && correct_user?(@user)
+        @activity = @user.activities.find_by(id: params[:id])
+
+        if !@activity.nil?
+          @activity.delete
+          @activity = nil
+          flash[:success] = "Activity deleted."
+          redirect_to user_boards_path(@user)
+        else
+          flash[:danger] = "Activity couldn't be found or updated."
+          redirect_to user_boards_path(current_user)
+        end
+      else
+        redirect_to user_boards_path(current_user)
+      end
+    end
+
+  end
+
   private
 
   def activity_params
