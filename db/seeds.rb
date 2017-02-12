@@ -20,6 +20,6 @@ ivan.activities.create(description: "Epiphany cake from Lenotre in Paris", ratin
 ivan.boards.create(title: "London Winter 2017")
 ivan.boards.create(title: "Paris Winter 2017")
 
-BoardActivity.create(user_id:"1", activity_id:"1")
-BoardActivity.create(user_id:"1", activity_id:"2")
-BoardActivity.create(user_id:"2", activity_id:"4")
+BoardActivity.create(board_id:"1", activity_id:"1")
+BoardActivity.create(board_id:"1", activity_id:"2")
+BoardActivity.create(board_id:"2", activity_id:"4")
