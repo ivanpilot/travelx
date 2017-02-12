@@ -29,7 +29,6 @@ class BoardsController < ApplicationController
           # flash[:danger] = "There was an error. The new board couldn't be created."
           render :index
         end
-
       else
         redirect_to user_boards_path(current_user)
       end
@@ -40,20 +39,16 @@ class BoardsController < ApplicationController
     if params[:user_id]
       @user = User.find_by(id: params[:user_id])
 
-      if @user.nil?
-        flash[:danger] = "Please sign in before proceeding."
-        redirect_to sign_in_path
-      else
+      if !@user.nil? && correct_user?(@user)
         @board = @user.boards.find_by(id: params[:id])
 
         if @board.nil?
           flash[:danger] = "Board not found."
           redirect_to user_boards_path(@user)
         end
+      else
+        redirect_to user_boards_path(current_user)
       end
-
-    else
-      @board = Board.find_by(id:params[:id])
     end
   end
 

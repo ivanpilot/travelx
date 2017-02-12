@@ -13,7 +13,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :boards, only: [:show] ### TO BE CHANGEDDDD
+  # resources :boards, only: [:show] ### TO BE CHANGEDDDD
   resources :activities, only: [:edit, :update]
 
 
