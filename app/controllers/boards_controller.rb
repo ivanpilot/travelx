@@ -5,7 +5,7 @@ class BoardsController < ApplicationController
     if params[:user_id]
       @user = User.find_by(id: params[:user_id])
 
-      if !@user.nil? && correct_user?(@user)
+      if !@user.nil? && current_user?(@user)
         @boards = @user.boards
         @board = Board.new
         @activity1 = @board.activities.build(user_id: @user.id)
@@ -19,7 +19,7 @@ class BoardsController < ApplicationController
   def create
     if params[:user_id]
       @user = User.find_by(id: params[:user_id])
-      if !@user.nil? && correct_user?(@user)
+      if !@user.nil? && current_user?(@user)
         @board = @user.boards.build(board_params)
 
         if @board.save
@@ -39,7 +39,7 @@ class BoardsController < ApplicationController
     if params[:user_id]
       @user = User.find_by(id: params[:user_id])
 
-      if !@user.nil? && correct_user?(@user)
+      if !@user.nil? && current_user?(@user)
         @board = @user.boards.find_by(id: params[:id])
 
         if @board.nil?
