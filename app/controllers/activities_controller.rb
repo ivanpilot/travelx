@@ -1,6 +1,18 @@
 class ActivitiesController < ApplicationController
   before_action :authenticate_user
 
+  def index
+    if params[:user_id]
+      @user = User.find_by(id: params[:user_id])
+
+      if !@user.nil? && correct_user?(@user)
+        @activities = @user.activities
+      else
+        redirect_to user_boards_path(current_user)
+      end
+    end
+  end
+
   def edit
     if params[:user_id]
       @user = User.find_by(id: params[:user_id])

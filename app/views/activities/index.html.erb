@@ -1,0 +1,7 @@
+<h2>My Activities</h2><br>
+<ul>
+  <% @activities.each do |activity|%>
+    <li>Description: <%= activity.description %> | Rating: <%= activity.rating %></li>
+    <%=link_to "Edit", edit_user_activity_path(current_user, activity) %> | Delete <br><br>
+  <% end %>
+</ul>
