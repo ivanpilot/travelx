@@ -4,33 +4,34 @@ class BoardsController < ApplicationController
   def index
     if params[:user_id]
       @user = User.find_by(id: params[:user_id])
-      @boards = @user.boards
 
-      @board = Board.new
-      @activity1 = @board.activities.build(user_id: @user.id)
-      @activity2 = @board.activities.build(user_id: @user.id)
-    else
-      @boards = Board.all
+      if !@user.nil? && correct_user?(@user)
+        @boards = @user.boards
+        @board = Board.new
+        @activity1 = @board.activities.build(user_id: @user.id)
+        @activity2 = @board.activities.build(user_id: @user.id)
+      else
+        redirect_to user_boards_path(current_user)
+      end
     end
   end
 
   def create
     if params[:user_id]
       @user = User.find_by(id: params[:user_id])
-
-      if @user.nil?
-        flash[:danger] = "Please sign in before proceeding."
-        redirect_to sign_in_path
-      else
+      if !@user.nil? && correct_user?(@user)
         @board = @user.boards.build(board_params)
 
         if @board.save
           flash[:success] = "New board successfully created."
           redirect_to user_board_path(@user, @board)
         else
-          flash[:danger] = "There was an error. The new board couldn't be created."
-          redirect_to user_boards_path(@user)
+          # flash[:danger] = "There was an error. The new board couldn't be created."
+          render :index
         end
+
+      else
+        redirect_to user_boards_path(current_user)
       end
     end
   end

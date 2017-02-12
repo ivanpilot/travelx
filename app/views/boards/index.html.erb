@@ -1,4 +1,18 @@
+<% if @board && @board.errors.any?%>
+  <div id="error_explanation">
+    <div class="alert alert-danger">
+      The form contains <%= pluralize(@board.errors.count, "error") %>.
+      <ul>
+        <% @board.errors.full_messages.each do |msg|%>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+<% end %>
+
 <h3>Create a new board</h3>
+<%= raise params if @board == nil %>
 <%= form_for([@user, @board]) do |f| %>
   <%= f.label :"Board title" %>
   <%= f.text_field :title, class: "well well-sm"%><br><br>
@@ -14,7 +28,6 @@
 
   <%= f.submit "Create Board", class: "btn btn-primary"%>
 <% end %>
-
 
 <h3>Existing boards</h3>
 <ul>

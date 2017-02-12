@@ -6,9 +6,7 @@ module UsersHelper
   #     redirect_to sign_in_path
   #   end
   # end
-  #
-  # def current_user?(user)
-  #   current_user == user
-  # end
+
+  
 
 end
