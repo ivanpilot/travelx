@@ -1,4 +1,4 @@
-<% if @board && @board.errors.any?%>
+<% if @board.errors.any?%>
   <div id="error_explanation">
     <div class="alert alert-danger">
       The form contains <%= pluralize(@board.errors.count, "error") %>.
@@ -30,8 +30,7 @@
 
 <h3>Existing boards</h3>
 <ul>
-  <% current_user.boards.each do |board| %>
-    <%= raise board.inspect if board.id.nil?%>
+  <% show_valid_boards(current_user).each do |board| %>
     <li><%= link_to board.title, user_board_path(current_user, board) %> | Edit | Delete</li>
   <% end %>
 </ul>

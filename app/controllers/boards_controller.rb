@@ -3,38 +3,37 @@ class BoardsController < ApplicationController
 
   def index
     if params[:user_id] && correct_user?(params[:user_id])
-    # if params[:user_id]
-    #   @user = User.find_by(id: params[:user_id])
-    #
-    #   if !@user.nil? && current_user?(@user)
-        @boards = current_user.boards
-        @board = Board.new
-        @activity1 = @board.activities.build(user_id: current_user.id)
-        @activity2 = @board.activities.build(user_id: current_user.id)
-      else
-        redirect_to user_boards_path(current_user)
-      end
-    # end
+      @boards = current_user.boards
+      @board = Board.new
+      @activity1 = @board.activities.build(user_id: current_user.id)
+      @activity2 = @board.activities.build(user_id: current_user.id)
+    else
+      redirect_to user_boards_path(current_user)
+    end
   end
 
   def create
-    # if params[:user_id] && correct_user?(params[:user_id])
-    if params[:user_id]
-      @user = User.find_by(id: params[:user_id])
-      if !@user.nil? && current_user?(@user)
-        @board = @user.boards.build(board_params)
+    if params[:user_id] && correct_user?(params[:user_id])
+    # if params[:user_id]
+    #   @user = User.find_by(id: params[:user_id])
+    #   if !@user.nil? && current_user?(@user)
+        @board = current_user.boards.build(board_params)
 
         if @board.save
+
           flash[:success] = "New board successfully created."
-          redirect_to user_board_path(@user, @board)
+          redirect_to user_board_path(current_user, @board)
         else
+# raise board.inspect
           # flash[:danger] = "There was an error. The new board couldn't be created."
           render :index
+          # redirect_to user_boards_path(current_user)
+
         end
     else
       redirect_to user_boards_path(current_user)
     end
-    end
+    # end
   end
 
   def show
