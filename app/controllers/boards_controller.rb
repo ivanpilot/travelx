@@ -2,21 +2,23 @@ class BoardsController < ApplicationController
   before_action :authenticate_user
 
   def index
-    if params[:user_id]
-      @user = User.find_by(id: params[:user_id])
-
-      if !@user.nil? && current_user?(@user)
-        @boards = @user.boards
+    if params[:user_id] && correct_user?(params[:user_id])
+    # if params[:user_id]
+    #   @user = User.find_by(id: params[:user_id])
+    #
+    #   if !@user.nil? && current_user?(@user)
+        @boards = current_user.boards
         @board = Board.new
-        @activity1 = @board.activities.build(user_id: @user.id)
-        @activity2 = @board.activities.build(user_id: @user.id)
+        @activity1 = @board.activities.build(user_id: current_user.id)
+        @activity2 = @board.activities.build(user_id: current_user.id)
       else
         redirect_to user_boards_path(current_user)
       end
-    end
+    # end
   end
 
   def create
+    # if params[:user_id] && correct_user?(params[:user_id])
     if params[:user_id]
       @user = User.find_by(id: params[:user_id])
       if !@user.nil? && current_user?(@user)
@@ -29,26 +31,22 @@ class BoardsController < ApplicationController
           # flash[:danger] = "There was an error. The new board couldn't be created."
           render :index
         end
-      else
-        redirect_to user_boards_path(current_user)
-      end
+    else
+      redirect_to user_boards_path(current_user)
+    end
     end
   end
 
   def show
-    if params[:user_id]
-      @user = User.find_by(id: params[:user_id])
+    if params[:user_id] && correct_user?(params[:user_id])
+      @board = current_user.boards.find_by(id: params[:id])
 
-      if !@user.nil? && current_user?(@user)
-        @board = @user.boards.find_by(id: params[:id])
-
-        if @board.nil?
-          flash[:danger] = "Board not found."
-          redirect_to user_boards_path(@user)
-        end
-      else
+      if @board.nil?
+        flash[:danger] = "Board not found."
         redirect_to user_boards_path(current_user)
       end
+    else
+      redirect_to user_boards_path(current_user)
     end
   end
 

@@ -13,8 +13,8 @@ class Board < ApplicationRecord
     attributes['description'].blank? || attributes['rating'].blank?
   end
 
-  def error_title
-    errors[:title] = "Provide a title to create a new board."
-  end
+  # def error_title
+  #   errors[:title] = "Provide a title to create a new board."
+  # end
 
 end

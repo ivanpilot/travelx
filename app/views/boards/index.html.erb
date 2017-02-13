@@ -12,8 +12,7 @@
 <% end %>
 
 <h3>Create a new board</h3>
-<%= raise params if @board == nil %>
-<%= form_for([@user, @board]) do |f| %>
+<%= form_for([current_user, @board]) do |f| %>
   <%= f.label :"Board title" %>
   <%= f.text_field :title, class: "well well-sm"%><br><br>
 
@@ -32,6 +31,7 @@
 <h3>Existing boards</h3>
 <ul>
   <% current_user.boards.each do |board| %>
+    <%= raise board.inspect if board.id.nil?%>
     <li><%= link_to board.title, user_board_path(current_user, board) %> | Edit | Delete</li>
   <% end %>
 </ul>
