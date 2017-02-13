@@ -1,7 +1,12 @@
 <h2>My Activities</h2><br>
 <ul>
   <% @activities.each do |activity|%>
-    <li>Description: <%= activity.description %> | Rating: <%= activity.rating %></li>
+    <li>
+      Description: <%= activity.description %> | Rating: <%= activity.rating %>
+      <% activity.boards.each do |board|%>
+        | Board: <%=link_to board.title, user_board_path(current_user, board)%>
+      <% end %>
+    </li>
     <%=link_to "Edit", edit_user_activity_path(current_user, activity) %> |
     <%=link_to "Delete", user_activity_path(current_user, activity),method: :delete, data: {confirm: 'Are you sure?'}%> <br><br>
   <% end %>
