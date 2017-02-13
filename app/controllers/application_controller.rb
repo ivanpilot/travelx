@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   include SessionsHelper
   include UsersHelper
   include FriendshipsHelper
+  # include BoardActivitiesHelper
 
   def authenticate_user
     unless is_logged_in?

@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   resources :users, only:[:index, :new, :create, :show] do
     resources :boards, only: [:index, :show, :create]
     resources :activities, only: [:index, :edit, :update, :destroy]
+    # resources :board_activities, only:[:destroy]
     member do
       get :friends
     end
@@ -19,7 +20,7 @@ Rails.application.routes.draw do
 
 
   resources :friendships, only: [:create, :destroy]
-  # resources :board_activities
+  resources :board_activities, only:[:destroy]
   # resources :activity_categories
   # resources :categories
 

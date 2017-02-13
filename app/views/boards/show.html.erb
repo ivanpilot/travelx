@@ -4,6 +4,7 @@
 <ol>
   <% @board.activities.each do |activity| %>
     <li>Description: <%= activity.description %> | Rating: <%= activity.rating %></li>
-    <%=link_to "Edit", edit_user_activity_path(current_user, activity) %> | Delete <br><br>
+    <%=link_to "Edit", edit_user_activity_path(current_user, activity) %> |
+    <%=link_to "Delete", board_activity_path(board_activity_id(@board, activity)), method: :delete, data: {confirm: 'This will delete the activity from the board only. Are you sure?'}%> <br><br>
   <% end %>
 </ol>
