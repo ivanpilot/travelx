@@ -40,6 +40,21 @@ class BoardsController < ApplicationController
     end
   end
 
+  def destroy
+    if params[:user_id] && correct_user?(params[:user_id])
+      @board = current_user.boards.find_by(id: params[:id])
+
+      if !@board.nil?
+        @board.delete
+        flash[:success] = "Board deleted."
+        @board = nil
+      else
+        flash[:danger] = "Board couldn't be found or updated."
+      end
+    end
+    redirect_to user_boards_path(current_user)
+  end
+
   private
 
   def board_params

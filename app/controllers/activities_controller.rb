@@ -44,12 +44,12 @@ class ActivitiesController < ApplicationController
 
       if !@activity.nil?
         @activity.delete
-        @activity = nil
         flash[:success] = "Activity deleted."
-        redirect_to user_boards_path(current_user)
+        redirect_to user_activities_path(current_user)
+        @activity = nil
       else
         flash[:danger] = "Activity couldn't be found or updated."
-        redirect_to user_boards_path(current_user)
+        redirect_to user_activities_path(current_user)
       end
     else
       redirect_to user_boards_path(current_user)

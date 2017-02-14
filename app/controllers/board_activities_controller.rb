@@ -14,6 +14,4 @@ class BoardActivitiesController < ApplicationController
     end
   end
 
-
-
 end
