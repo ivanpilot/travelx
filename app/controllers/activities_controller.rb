@@ -1,5 +1,5 @@
 class ActivitiesController < ApplicationController
-  before_action :authenticate_user
+  before_action :authenticate_user, :reset_activities
 
   def index
     if params[:user_id] && correct_user?(params[:user_id])
@@ -18,10 +18,9 @@ class ActivitiesController < ApplicationController
         flash[:success] = "New activity successfully created."
         redirect_to user_activities_path(current_user)
       else
-        render :index
+        flash[:danger] = "Activity not created. Make sure you provide a decscription and a rating."
+        redirect_to user_boards_path(current_user)
       end
-    else
-      redirect_to user_boards_path(current_user)
     end
   end
 
@@ -76,6 +75,10 @@ class ActivitiesController < ApplicationController
 
   def activity_params
     params.require(:activity).permit(:description, :rating)
+  end
+
+  def reset_activities
+    @activities = current_user.boards.select {|activity| activity.id}
   end
 
 end
