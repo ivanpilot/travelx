@@ -1,5 +1,5 @@
 class BoardsController < ApplicationController
-  before_action :authenticate_user
+  before_action :authenticate_user, :reset_boards
 
   def index
     if params[:user_id] && correct_user?(params[:user_id])
@@ -44,6 +44,10 @@ class BoardsController < ApplicationController
 
   def board_params
     params.require(:board).permit(:title, activities_attributes:[:description, :rating, :user_id])
+  end
+
+  def reset_boards
+    @boards = current_user.boards.select {|board| board.id}
   end
 
 end

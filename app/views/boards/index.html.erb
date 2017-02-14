@@ -30,7 +30,7 @@
 
 <h3>Existing boards</h3>
 <ul>
-  <% show_valid_boards(current_user).each do |board| %>
+  <% @boards.each do |board| %>
     <li><%= link_to board.title, user_board_path(current_user, board) %></li>
   <% end %>
 </ul>
