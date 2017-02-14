@@ -45,7 +45,7 @@ class BoardsController < ApplicationController
       @board = current_user.boards.find_by(id: params[:id])
 
       if !@board.nil?
-        @board.delete
+        @board.destroy
         flash[:success] = "Board deleted."
         @board = nil
       else

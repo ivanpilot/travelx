@@ -9,7 +9,7 @@ class Activity < ApplicationRecord
   has_many :activity_categories, dependent: :destroy
   has_many :categories, through: :activity_categories
 
-  has_many :board_activities, dependent: :destroy
+  has_many :board_activities
   has_many :boards, through: :board_activities
   # belongs_to :board
 end
