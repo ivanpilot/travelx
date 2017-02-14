@@ -9,6 +9,22 @@ class ActivitiesController < ApplicationController
     end
   end
 
+  def create
+    # raise params.inspect
+    if params[:user_id] && correct_user?(params[:user_id])
+      @activity = current_user.activities.build(activity_params)
+
+      if @activity.save
+        flash[:success] = "New activity successfully created."
+        redirect_to user_activities_path(current_user)
+      else
+        render :index
+      end
+    else
+      redirect_to user_boards_path(current_user)
+    end
+  end
+
   def edit
     if params[:user_id] && correct_user?(params[:user_id])
       @activity = current_user.activities.find_by(id: params[:id])
