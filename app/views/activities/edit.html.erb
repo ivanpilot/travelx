@@ -1,7 +1,14 @@
+<h2>Update your activity</h2><br>
 <%= form_for @activity, url:user_activity_path(current_user, @activity) do |f|%>
-  <%= f.label :"Activity description" %><br>
-  <%= f.text_area :description %>
-  <%= f.label :"Activity rating" %>
-  <%= f.text_field :rating %><br>
+  <%= f.label :Description %><br>
+  <%= f.text_area :description %><br><br>
+  <%= f.label :Rating %><br>
+  <%= f.text_field :rating %><br><br>
+  <h3>Belongs to boards</h3>
+
+
+  <%= f.collection_check_boxes :board_ids, current_user.boards, :id, :title do |b|
+      b.label(class: 'checkbox') {b.check_box + b.text}
+  end %><br><br>
   <%= f.submit "Edit Activity", class: "btn btn-primary"%>
 <% end %>

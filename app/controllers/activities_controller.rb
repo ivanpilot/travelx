@@ -38,6 +38,7 @@ class ActivitiesController < ApplicationController
   end
 
   def update
+    # raise params.inspect
     if params[:user_id] && correct_user?(params[:user_id])
       @activity = current_user.activities.find_by(id: params[:id])
 
@@ -74,7 +75,7 @@ class ActivitiesController < ApplicationController
   private
 
   def activity_params
-    params.require(:activity).permit(:description, :rating)
+    params.require(:activity).permit(:description, :rating, :board_ids => [])
   end
 
   def reset_activities

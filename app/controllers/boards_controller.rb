@@ -13,7 +13,6 @@ class BoardsController < ApplicationController
   end
 
   def create
-    raise params.inspect
     if params[:user_id] && correct_user?(params[:user_id])
       @board = current_user.boards.build(board_params)
 

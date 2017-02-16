@@ -6,6 +6,6 @@
       <%=link_to "Edit", edit_user_activity_path(current_user, activity) %> |
       <%=link_to "Delete", user_activity_path(current_user, activity),method: :delete, data: {confirm: 'Are you sure?'}%> <br>
     </li>
-    Board: <%=boards_related_to(activity, current_user)%><br><br>
+    Boards: <%=boards_related_to(activity, current_user)%><br><br>
   <% end %>
 </ul>
