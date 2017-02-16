@@ -21,6 +21,8 @@ class ActivitiesController < ApplicationController
         flash[:danger] = "Activity not created. Make sure you provide a description and a rating."
         redirect_to user_boards_path(current_user)
       end
+    else
+      redirect_to user_boards_path(current_user)
     end
   end
 

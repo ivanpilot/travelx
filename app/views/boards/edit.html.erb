@@ -1,0 +1,7 @@
+<%= form_for([current_user, @board]) do |f| %>
+  <%= f.hidden_field :user_id%>
+  <%= f.hidden_field :id%>
+  <%= f.label :"Board title" %>
+  <%= f.text_field :title, class: "well well-sm"%>
+  <%= f.submit "Update", class: "btn btn-primary"%>
+<% end %><br><br>

@@ -34,6 +34,11 @@ class User < ApplicationRecord
     Friendship.where(user_id: self.id) + Friendship.where(friend_id: self.id)
   end
 
+  def owns_board?(board)
+    self.boards.include?(board)
+  end
+
+
 
   private
 

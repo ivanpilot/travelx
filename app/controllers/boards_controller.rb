@@ -27,6 +27,34 @@ class BoardsController < ApplicationController
     end
   end
 
+  def edit
+    if params[:user_id] && correct_user?(params[:user_id])
+      @board = current_user.boards.find_by(id: params[:id])
+
+      if @board.nil?
+        flash[:danger] = "Board not found."
+        redirect_to user_boards_path(current_user)
+      end
+    else
+      redirect_to user_boards_path(current_user)
+    end
+  end
+
+  def update
+    if params[:user_id] && correct_user?(params[:user_id])
+      if @board = current_user.boards.find_by(id: params[:id])
+        @board.update(board_params)
+        flash[:success] = "Board updated."
+        redirect_to user_board_path(current_user, @board)
+      else
+        flash[:danger] = "Board not found."
+        redirect_to user_boards_path(current_user)
+      end
+    else
+      redirect_to user_boards_path(current_user)
+    end
+  end
+
   def show
     if params[:user_id] && correct_user?(params[:user_id])
       @board = current_user.boards.find_by(id: params[:id])
@@ -58,11 +86,12 @@ class BoardsController < ApplicationController
   private
 
   def board_params
-    params.require(:board).permit(:title, activities_attributes:[:description, :rating, :user_id])
+    params.require(:board).permit(:user_id, :id,:title, activities_attributes:[:description, :rating, :user_id], )
   end
 
   def reset_boards
     @boards = current_user.boards.select {|board| board.id}
   end
+
 
 end
