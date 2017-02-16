@@ -86,7 +86,7 @@ class BoardsController < ApplicationController
   private
 
   def board_params
-    params.require(:board).permit(:user_id, :id,:title, activities_attributes:[:description, :rating, :user_id], )
+    params.require(:board).permit(:title, activities_attributes:[:description, :rating, :user_id])
   end
 
   def reset_boards
