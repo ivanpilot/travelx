@@ -58,7 +58,7 @@ class ActivitiesController < ApplicationController
       @activity = current_user.activities.find_by(id: params[:id])
 
       if !@activity.nil?
-        @activity.delete
+        @activity.destroy
         flash[:success] = "Activity deleted."
         redirect_to user_activities_path(current_user)
         @activity = nil
