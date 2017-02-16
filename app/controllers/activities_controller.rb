@@ -11,7 +11,6 @@ class ActivitiesController < ApplicationController
   end
 
   def create
-    # raise params.inspect
     if params[:user_id] && correct_user?(params[:user_id])
       @activity = current_user.activities.build(activity_params)
 
@@ -83,7 +82,6 @@ class ActivitiesController < ApplicationController
   def reset_activities
     @activities = current_user.boards.select {|activity| activity.id}
   end
-
 
 
 end

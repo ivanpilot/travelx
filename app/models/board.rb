@@ -3,7 +3,6 @@ class Board < ApplicationRecord
   validates :title, presence: true#, message: "Please provide a title to create a new board."
 
   belongs_to :user
-  # has_many :activities
   has_many :board_activities, dependent: :destroy
   has_many :activities, through: :board_activities
 

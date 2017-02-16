@@ -9,8 +9,6 @@ class User < ApplicationRecord
 
   has_secure_password
 
-  # has_many :experiences, dependent: :destroy
-  # has_many :activities, through: :experiences
   has_many :activities
   has_many :boards
   has_many :friendships, dependent: :destroy

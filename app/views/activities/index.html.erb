@@ -4,10 +4,9 @@
   <%= f.text_field :description, class: "well well-sm" %>
   <%= f.label :rating %>
   <%= f.text_field :rating, class: "well well-sm" %><br>
-
   <%= f.collection_check_boxes :board_ids, current_user.boards, :id, :title do |b|
       b.label(class: 'checkbox') {b.check_box + b.text}
-  end %><br><br>
+  end %><br>
 
   <%= f.submit "Create Activity", class:"btn btn-primary" %>
 <% end %><br><br>
