@@ -18,7 +18,7 @@ class ActivitiesController < ApplicationController
         flash[:success] = "New activity successfully created."
         redirect_to user_activities_path(current_user)
       else
-        flash[:danger] = "Activity not created. Make sure you provide a decscription and a rating."
+        flash[:danger] = "Activity not created. Make sure you provide a description and a rating."
         redirect_to user_boards_path(current_user)
       end
     end
@@ -27,7 +27,7 @@ class ActivitiesController < ApplicationController
   def edit
     if params[:user_id] && correct_user?(params[:user_id])
       @activity = current_user.activities.find_by(id: params[:id])
-
+      store_previous_url
       if @activity.nil?
         flash[:danger] = "Activity not found."
         redirect_to user_boards_path(current_user)
@@ -38,13 +38,12 @@ class ActivitiesController < ApplicationController
   end
 
   def update
-    # raise params.inspect
     if params[:user_id] && correct_user?(params[:user_id])
       @activity = current_user.activities.find_by(id: params[:id])
 
       if !@activity.nil? && @activity.update(activity_params)
         flash[:success] = "Activity updated."
-        redirect_to user_boards_path(current_user)#TO BE CHANGEDDDDD to previous url
+        go_to_previous_url
       else
         flash[:danger] = "Activity couldn't be found or updated."
         redirect_to user_boards_path(current_user)
@@ -81,5 +80,7 @@ class ActivitiesController < ApplicationController
   def reset_activities
     @activities = current_user.boards.select {|activity| activity.id}
   end
+
+
 
 end

@@ -31,16 +31,13 @@ class ApplicationController < ActionController::Base
     current_user?(user)
   end
 
-  # def correct_user
-  #   if params[:user_id]
-  #     params_user = User.find_by(id: params[:user_id])
-  #     redirect_back(fallback_location: user_boards_path(current_user)) unless current_user == params_user
-  #   end
-  # end
+  def store_previous_url
+    session[:previous_url] = request.referrer
+  end
 
-  # def home
-  #   is_logged_in? ? user_boards_path(current_user) : root_path
-  # end
+  def go_to_previous_url
+    redirect_to session[:previous_url]
+  end
 
 
 end

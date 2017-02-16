@@ -1,7 +1,7 @@
 <h1><%= @board.title %></h1>
 <%= button_to "Delete board", user_board_path(current_user, @board), :class => "btn btn-danger", method: :delete, data: {confirm: "Are you sure?"}%><br><br>
 
-<h3>Activities included in that board</h3><br>
+<h3>Activities</h3><br>
 <ol>
   <% @board.activities.each do |activity| %>
     <li>Description: <%= activity.description %> | Rating: <%= activity.rating %></li>
