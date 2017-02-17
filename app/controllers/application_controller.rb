@@ -37,6 +37,7 @@ class ApplicationController < ActionController::Base
 
   def go_to_previous_url
     redirect_to session[:previous_url]
+    session.delete(:previous_url)
   end
 
 

@@ -20,9 +20,6 @@ class ActivitiesController < ApplicationController
       else
         flash[:danger] = "Activity not created. Make sure you provide a description and a rating."
         redirect_back(fallback_location: session[:previous_url])
-        # raise params.inspect
-        # redirect_to user_activities_path(current_user)
-        # redirect_to user_boards_path(current_user) #### MUST REDIRECT TO RIGHT URL
       end
     else
       redirect_to user_boards_path(current_user)

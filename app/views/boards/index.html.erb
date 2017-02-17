@@ -23,7 +23,7 @@
 <h5>Create your board and add somes activities already!</h5>
 <%= form_for([current_user, @board]) do |f| %>
   <%= f.label :"Board title" %>
-  <%= f.text_field :title, class: "well well-sm"%>
+  <%= f.text_field :title, class: "well well-sm", autocomplete:"off" %>
   <h5>Create somes activities within your new board</h5>
   <h6>(Description and rating fields must be filled)</h6><br>
   <%= f.fields_for :activities do |activity| %>
