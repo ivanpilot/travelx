@@ -1,9 +1,6 @@
 <h2>Create a new activity</h2>
 <%= form_for ([current_user, @activity]) do |f|%>
-  <%= f.label :description %>
-  <%= f.text_field :description, class: "well well-sm" %>
-  <%= f.label :rating %>
-  <%= f.text_field :rating, class: "well well-sm" %><br>
+  <%= render partial:"activity", :locals => {activity: f} %>
   <%= f.collection_check_boxes :board_ids, current_user.boards, :id, :title do |b|
       b.label(class: 'checkbox') {b.check_box + b.text}
   end %><br>

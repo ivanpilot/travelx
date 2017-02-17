@@ -1,9 +1,6 @@
 <h3>Start by creating an activity or ...</h3>
 <%= form_for current_user.activities.build, :url => user_activities_path(current_user) do |f|%>
-  <%= f.label :description %>
-  <%= f.text_field :description, class: "well well-sm" %>
-  <%= f.label :rating %>
-  <%= f.text_field :rating, class: "well well-sm" %><br>
+  <%= render partial:"activities/activity", :locals => {activity: f} %><br>
   <%= f.submit "Create Activity", class:"btn btn-primary" %>
 <% end %><br><br>
 
@@ -31,10 +28,7 @@
   <h6>(Description and rating fields must be filled)</h6><br>
   <%= f.fields_for :activities do |activity| %>
     <%= activity.hidden_field :user_id %>
-    <%= activity.label :description %>
-    <%= activity.text_field :description, class: "well well-sm" %>
-    <%= activity.label :rating %>
-    <%= activity.text_field :rating, class: "well well-sm" %><br>
+    <%= render partial: "activities/activity_inline", :locals => {activity: activity}%>
   <% end %>
 
   <%= f.submit "Create Board", class: "btn btn-primary"%>
