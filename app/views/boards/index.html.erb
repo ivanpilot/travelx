@@ -1,6 +1,6 @@
 <h3>Start by creating an activity or ...</h3>
 <%= form_for current_user.activities.build, :url => user_activities_path(current_user) do |f|%>
-  <%= render partial:"activities/activity", :locals => {activity: f} %><br>
+  <%= render partial:"activities/activity_inline", :locals => {activity: f} %>
   <%= f.submit "Create Activity", class:"btn btn-primary" %>
 <% end %><br><br>
 
