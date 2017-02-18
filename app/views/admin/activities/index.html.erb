@@ -1,0 +1,7 @@
+<h2>Number of activities: <%=@activities.count%></h2>
+
+<ul>
+  <% @activities.each do |activity|%>
+    <li>User: <%= activity.user.username %> | Description:<%= activity.description %> | Rating: <%=activity.rating%></li>
+  <% end %>
+</ul>
