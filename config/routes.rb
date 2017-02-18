@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   post '/sign_in', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
 
-  resources :users, only:[:index, :new, :create, :show, :update] do
+  resources :users, only:[:new, :create, :show, :update] do
     resources :boards, only: [:index, :create, :edit, :update, :show,  :destroy]
     resources :activities, only: [:index, :create, :edit, :update, :destroy]
     member do
@@ -22,8 +22,9 @@ Rails.application.routes.draw do
   # resources :categories
 
   scope '/admin', module: 'admin' do
-    resources :activities, only: [:index]
     resources :users, only:[:index]
+    resources :activities, only: [:index]
+    resources :boards, only:[:index]
   end
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
