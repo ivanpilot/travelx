@@ -1,11 +1,14 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
-  helper_method :current_user, :is_logged_in?, :current_user?, :correct_user?
   include Pundit
   include SessionsHelper
   include UsersHelper
   include FriendshipsHelper
-  # include BoardActivitiesHelper
+
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+
+  helper_method :current_user, :is_logged_in?, :current_user?, :correct_user?
+
 
   def authenticate_user
     unless is_logged_in?
@@ -39,6 +42,17 @@ class ApplicationController < ActionController::Base
   def go_to_previous_url
     redirect_to session[:previous_url]
     session.delete(:previous_url)
+  end
+
+  private
+
+  def user_not_authorized#(exception)
+    # raise params.inspect
+    flash[:warning] = "You are not authorized to perform this action."
+    redirect_to(request.referrer || root_path)
+    # policy_name = exception.policy.class.to_s.underscore
+    # flash[:error] = t "#{policy_name}.#{exception.query}", scope: "pundit", default: :default
+    # redirect_to(request.referrer || root_path)
   end
 
 
