@@ -13,7 +13,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       log_in(@user)
-      flash[:success] = "You have successfully signed up"
+      flash[:success] = "You have successfully signed up."
       redirect_to root_path
     else
       render :new
@@ -22,6 +22,16 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find_by(id: params[:id])
+  end
+
+  def update
+    if correct_user?(params[:id])
+      current_user.alternate_role
+      redirect_to user_boards_path(current_user)
+      flash[:success] = "You changed your role."
+    else
+      redirect_to user_boards_path(current_user)
+    end
   end
 
   def friends

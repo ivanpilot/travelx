@@ -33,6 +33,7 @@
           </div>
           <div class="navbar-right">
             <ul class="nav navbar-nav">
+              <li><p><%= button_to current_user.role.capitalize, user_path(current_user), class:"btn btn-success", method: :patch if current_user %></p></li>
               <li><p class="navbar-text"><%= current_user.username if current_user %></p></li>
               <li><p><%= button_to 'Log Out', logout_path, class:"btn btn-warning",method: :delete if current_user %></p></li>
             </ul>

@@ -4,8 +4,8 @@ class User < ApplicationRecord
   validates :username, presence: true, uniqueness: true
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
   validates :email, presence: true, format: { with: VALID_EMAIL_REGEX }, uniqueness: { case_sensitive: false }
-  validates :password, presence: true, confirmation: true
-  validates :password_confirmation, presence: true
+  validates :password, presence: true, confirmation: true, unless: Proc.new { |a| a.password.blank? }
+  validates :password_confirmation, presence: true, unless: Proc.new { |a| a.password.blank? }
 
   has_secure_password
 
@@ -36,6 +36,10 @@ class User < ApplicationRecord
     self.boards.include?(board)
   end
 
+  def alternate_role
+    self.role == "user" ? self.role = "admin" : self.role = "user"
+    self.save
+  end
 
 
   private
