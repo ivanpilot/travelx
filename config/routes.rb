@@ -9,18 +9,15 @@ Rails.application.routes.draw do
   resources :users, only:[:index, :new, :create, :show, :update] do
     resources :boards, only: [:index, :create, :edit, :update, :show,  :destroy]
     resources :activities, only: [:index, :create, :edit, :update, :destroy]
-    # resources :board_activities, only:[:destroy]
     member do
       get :friends
     end
   end
 
-  # resources :boards, only: [:show] ### TO BE CHANGEDDDD
-  # resources :activities, only: [:edit, :update]
-
-
   resources :friendships, only: [:create, :destroy]
   resources :board_activities, only:[:destroy]
+  # resources :boards, only: [:show] ### TO BE CHANGEDDDD
+  # resources :activities, only: [:edit, :update]
   # resources :activity_categories
   # resources :categories
 

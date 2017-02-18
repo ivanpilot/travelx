@@ -27,7 +27,7 @@ class UsersController < ApplicationController
   def update
     if correct_user?(params[:id])
       current_user.alternate_role
-      redirect_to user_boards_path(current_user)
+      redirect_back(fallback_location: session[:previous_url])
       flash[:success] = "You changed your role."
     else
       redirect_to user_boards_path(current_user)

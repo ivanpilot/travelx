@@ -33,7 +33,7 @@
             <%= content_tag(:tr) do %>
 
               <%= content_tag(:td) do %>
-                <%= link_to friendship.friend_name_of(current_user), user_path(friendship.friend_of(current_user))%>
+                <%= link_to friendship.friend_name_of(current_user), user_activities_path(friendship.friend_of(current_user))%>
               <% end %>
               <%= content_tag(:td, friendship.created_at.strftime('%v')) %>
               <%= content_tag(:td) do %>
