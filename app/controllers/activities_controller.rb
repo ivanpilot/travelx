@@ -2,7 +2,6 @@ class ActivitiesController < ApplicationController
   before_action :authenticate_user, :reset_activities
 
   def index
-
     @activities = current_user.activities
     @activity = Activity.new
     # if params[:user_id] && correct_user?(params[:user_id])
@@ -14,7 +13,6 @@ class ActivitiesController < ApplicationController
   end
 
   def create
-    # raise params.inspect
     @activity = current_user.activities.build(activity_params)
     if @activity.save
       flash[:success] = "New activity successfully created."
@@ -63,15 +61,13 @@ class ActivitiesController < ApplicationController
   end
 
   def update
-    # raise params.inspect
     @activity = current_user.activities.find_by(id: params[:id])
     if !@activity.nil? && @activity.update(activity_params)
       flash[:success] = "Activity updated."
-      go_to_previous_url
     else
       flash[:danger] = "Activity couldn't be found or updated."
-      redirect_to boards_path(current_user)
     end
+    go_to_previous_url
 
     # if params[:user_id] && correct_user?(params[:user_id])
     #   @activity = current_user.activities.find_by(id: params[:id])
@@ -89,21 +85,31 @@ class ActivitiesController < ApplicationController
   end
 
   def destroy
-    if params[:user_id] && correct_user?(params[:user_id])
-      @activity = current_user.activities.find_by(id: params[:id])
-
-      if !@activity.nil?
-        @activity.destroy
-        flash[:success] = "Activity deleted."
-        redirect_to user_activities_path(current_user)
-        @activity = nil
-      else
-        flash[:danger] = "Activity couldn't be found or updated."
-        redirect_to user_activities_path(current_user)
-      end
+    @activity = current_user.activities.find_by(id: params[:id])
+    if !@activity.nil?
+      @activity.destroy
+      flash[:success] = "Activity deleted."
+      @activity = nil
     else
-      redirect_to user_boards_path(current_user)
+      flash[:danger] = "Activity couldn't be found or updated."
     end
+    redirect_to activities_path
+    
+    # if params[:user_id] && correct_user?(params[:user_id])
+    #   @activity = current_user.activities.find_by(id: params[:id])
+    #
+    #   if !@activity.nil?
+    #     @activity.destroy
+    #     flash[:success] = "Activity deleted."
+    #     redirect_to user_activities_path(current_user)
+    #     @activity = nil
+    #   else
+    #     flash[:danger] = "Activity couldn't be found or updated."
+    #     redirect_to user_activities_path(current_user)
+    #   end
+    # else
+    #   redirect_to user_boards_path(current_user)
+    # end
   end
 
   private
