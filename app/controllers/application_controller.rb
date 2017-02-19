@@ -1,13 +1,14 @@
 class ApplicationController < ActionController::Base
+  protect_from_forgery with: :exception
   include Pundit
   include SessionsHelper
   include UsersHelper
   include FriendshipsHelper
-  protect_from_forgery with: :exception
+
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+
   helper_method :current_user, :is_logged_in?, :current_user?, :correct_user?
 
-  # include BoardActivitiesHelper
 
   def authenticate_user
     unless is_logged_in?
@@ -19,7 +20,6 @@ class ApplicationController < ActionController::Base
   def is_logged_in?
     !!current_user
   end
-
 
   def current_user
     @current_user ||= User.find_by(id: session[:user_id]) if session.include?(:user_id)

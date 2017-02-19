@@ -20,6 +20,11 @@ class UsersController < ApplicationController
     end
   end
 
+  def update
+    current_user.switch_role
+    redirect_back(fallback_location: activities_path)
+  end
+
   def show
     @user = User.find_by(id: params[:id])
   end
