@@ -2,12 +2,15 @@ class ActivitiesController < ApplicationController
   before_action :authenticate_user, :reset_activities
 
   def index
-    if params[:user_id] && correct_user?(params[:user_id])
-      @activities = current_user.activities
-      @activity = Activity.new
-    else
-      redirect_to user_boards_path(current_user)
-    end
+
+    @activities = current_user.activities
+    @activity = Activity.new
+    # if params[:user_id] && correct_user?(params[:user_id])
+    #   @activities = current_user.activities
+    #   @activity = Activity.new
+    # else
+    #   redirect_to boards_path
+    # end
   end
 
   def create

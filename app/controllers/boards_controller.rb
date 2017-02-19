@@ -2,14 +2,14 @@ class BoardsController < ApplicationController
   before_action :authenticate_user, :reset_boards
 
   def index
-    if params[:user_id] && correct_user?(params[:user_id])
-      @boards = current_user.boards
-      @board = Board.new
-      @activity1 = @board.activities.build(user_id: current_user.id)
-      @activity2 = @board.activities.build(user_id: current_user.id)
-    else
-      redirect_to user_boards_path(current_user)
-    end
+    # if params[:user_id] && correct_user?(params[:user_id])
+    #   @boards = current_user.boards
+    #   @board = Board.new
+    #   @activity1 = @board.activities.build(user_id: current_user.id)
+    #   @activity2 = @board.activities.build(user_id: current_user.id)
+    # else
+    #   redirect_to boards_path
+    # end
   end
 
   def create
