@@ -43,32 +43,49 @@ class ActivitiesController < ApplicationController
   end
 
   def edit
-    if params[:user_id] && correct_user?(params[:user_id])
-      @activity = current_user.activities.find_by(id: params[:id])
-      store_previous_url
-      if @activity.nil?
-        flash[:danger] = "Activity not found."
-        redirect_to user_boards_path(current_user)
-      end
-    else
-      redirect_to user_boards_path(current_user)
+    @activity = current_user.activities.find_by(id: params[:id])
+    if @activity.nil?
+      flash[:danger] = "Activity not found."
+      redirect_to boards_path(current_user)
     end
+    store_previous_url
+    #
+    # if params[:user_id] && correct_user?(params[:user_id])
+    #   @activity = current_user.activities.find_by(id: params[:id])
+    #
+    #   if @activity.nil?
+    #     flash[:danger] = "Activity not found."
+    #     redirect_to user_boards_path(current_user)
+    #   end
+    # else
+    #   redirect_to user_boards_path(current_user)
+    # end
   end
 
   def update
-    if params[:user_id] && correct_user?(params[:user_id])
-      @activity = current_user.activities.find_by(id: params[:id])
-
-      if !@activity.nil? && @activity.update(activity_params)
-        flash[:success] = "Activity updated."
-        go_to_previous_url
-      else
-        flash[:danger] = "Activity couldn't be found or updated."
-        redirect_to user_boards_path(current_user)
-      end
+    # raise params.inspect
+    @activity = current_user.activities.find_by(id: params[:id])
+    if !@activity.nil? && @activity.update(activity_params)
+      flash[:success] = "Activity updated."
+      go_to_previous_url
     else
-      redirect_to user_boards_path(current_user)
+      flash[:danger] = "Activity couldn't be found or updated."
+      redirect_to boards_path(current_user)
     end
+
+    # if params[:user_id] && correct_user?(params[:user_id])
+    #   @activity = current_user.activities.find_by(id: params[:id])
+    #
+    #   if !@activity.nil? && @activity.update(activity_params)
+    #     flash[:success] = "Activity updated."
+    #     go_to_previous_url
+    #   else
+    #     flash[:danger] = "Activity couldn't be found or updated."
+    #     redirect_to user_boards_path(current_user)
+    #   end
+    # else
+    #   redirect_to user_boards_path(current_user)
+    # end
   end
 
   def destroy

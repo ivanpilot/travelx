@@ -9,4 +9,5 @@ module ActivitiesHelper
       end.join(" | ").html_safe
     end
   end
+  
 end
