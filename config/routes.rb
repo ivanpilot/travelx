@@ -21,7 +21,7 @@ Rails.application.routes.draw do
   # resources :activity_categories
   # resources :categories
 
-  scope '/admin', module: 'admin' do
+  namespace :admin do
     resources :users, only:[:index]
     resources :activities, only: [:index]
     resources :boards, only:[:index]

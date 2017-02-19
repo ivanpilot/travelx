@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
 
   rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
-  helper_method :current_user, :is_logged_in?, :current_user?, :correct_user?
+  helper_method :current_user, :is_logged_in?, :current_user?, :correct_user?, :is_admin?
 
 
   def authenticate_user
@@ -35,6 +35,17 @@ class ApplicationController < ActionController::Base
     current_user?(user)
   end
 
+  def admin_user
+    unless is_admin?
+      flash[:warning] = "Please sign up."
+      redirect_to sign_in_path
+    end
+  end
+
+  def is_admin?
+    !!current_user.admin? if current_user
+  end
+
   def store_previous_url
     session[:previous_url] = request.referrer
   end
@@ -48,7 +59,7 @@ class ApplicationController < ActionController::Base
 
   def user_not_authorized#(exception)
     # raise params.inspect
-    flash[:warning] = "You are not authorized to perform this action."
+    flash[:warning] = "You are not authorized to perform this action, Asshole!"
     redirect_to(request.referrer || root_path)
     # policy_name = exception.policy.class.to_s.underscore
     # flash[:error] = t "#{policy_name}.#{exception.query}", scope: "pundit", default: :default

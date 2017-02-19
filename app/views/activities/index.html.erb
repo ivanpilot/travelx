@@ -1,8 +1,10 @@
+<% if policy(@activity).create? %>
 <h2>Create a new activity</h2>
 <%= form_for ([current_user, @activity]) do |f|%>
   <%= render partial:"activity", :locals => {activity: f} %>
   <%= f.submit "Create Activity", class:"btn btn-primary" %>
 <% end %><br><br>
+<% end %>
 
 
 <h2>My Activities</h2><br>

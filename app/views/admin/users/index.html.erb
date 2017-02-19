@@ -1,7 +1,7 @@
-<h2>Number of activities: <%=@users.count%></h2>
+<h2>Number of users: <%=@users.count%></h2>
 
-<ul>
+<ol>
   <% @users.each do |user|%>
     <li><%=user.username.capitalize%> | <%=link_to "Boards", user_boards_path(user)%> | <%=link_to "Activities", user_activities_path(user)%></li>
   <% end %>
-</ul>
+</ol>
