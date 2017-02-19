@@ -1,11 +1,7 @@
 <h2>Create a new activity</h2>
-<%= form_for @activity do |activity|%>
-  <%= activity.label :Description %><br>
-  <%= activity.text_area :description %><br>
-  <%= activity.label :Rating %><br>
-  <%= activity.text_field :rating %><br><br>
-
-  <%= activity.submit "Create Activity", class:"btn btn-primary" %>
+<%= form_for @activity do |f|%>
+  <%= render partial:"activity", :locals => {activity: f}%>
+  <%= f.submit "Create Activity", class:"btn btn-primary" %>
 <% end %><br><br>
 
 

@@ -14,22 +14,32 @@ class ActivitiesController < ApplicationController
   end
 
   def create
-    if params[:user_id] && correct_user?(params[:user_id])
-      @activity = current_user.activities.build(activity_params)
-
-      if @activity.save
-        flash[:success] = "New activity successfully created."
-        redirect_to user_activities_path(current_user)
-      else
-        flash[:danger] = "Activity not created. Make sure you provide a description and a rating."
-        redirect_back(fallback_location: session[:previous_url])
-        # raise params.inspect
-        # redirect_to user_activities_path(current_user)
-        # redirect_to user_boards_path(current_user) #### MUST REDIRECT TO RIGHT URL
-      end
+    # raise params.inspect
+    @activity = current_user.activities.build(activity_params)
+    if @activity.save
+      flash[:success] = "New activity successfully created."
+      redirect_to activities_path
     else
-      redirect_to user_boards_path(current_user)
+      flash[:danger] = "Activity not created. Make sure you provide a description and a rating."
+      redirect_back(fallback_location: session[:previous_url])
     end
+
+    # if params[:user_id] && correct_user?(params[:user_id])
+    #   @activity = current_user.activities.build(activity_params)
+    #
+    #   if @activity.save
+    #     flash[:success] = "New activity successfully created."
+    #     redirect_to user_activities_path(current_user)
+    #   else
+    #     flash[:danger] = "Activity not created. Make sure you provide a description and a rating."
+    #     redirect_back(fallback_location: session[:previous_url])
+    #     # raise params.inspect
+    #     # redirect_to user_activities_path(current_user)
+    #     # redirect_to user_boards_path(current_user) #### MUST REDIRECT TO RIGHT URL
+    #   end
+    # else
+    #   redirect_to user_boards_path(current_user)
+    # end
   end
 
   def edit

@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   end
 
   resources :boards, only: [:index] ### TO BE CHANGEDDDD
-  resources :activities, only: [:index, :edit, :destroy]
+  resources :activities, only: [:index, :create, :edit, :destroy]
 
 
   resources :friendships, only: [:create, :destroy]
