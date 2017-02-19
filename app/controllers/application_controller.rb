@@ -1,9 +1,12 @@
 class ApplicationController < ActionController::Base
-  protect_from_forgery with: :exception
-  helper_method :current_user, :is_logged_in?, :current_user?, :correct_user?
+  include Pundit
   include SessionsHelper
   include UsersHelper
   include FriendshipsHelper
+  protect_from_forgery with: :exception
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+  helper_method :current_user, :is_logged_in?, :current_user?, :correct_user?
+
   # include BoardActivitiesHelper
 
   def authenticate_user
@@ -39,5 +42,11 @@ class ApplicationController < ActionController::Base
     redirect_to session[:previous_url]
   end
 
+  private
+
+  def user_not_authorized
+    flash[:alert] = "You are not authorized to perform this action, Asshole!"
+    redirect_to(request.referrer || root_path)
+  end
 
 end
