@@ -5,9 +5,9 @@ module ActivitiesHelper
       "No board"
     else
       activity.boards.collect do |board|
-        link_to(board.title, boards_path(board))
+        link_to(board.title, board_path(board))
       end.join(" | ").html_safe
     end
   end
-  
+
 end

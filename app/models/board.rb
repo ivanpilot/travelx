@@ -9,7 +9,7 @@ class Board < ApplicationRecord
   accepts_nested_attributes_for :activities, reject_if: :reject_activities
 
   def reject_activities(attributes)
-    attributes['description'].blank? || attributes['rating'].blank?
+    attributes['description'].blank? && attributes['rating'].blank?
   end
 
   # def error_title

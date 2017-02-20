@@ -4,8 +4,10 @@ class BoardsController < ApplicationController
   def index
     @boards = current_user.boards
     @board = Board.new
-    @activity1 = @board.activities.build(user_id: current_user.id)
-    @activity2 = @board.activities.build(user_id: current_user.id)
+    # @activities = @board.activities.build(user_id: current_user.id)
+    # @activity1 ||= @board.activities.build(user_id: current_user.id)
+    # @activity2 ||= @board.activities.build(user_id: current_user.id)
+    # raise params.inspect
     # if params[:user_id] && correct_user?(params[:user_id])
     #   @boards = current_user.boards
     #   @board = Board.new
@@ -23,8 +25,12 @@ class BoardsController < ApplicationController
       flash[:success] = "New board successfully created."
       redirect_to boards_path
     else
-      flash[:danger] = "Board couldn't be created."
+      # @boards = current_user.boards.select {|board| board.id}
+    # @activity1 = @board.activities.build(user_id: current_user.id) if @activity1.blank?
+    #   @activity2 = @board.activities.build(user_id: current_user.id) if @activity2.blank?
+      flash.now[:danger] = "Board not created. Make sure you provide a title and a description and a rating if you add an activity."
       render :index
+      # raise params.inspect
     end
 
     # if params[:user_id] && correct_user?(params[:user_id])
