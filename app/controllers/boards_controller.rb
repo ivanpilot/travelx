@@ -2,8 +2,12 @@ class BoardsController < ApplicationController
   before_action :authenticate_user, :reset_boards
 
   def index
-    @boards = current_user.boards
-    @board = Board.new
+    if params[:user_id] && User.exists?(params[:user_id])
+      @boards = User.find_by(id:params[:user_id]).boards
+    else
+      @boards = current_user.boards
+      @board = Board.new
+    end
     # raise params.inspect
     # if params[:user_id] && correct_user?(params[:user_id])
     #   @boards = current_user.boards
