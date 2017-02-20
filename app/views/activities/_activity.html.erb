@@ -1,6 +1,6 @@
-<%= activity.label :Description %><br>
+<%= activity.label :description %><br>
 <%= activity.text_area :description %><br>
-<%= activity.label :Rating %><br>
+<%= activity.label :rating %><br>
 <%= activity.text_field :rating %><br><br>
 <h3>Belongs to boards</h3>
 <%= activity.collection_check_boxes :board_ids, current_user.boards, :id, :title do |b|

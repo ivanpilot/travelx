@@ -1,5 +1,5 @@
 <h3>Start by creating an activity or ...</h3>
-<%= form_for current_user.activities.build, :url => user_activities_path(current_user) do |f|%>
+<%= form_for current_user.activities.build, :url => activities_path do |f|%>
   <%= render partial:"activities/activity_inline", :locals => {activity: f} %>
   <%= f.submit "Create Activity", class:"btn btn-primary" %>
 <% end %><br><br>
@@ -21,7 +21,7 @@
 
 <h3>... Create a board</h3>
 <h5>Create your board and add somes activities already!</h5>
-<%= form_for([current_user, @board]) do |f| %>
+<%= form_for @board do |f| %>
   <%= f.label :"Board title" %>
   <%= f.text_field :title, class: "well well-sm"%>
   <h5>Create somes activities within your new board</h5>
@@ -39,6 +39,6 @@
   <h3>Existing boards</h3>
   <ul>
     <% @boards.each do |board| %>
-      <li><%= link_to board.title, user_board_path(current_user, board) %></li>
+      <li><%= link_to board.title, board_path(board) %></li>
     <% end %>
   </ul>

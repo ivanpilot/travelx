@@ -2,6 +2,10 @@ class BoardsController < ApplicationController
   before_action :authenticate_user, :reset_boards
 
   def index
+    @boards = current_user.boards
+    @board = Board.new
+    @activity1 = @board.activities.build(user_id: current_user.id)
+    @activity2 = @board.activities.build(user_id: current_user.id)
     # if params[:user_id] && correct_user?(params[:user_id])
     #   @boards = current_user.boards
     #   @board = Board.new
