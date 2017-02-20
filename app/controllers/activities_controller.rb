@@ -62,12 +62,15 @@ class ActivitiesController < ApplicationController
 
   def update
     @activity = current_user.activities.find_by(id: params[:id])
-    if !@activity.nil? && @activity.update(activity_params)
+    redirect_to activities_path unless @activity
+    if @activity.update(activity_params)
       flash[:success] = "Activity updated."
+      go_to_previous_url
     else
-      flash[:danger] = "Activity couldn't be found or updated."
+      flash.now[:danger] = "Activity couldn't be found or updated."
+      render :edit
     end
-    go_to_previous_url
+
 
     # if params[:user_id] && correct_user?(params[:user_id])
     #   @activity = current_user.activities.find_by(id: params[:id])
@@ -94,7 +97,7 @@ class ActivitiesController < ApplicationController
       flash[:danger] = "Activity couldn't be found or updated."
     end
     redirect_to activities_path
-    
+
     # if params[:user_id] && correct_user?(params[:user_id])
     #   @activity = current_user.activities.find_by(id: params[:id])
     #
