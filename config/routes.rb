@@ -15,7 +15,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :boards, only: [:index, :show] ### TO BE CHANGEDDDD
+  resources :boards, only: [:index, :create, :show, :edit, :destroy] ### TO BE CHANGEDDDD
   resources :activities, only: [:index, :create, :edit, :update, :destroy]
 
 

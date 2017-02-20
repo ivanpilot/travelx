@@ -17,18 +17,28 @@ class BoardsController < ApplicationController
   end
 
   def create
-    if params[:user_id] && correct_user?(params[:user_id])
-      @board = current_user.boards.build(board_params)
-
-      if @board.save
-        flash[:success] = "New board successfully created."
-        redirect_to user_board_path(current_user, @board)
-      else
-        render :index
-      end
+    # raise params.inspect
+    @board = current_user.boards.build(board_params)
+    if @board.save
+      flash[:success] = "New board successfully created."
+      redirect_to boards_path
     else
-      redirect_to user_boards_path(current_user)
+      flash[:danger] = "Board couldn't be created."
+      render :index
     end
+
+    # if params[:user_id] && correct_user?(params[:user_id])
+    #   @board = current_user.boards.build(board_params)
+    #
+    #   if @board.save
+    #     flash[:success] = "New board successfully created."
+    #     redirect_to user_board_path(current_user, @board)
+    #   else
+    #     render :index
+    #   end
+    # else
+    #   redirect_to user_boards_path(current_user)
+    # end
   end
 
   def edit
@@ -60,16 +70,22 @@ class BoardsController < ApplicationController
   end
 
   def show
-    if params[:user_id] && correct_user?(params[:user_id])
-      @board = current_user.boards.find_by(id: params[:id])
-
-      if @board.nil?
-        flash[:danger] = "Board not found."
-        redirect_to user_boards_path(current_user)
-      end
-    else
-      redirect_to user_boards_path(current_user)
+    @board = current_user.boards.find_by(id: params[:id])
+    if @board.nil?
+      flash[:danger] = "Board not found."
+      redirect_to boards_path
     end
+
+    # if params[:user_id] && correct_user?(params[:user_id])
+    #   @board = current_user.boards.find_by(id: params[:id])
+    #
+    #   if @board.nil?
+    #     flash[:danger] = "Board not found."
+    #     redirect_to user_boards_path(current_user)
+    #   end
+    # else
+    #   redirect_to user_boards_path(current_user)
+    # end
   end
 
   def destroy
