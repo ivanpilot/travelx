@@ -6,11 +6,11 @@ class BoardActivitiesController < ApplicationController
     if board_activity.is_correct?(current_user, board_activity.board, board_activity.activity)
       board_activity.delete
       flash[:success] = "Activity deleted."
-      redirect_to user_board_path(current_user, board_activity.board)
+      redirect_to board_path(board_activity.board)
       board_activity = nil
     else
       flash[:danger] = "Activity couldn't be found or updated."
-      redirect_to user_boards_path(current_user)
+      redirect_to boards_path
     end
   end
 

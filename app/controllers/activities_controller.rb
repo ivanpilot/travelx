@@ -1,5 +1,5 @@
 class ActivitiesController < ApplicationController
-  before_action :authenticate_user, :reset_activities
+  before_action :authenticate_user#, :reset_activities
 
   def index
     @activities = current_user.activities
