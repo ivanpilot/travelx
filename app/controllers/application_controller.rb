@@ -9,6 +9,13 @@ class ApplicationController < ActionController::Base
 
   helper_method :current_user, :is_logged_in?, :current_user?, :correct_user?
 
+  def pundit_user
+    UserContext.new(current_user, current_friend)
+  end
+
+  def current_friend
+    @current_friend ||= User.find_by(id: params[:user_id]) if params[:user_id]
+  end
 
   def authenticate_user
     unless is_logged_in?

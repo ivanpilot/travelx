@@ -41,6 +41,14 @@ class User < ApplicationRecord
     self.save
   end
 
+  def admin?
+    self.role == "admin"
+  end
+
+  def is_friend_with?(friend)
+    self.all_friends.include?(friend)
+  end
+
 
 
   private

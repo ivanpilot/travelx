@@ -4,16 +4,19 @@ class BoardsController < ApplicationController
   def index
     if params[:user_id] && User.exists?(params[:user_id])
       @boards = User.find_by(id:params[:user_id]).boards
+      @board = Board.new # TO BE DELETED #############
     else
       @boards = current_user.boards
       @board = Board.new
     end
+
+
     # raise params.inspect
     # if params[:user_id] && correct_user?(params[:user_id])
     #   @boards = current_user.boards
     #   @board = Board.new
-    #   @activity1 = @board.activities.build(user_id: current_user.id)
-    #   @activity2 = @board.activities.build(user_id: current_user.id)
+      # @activity1 = @board.activities.build(user_id: current_user.id)
+      # @activity2 = @board.activities.build(user_id: current_user.id)
     # else
     #   redirect_to boards_path
     # end
@@ -26,6 +29,8 @@ class BoardsController < ApplicationController
       redirect_to boards_path
     else
       flash.now[:danger] = "Board not created. Make sure you provide a title and a description and a rating if you add an activity."
+# @activity3 = @board.activities.build(user_id: current_user.id)
+# @activity4 = @board.activities.build(user_id: current_user.id)
       render :index
     end
 
@@ -88,7 +93,9 @@ class BoardsController < ApplicationController
   end
 
   def show
-    @board = current_user.boards.find_by(id: params[:id])
+    # @board = current_user.boards.find_by(id: params[:id])
+    @board = Board.find_by(id: params[:id])
+
     if @board.nil?
       flash[:danger] = "Board not found."
       redirect_to boards_path

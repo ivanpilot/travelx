@@ -2,8 +2,10 @@ class ActivitiesController < ApplicationController
   before_action :authenticate_user#, :reset_activities
 
   def index
-    @activities = current_user.activities
+    @activities = ActivityPolicy::Scope.new(pundit_user, Activity).resolve
+    # @activities = current_user.activities
     @activity = Activity.new
+    # raise params.inspect
     # if params[:user_id] && correct_user?(params[:user_id])
     #   @activities = current_user.activities
     #   @activity = Activity.new
