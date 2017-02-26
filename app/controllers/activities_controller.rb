@@ -1,10 +1,12 @@
 class ActivitiesController < ApplicationController
   before_action :authenticate_user#, :reset_activities
 
-  def index
-    @activities = ActivityPolicy::Scope.new(pundit_user, Activity).resolve
-    # @activities = current_user.activities
+  def index ###OK
+    # @activities = ActivityPolicy::Scope.new(pundit_user, Activity).resolve
+    @activities = policy_scope(Activity)
     @activity = Activity.new
+
+    # @activities = current_user.activities
     # raise params.inspect
     # if params[:user_id] && correct_user?(params[:user_id])
     #   @activities = current_user.activities
@@ -15,10 +17,12 @@ class ActivitiesController < ApplicationController
   end
 
   def create
+    authorize Activity
     @activity = current_user.activities.build(activity_params)
     if @activity.save
       flash[:success] = "New activity successfully created."
-      redirect_to activities_path
+      # redirect_to activities_path
+      redirect_back(fallback_location: session[:previous_url])
     else
       flash[:danger] = "Activity not created. Make sure you provide a description and a rating."
       redirect_back(fallback_location: session[:previous_url])
@@ -43,13 +47,14 @@ class ActivitiesController < ApplicationController
   end
 
   def edit
-    @activity = current_user.activities.find_by(id: params[:id])
-    if @activity.nil?
+    @activity = Activity.find_by(id: params[:id])
+    if @activity
+      authorize @activity #ActivityPolicy
+      store_previous_url
+    else
       flash[:danger] = "Activity not found."
-      redirect_to boards_path(current_user)
+      redirect_to boards_path
     end
-    store_previous_url
-    #
     # if params[:user_id] && correct_user?(params[:user_id])
     #   @activity = current_user.activities.find_by(id: params[:id])
     #
@@ -63,8 +68,9 @@ class ActivitiesController < ApplicationController
   end
 
   def update
-    @activity = current_user.activities.find_by(id: params[:id])
+    @activity = Activity.find_by(id: params[:id])
     redirect_to activities_path unless @activity
+    authorize @activity
     if @activity.update(activity_params)
       flash[:success] = "Activity updated."
       go_to_previous_url
@@ -90,15 +96,17 @@ class ActivitiesController < ApplicationController
   end
 
   def destroy
-    @activity = current_user.activities.find_by(id: params[:id])
-    if !@activity.nil?
+    @activity = Activity.find_by(id: params[:id])
+    if @activity
+      authorize @activity
       @activity.destroy
       flash[:success] = "Activity deleted."
       @activity = nil
     else
       flash[:danger] = "Activity couldn't be found or updated."
     end
-    redirect_to activities_path
+    # redirect_to activities_path
+    redirect_back(fallback_location: activities_path)
 
     # if params[:user_id] && correct_user?(params[:user_id])
     #   @activity = current_user.activities.find_by(id: params[:id])
@@ -120,7 +128,7 @@ class ActivitiesController < ApplicationController
   private
 
   def activity_params
-    params.require(:activity).permit(:description, :rating, :board_ids => [])
+    params.require(:activity).permit(:user_id, :description, :rating, :board_ids => [])
   end
 
   def reset_activities

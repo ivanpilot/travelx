@@ -15,14 +15,13 @@ Rails.application.routes.draw do
     #   get :friends
     # end
   end
-  # resources :friends, only:[:index]
 
   resources :boards, only: [:index, :create, :show, :edit, :update, :destroy] ### TO BE CHANGEDDDD
   resources :activities, only: [:index, :create, :edit, :update, :destroy]
 
-
   resources :friendships, only: [:create, :destroy]
   resources :board_activities, only:[:destroy]
+
   # resources :activity_categories
   # resources :categories
 

@@ -23,7 +23,9 @@ class BoardsController < ApplicationController
   end
 
   def create
+
     @board = current_user.boards.build(board_params)
+# raise params.inspect
     if @board.save
       flash[:success] = "New board successfully created."
       redirect_to boards_path
