@@ -10,4 +10,11 @@ module ActivitiesHelper
     end
   end
 
+  def form_activities(activity)
+    form_for activity do |f|
+      concat render partial:"activity", :locals => {activity: f}
+      concat f.submit "Create Activity", class:"btn btn-primary"
+    end
+  end
+
 end
