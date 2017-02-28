@@ -4,7 +4,7 @@ class ActivitiesController < ApplicationController
   def index ###OK
     # @activities = ActivityPolicy::Scope.new(pundit_user, Activity).resolve
     @activities = policy_scope(Activity)
-    @activity = Activity.new
+    @activity = Activity.new(user: current_user)
 
     # @activities = current_user.activities
     # raise params.inspect

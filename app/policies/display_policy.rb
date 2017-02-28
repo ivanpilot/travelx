@@ -1,28 +1,16 @@
-class DisplayPolicy < ApplicationPolicy
+class DisplayPolicy# < Struct.new(:user, :display)
 
-  attr_reader :user, :menu
+  attr_reader :user, :activity, :friend
 
-  def initialize(user, menu)
-    @user = user
-    @menu = menu
+  def initialize(context, activity)
+    @user = context.user
+    @friend = context.friend
+    @activity = activity
   end
 
-
-
-  class Scope < Scope
-
-    attr_reader :user, :scope
-
-    def initialize(user, scope)
-      @user = user
-      @scope = scope
-    end
-
-    def resolve
-      if user.admin?
-        scope.all
-      end
-    end
+  def show?
+    # true
+    false
   end
 
 end
