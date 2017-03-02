@@ -1,5 +1,8 @@
 class Activity < ApplicationRecord
 
+  # include Display::InstanceMethods
+  include Display::InstanceMethods
+
   validates :description, presence: true
   validates :rating, presence: true
 
@@ -25,6 +28,10 @@ class Activity < ApplicationRecord
       board_activity.delete
     end
   end
+
+  # def wordify
+  #   self.class.name.downcase
+  # end
 
 
 end

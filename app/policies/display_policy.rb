@@ -9,8 +9,8 @@ class DisplayPolicy# < Struct.new(:user, :display)
   end
 
   def show?
-    # true
-    false
+    true
+    # false
   end
 
 end
