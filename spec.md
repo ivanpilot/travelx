@@ -12,6 +12,13 @@ Authorisation
 [X] Install Pundit
 [X] Create a context for pundit
 [X] Add a display authorisation for view based and using pundit
+[X] Add a activity policy
+[ ] check if activity policy working well
+[ ] Add a board policy
+[ ] check if board policy working well
+[ ] using pundit in the view for activities
+[ ] using pundit in the view for boards
+
 
 Board
 [X] Create a board index page that will be the landing page once logged in

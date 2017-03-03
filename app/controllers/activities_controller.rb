@@ -2,18 +2,13 @@ class ActivitiesController < ApplicationController
   before_action :authenticate_user, :reset_activities
 
   def index
-    # @activities = ActivityPolicy::Scope.new(pundit_user, Activity).resolve
-    @activities = policy_scope(Activity)
-    @activity = Activity.new
-
-    # @activities = current_user.activities
-    # raise params.inspect
-    # if params[:user_id] && correct_user?(params[:user_id])
-    #   @activities = current_user.activities
-    #   @activity = Activity.new
-    # else
-    #   redirect_to boards_path
-    # end
+    if params[:user_id] && (!User.exists?(id: params[:user_id]) || !current_user.is_friend_with?(User.find_by(id: params[:user_id])))
+      flash[:danger] = "You don't have access to this user."
+      redirect_back(fallback_location: activities_path)
+    else
+      @activities = policy_scope(Activity) #ActivityPolicy::Scope.new(pundit_user, Activity).resolve
+      @activity = Activity.new
+    end
   end
 
   def create ### TBC WITH ADMIN NAMESPACE
