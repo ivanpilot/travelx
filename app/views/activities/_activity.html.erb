@@ -3,6 +3,6 @@
 <%= activity.label :rating %><br>
 <%= activity.text_field :rating, autocomplete:"off" %><br><br>
 <h3>Belongs to boards</h3>
-<%= activity.collection_check_boxes :board_ids, current_user.boards, :id, :title do |b|
+<%= activity.collection_check_boxes :board_ids, @boards, :id, :title do |b|
     b.label(class: 'checkbox') {b.check_box + b.text}
 end %><br>

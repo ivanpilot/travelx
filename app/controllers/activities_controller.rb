@@ -8,6 +8,8 @@ class ActivitiesController < ApplicationController
     else
       @activities = policy_scope(Activity) #ActivityPolicy::Scope.new(pundit_user, Activity).resolve
       @activity = Activity.new
+      @boards = policy_scope(Board)
+      @user = User.find_by(id: params[:user_id])
     end
   end
 
@@ -21,44 +23,18 @@ class ActivitiesController < ApplicationController
       flash[:danger] = "Activity not created. Make sure you provide a description and a rating."
       redirect_back(fallback_location: session[:previous_url])
     end
-
-    # if params[:user_id] && correct_user?(params[:user_id])
-    #   @activity = current_user.activities.build(activity_params)
-    #
-    #   if @activity.save
-    #     flash[:success] = "New activity successfully created."
-    #     redirect_to user_activities_path(current_user)
-    #   else
-    #     flash[:danger] = "Activity not created. Make sure you provide a description and a rating."
-    #     redirect_back(fallback_location: session[:previous_url])
-    #     # raise params.inspect
-    #     # redirect_to user_activities_path(current_user)
-    #     # redirect_to user_boards_path(current_user) #### MUST REDIRECT TO RIGHT URL
-    #   end
-    # else
-    #   redirect_to user_boards_path(current_user)
-    # end
   end
 
   def edit
     @activity = Activity.find_by(id: params[:id])
     if @activity
       authorize @activity #ActivityPolicy
+      @boards = policy_scope(Board) ###not working as must used the url with params
       store_previous_url
     else
       flash[:danger] = "Activity not found."
-      redirect_to boards_path
+      redirect_to activities_path
     end
-    # if params[:user_id] && correct_user?(params[:user_id])
-    #   @activity = current_user.activities.find_by(id: params[:id])
-    #
-    #   if @activity.nil?
-    #     flash[:danger] = "Activity not found."
-    #     redirect_to user_boards_path(current_user)
-    #   end
-    # else
-    #   redirect_to user_boards_path(current_user)
-    # end
   end
 
   def update
