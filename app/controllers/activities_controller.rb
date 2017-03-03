@@ -1,5 +1,5 @@
 class ActivitiesController < ApplicationController
-  before_action :authenticate_user
+  before_action :authenticate_user, :reset_activities
 
   def index
     # @activities = ActivityPolicy::Scope.new(pundit_user, Activity).resolve
@@ -16,13 +16,12 @@ class ActivitiesController < ApplicationController
     # end
   end
 
-  def create
+  def create ### TBC WITH ADMIN NAMESPACE
     authorize Activity
     @activity = current_user.activities.build(activity_params)
     if @activity.save
       flash[:success] = "New activity successfully created."
-      # redirect_to activities_path
-      redirect_back(fallback_location: session[:previous_url])
+      redirect_to activities_path
     else
       flash[:danger] = "Activity not created. Make sure you provide a description and a rating."
       redirect_back(fallback_location: session[:previous_url])
@@ -130,9 +129,9 @@ class ActivitiesController < ApplicationController
   def activity_params
     params.require(:activity).permit(:user_id, :description, :rating, :board_ids => [])
   end
-  #
-  # def reset_activities
-  #   @activities = current_user.boards.select {|activity| activity.id}
-  # end
+
+  def reset_activities
+    @activities = current_user.activities.select {|activity| activity.id}
+  end
 
 end
