@@ -1,5 +1,4 @@
 module ActivitiesHelper
-  # include Display::InstanceMethods
 
   def boards_related_to(activity)
     if activity.boards.empty?
@@ -12,8 +11,7 @@ module ActivitiesHelper
   end
 
   def display_form(object)
-    # if DisplayPolicy.new(pundit_user, object).show?
-    if policy(:display).show?
+    if policy(:display).show? # if DisplayPolicy.new(pundit_user, object).show?
       concat content_tag(:h2,"Create a new #{object.wordify.capitalize}")
       form_for object do |f|
         concat render :partial => "#{object.wordify}", :locals => {object.wordify.to_sym => f}

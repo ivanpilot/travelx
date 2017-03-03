@@ -1,10 +1,10 @@
 class ActivitiesController < ApplicationController
-  before_action :authenticate_user#, :reset_activities
+  before_action :authenticate_user
 
-  def index ###OK
+  def index
     # @activities = ActivityPolicy::Scope.new(pundit_user, Activity).resolve
     @activities = policy_scope(Activity)
-    @activity = Activity.new(user: current_user)
+    @activity = Activity.new
 
     # @activities = current_user.activities
     # raise params.inspect
@@ -130,10 +130,9 @@ class ActivitiesController < ApplicationController
   def activity_params
     params.require(:activity).permit(:user_id, :description, :rating, :board_ids => [])
   end
-
-  def reset_activities
-    @activities = current_user.boards.select {|activity| activity.id}
-  end
-
+  #
+  # def reset_activities
+  #   @activities = current_user.boards.select {|activity| activity.id}
+  # end
 
 end
