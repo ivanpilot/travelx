@@ -32,11 +32,11 @@ class ActivityPolicy < ApplicationPolicy
   end
 
   def edit?
-    user.admin? || is_owner?
+    is_owner? || (!friend.nil? && user.admin?)
   end
 
   def update?
-    user.admin? || is_owner?
+    is_owner? || (!friend.nil? && user.admin?)
   end
 
   def destroy?

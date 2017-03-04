@@ -48,21 +48,6 @@ class ActivitiesController < ApplicationController
       flash.now[:danger] = "Activity couldn't be found or updated."
       render :edit
     end
-
-
-    # if params[:user_id] && correct_user?(params[:user_id])
-    #   @activity = current_user.activities.find_by(id: params[:id])
-    #
-    #   if !@activity.nil? && @activity.update(activity_params)
-    #     flash[:success] = "Activity updated."
-    #     go_to_previous_url
-    #   else
-    #     flash[:danger] = "Activity couldn't be found or updated."
-    #     redirect_to user_boards_path(current_user)
-    #   end
-    # else
-    #   redirect_to user_boards_path(current_user)
-    # end
   end
 
   def destroy
