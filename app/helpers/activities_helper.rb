@@ -1,15 +1,5 @@
 module ActivitiesHelper
 
-  def boards_related_to(activity)
-    if activity.boards.empty?
-      "No board"
-    else
-      activity.boards.collect do |board|
-        link_to(board.title, board_path(board))
-      end.join(" | ").html_safe
-    end
-  end
-
   def display_form(object)
     if policy(:display).show? #DisplayPolicy.new(pundit_user, object).show?
       concat content_tag(:h2,"Create a new #{object.wordify.capitalize}")
@@ -33,5 +23,3 @@ module ActivitiesHelper
   end
 
 end
-
-# link_to "| Edit", edit_activity_path(activity) if policy(activity).edit?

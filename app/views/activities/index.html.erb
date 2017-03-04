@@ -6,7 +6,7 @@
   <% @activities.each do |activity|%>
     <li>
       Description: <%= activity.description %> | Rating: <%= activity.rating %>
-      <%= show_edit_link(activity, @user) %>
+      <%= show_edit_link(activity, @user)  %>
       <%= show_delete_link(activity) %><br>
     </li>
     Boards: <%=boards_related_to(activity)%><br><br>

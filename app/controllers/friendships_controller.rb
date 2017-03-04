@@ -9,14 +9,14 @@ class FriendshipsController < ApplicationController
     else
       flash[:warning] = "There was an error."
     end
-    redirect_to friends_user_path(current_user)
+    redirect_to friends_path
   end
 
   def destroy
     friendship = Friendship.find_by(id: params[:id])
     if friendship and current_user.all_relationships.include?(friendship)
       delete_friendship(friendship)
-      redirect_to friends_user_path(current_user)
+      redirect_to friends_path
     end
   end
 

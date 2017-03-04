@@ -11,7 +11,7 @@ class ActivityPolicy < ApplicationPolicy
     def resolve
       # if user.admin?
       #   scope.all
-      if user.is_friend_with?(friend)
+      if !friend.nil? && (user.admin? || user.is_friend_with?(friend))
         scope.where(user: friend)
       else
         scope.where(user: user)

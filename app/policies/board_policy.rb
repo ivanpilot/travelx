@@ -11,7 +11,7 @@ class BoardPolicy < ApplicationPolicy
     def resolve
       # if user.admin?
       #   scope.all
-      if user.is_friend_with?(friend)
+      if !friend.nil? && (user.admin? || user.is_friend_with?(friend))
         scope.where(user: friend)
       else
         scope.where(user: user)
@@ -19,21 +19,21 @@ class BoardPolicy < ApplicationPolicy
     end
   end
 
-  attr_reader :user, :board, :friend
-
-  def initialize(context, board)
-    @user = context.user
-    @friend = context.friend
-    @board = board
-  end
+  # attr_reader :user, :board, :friend
+  #
+  # def initialize(context, board)
+  #   @user = context.user
+  #   @friend = context.friend
+  #   @board = board
+  # end
 
   # def create?
   #   true
   # end
 
-  def edit?
-    user.admin? || is_owner?
-  end
+  # def edit?
+  #   user.admin? || is_owner?
+  # end
 
   # def update?
   #   user.admin? || is_owner?
