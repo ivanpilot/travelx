@@ -1,4 +1,4 @@
-<%= display_form(@activity) %>
+<%= display_create_form(@activity) %>
 <br><br>
 
 <h2>Activities</h2><br>
@@ -7,7 +7,7 @@
     <li>
       Description: <%= activity.description %> | Rating: <%= activity.rating %>
       <%= show_edit_link(activity, @user)  %>
-      <%= show_delete_link(activity) %><br>
+      <%= show_delete_link(activity, @user) %><br>
     </li>
     Boards: <%=boards_related_to(activity)%><br><br>
   <% end %>

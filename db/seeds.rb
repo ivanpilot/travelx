@@ -31,12 +31,12 @@ jean.boards.create(title: "2018 objectives") #5
 
 Friendship.create(user_id:"1", friend_id:"4")
 
-BoardActivity.create(board_id:"1", activity_id:"1")
-BoardActivity.create(board_id:"1", activity_id:"2")
-BoardActivity.create(board_id:"2", activity_id:"4")
-BoardActivity.create(board_id:"3", activity_id:"7")
-BoardActivity.create(board_id:"3", activity_id:"8")
-BoardActivity.create(board_id:"4", activity_id:"6")
-BoardActivity.create(board_id:"5", activity_id:"9")
-BoardActivity.create(board_id:"5", activity_id:"10")
-BoardActivity.create(board_id:"5", activity_id:"11")
+BoardActivity.create(board_id:"1", activity_id:"1") #1
+BoardActivity.create(board_id:"1", activity_id:"2") #2
+BoardActivity.create(board_id:"2", activity_id:"4") #3
+BoardActivity.create(board_id:"3", activity_id:"7") #4
+BoardActivity.create(board_id:"3", activity_id:"8") #5
+BoardActivity.create(board_id:"4", activity_id:"6") #6
+BoardActivity.create(board_id:"5", activity_id:"9") #7
+BoardActivity.create(board_id:"5", activity_id:"10") #8
+BoardActivity.create(board_id:"5", activity_id:"11") #9

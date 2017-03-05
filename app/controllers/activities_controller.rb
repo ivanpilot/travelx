@@ -30,6 +30,7 @@ class ActivitiesController < ApplicationController
     if @activity
       authorize @activity #ActivityPolicy
       @boards = policy_scope(Board) ###not working as must used the url with params
+      @user = User.find_by(id: params[:user_id]) if params[:user_id]
       store_previous_url
     else
       flash[:danger] = "Activity not found."
@@ -53,6 +54,7 @@ class ActivitiesController < ApplicationController
   def destroy
     @activity = Activity.find_by(id: params[:id])
     if @activity
+      # raise params.inspect
       authorize @activity
       @activity.destroy
       flash[:success] = "Activity deleted."

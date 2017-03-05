@@ -1,5 +1,5 @@
 <h2>Update your activity</h2><br>
-<%= form_for @activity do |f|%>
+<%= form_for @activity, :url => url_address(@activity, @user) do |f|%>
   <%= render partial:"activity", :locals => {activity: f} %>
   <%= f.submit "Edit Activity", class: "btn btn-primary"%>
 <% end %>
