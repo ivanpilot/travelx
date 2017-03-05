@@ -17,6 +17,12 @@ class ApplicationController < ActionController::Base
     @current_friend ||= User.find_by(id: params[:user_id]) if params[:user_id]
   end
 
+  def authenticate_friend
+    if params[:user_id] && !User.exists?(params[:user_id])
+      redirect_back(fallback_location: session[:previous_url])
+    end
+  end
+
   def authenticate_user
     unless is_logged_in?
       flash[:warning] = "Please sign in."

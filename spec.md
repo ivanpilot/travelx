@@ -13,10 +13,10 @@ Authorisation
 [X] Create a context for pundit
 [X] Add a display authorisation for view based and using pundit
 [X] Add a activity policy
-[ ] check if activity policy working well
-[ ] Add a board policy
+[X] check if activity policy working well
+[X] Add a board policy
 [ ] check if board policy working well
-[ ] using pundit in the view for activities
+[X] using pundit in the view for activities
 [ ] using pundit in the view for boards
 
 
@@ -38,7 +38,8 @@ Friend
 [X] Create the user / friends model and relationships
 [X] Add / delete friends
 [X] Visit the boards page of friends
-[ ] Visit the activity page of friends
+[ ] Visit the activity page of friends - board
+[X] Visit the activity page of friends - activities
 [ ] Transfer an activity from a friend to your own board (duplicating the activity)
 
 Admin

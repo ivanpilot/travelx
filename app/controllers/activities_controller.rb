@@ -29,7 +29,7 @@ class ActivitiesController < ApplicationController
     @activity = Activity.find_by(id: params[:id])
     if @activity
       authorize @activity #ActivityPolicy
-      @boards = policy_scope(Board) ###not working as must used the url with params
+      @boards = policy_scope(Board)
       @user = User.find_by(id: params[:user_id]) if params[:user_id]
       store_previous_url
     else
@@ -54,7 +54,6 @@ class ActivitiesController < ApplicationController
   def destroy
     @activity = Activity.find_by(id: params[:id])
     if @activity
-      # raise params.inspect
       authorize @activity
       @activity.destroy
       flash[:success] = "Activity deleted."
@@ -62,24 +61,7 @@ class ActivitiesController < ApplicationController
     else
       flash[:danger] = "Activity couldn't be found or updated."
     end
-    # redirect_to activities_path
     redirect_back(fallback_location: activities_path)
-
-    # if params[:user_id] && correct_user?(params[:user_id])
-    #   @activity = current_user.activities.find_by(id: params[:id])
-    #
-    #   if !@activity.nil?
-    #     @activity.destroy
-    #     flash[:success] = "Activity deleted."
-    #     redirect_to user_activities_path(current_user)
-    #     @activity = nil
-    #   else
-    #     flash[:danger] = "Activity couldn't be found or updated."
-    #     redirect_to user_activities_path(current_user)
-    #   end
-    # else
-    #   redirect_to user_boards_path(current_user)
-    # end
   end
 
   private
@@ -90,12 +72,6 @@ class ActivitiesController < ApplicationController
 
   def reset_activities
     @activities = current_user.activities.select {|activity| activity.id}
-  end
-
-  def authenticate_friend
-    if params[:user_id] && !User.exists?(params[:user_id])
-      redirect_back(fallback_location: session[:previous_url])
-    end
   end
 
 end
