@@ -26,6 +26,8 @@ Board
   [X] Add the possibility to create a board with nested activity
   [X] Add the possibility to view the boards
 [X] Edit and Delete a board
+[ ] Fix the creation of a board with appropriate actions depending if user or admin
+
 
 Activity
 [X] Create a activity index page
@@ -33,6 +35,7 @@ Activity
   [X] Add the possibility to view the activities and to which boards each of them is related
   [X] Be able to edit and delete an activity
 [X] add a button to switch from standard user to an admin user (development phase of the website)
+[ ] Fix the creation of a activity with appropriate actions depending if user or admin
 
 Friend
 [X] Create the user / friends model and relationships

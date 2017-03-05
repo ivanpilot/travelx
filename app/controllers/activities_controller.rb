@@ -15,7 +15,7 @@ class ActivitiesController < ApplicationController
 
   def create ### TBC WITH ADMIN NAMESPACE ### MUST BE MODIFIED !!!!
     authorize Activity
-    @activity = current_user.activities.build(activity_params)
+    @activity = current_user.activities.build(activity_params) ### MUST BE MODIFIED IF ADMIN CREATE!!!!
     if @activity.save
       flash[:success] = "New activity successfully created."
       redirect_to activities_path

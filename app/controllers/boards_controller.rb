@@ -1,52 +1,49 @@
 class BoardsController < ApplicationController
-  before_action :authenticate_user, :reset_boards
+  before_action :authenticate_user, :reset_boards, :authenticate_friend
 
   def index
-    if params[:user_id] && User.exists?(params[:user_id])
-      @boards = User.find_by(id:params[:user_id]).boards
-      @board = Board.new # TO BE DELETED #############
+    if params[:user_id] && !current_user.is_friend_with?(User.find_by(id: params[:user_id])) && !current_user.admin?
+      flash[:danger] = "You don't have authorization."
+      redirect_back(fallback_location: boards_path)
     else
-      @boards = current_user.boards
+      # @activities = policy_scope(Activity) #ActivityPolicy::Scope.new(pundit_user, Activity).resolve
+      @boards = policy_scope(Board)
       @board = Board.new
+      # @user = User.find_by(id: params[:user_id]) if params[:user_id]
     end
 
-
-    # raise params.inspect
-    # if params[:user_id] && correct_user?(params[:user_id])
+    # if params[:user_id] && User.exists?(params[:user_id])
+    #   @boards = User.find_by(id:params[:user_id]).boards
+    #   @board = Board.new # TO BE DELETED #############
+    # else
     #   @boards = current_user.boards
     #   @board = Board.new
-      # @activity1 = @board.activities.build(user_id: current_user.id)
-      # @activity2 = @board.activities.build(user_id: current_user.id)
-    # else
-    #   redirect_to boards_path
     # end
   end
 
   def create
-
+    # authorize Board
     @board = current_user.boards.build(board_params)
-# raise params.inspect
+    # raise params.inspect
     if @board.save
+
       flash[:success] = "New board successfully created."
       redirect_to boards_path
     else
       flash.now[:danger] = "Board not created. Make sure you provide a title and a description and a rating if you add an activity."
-# @activity3 = @board.activities.build(user_id: current_user.id)
-# @activity4 = @board.activities.build(user_id: current_user.id)
       render :index
     end
 
-    # if params[:user_id] && correct_user?(params[:user_id])
-    #   @board = current_user.boards.build(board_params)
-    #
-    #   if @board.save
-    #     flash[:success] = "New board successfully created."
-    #     redirect_to user_board_path(current_user, @board)
-    #   else
-    #     render :index
-    #   end
-    # else
-    #   redirect_to user_boards_path(current_user)
+    # @board = current_user.boards.build(board_params)
+# raise params.inspect
+    # if @board.save
+#       flash[:success] = "New board successfully created."
+#       redirect_to boards_path
+#     else
+#       flash.now[:danger] = "Board not created. Make sure you provide a title and a description and a rating if you add an activity."
+# # @activity3 = @board.activities.build(user_id: current_user.id)
+# # @activity4 = @board.activities.build(user_id: current_user.id)
+#       render :index
     # end
   end
 

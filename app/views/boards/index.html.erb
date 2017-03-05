@@ -1,14 +1,4 @@
-<% if @board.errors.any?%>
-  <div id="error_explanation">
-    <div class="alert alert-danger">
-      <ul>
-        <% @board.errors.full_messages.each do |msg|%>
-          <li><%= msg %></li>
-        <% end %>
-      </ul>
-    </div>
-  </div>
-<% end %>
+<%= errors_messages(@board)%>
 
 <h3>Start by creating an activity or ...</h3>
 <%= form_for current_user.activities.build, :url => activities_path do |f|%>
@@ -34,7 +24,7 @@
 
 
 
-  <h3>Existing boards</h3>
+  <h3>Boards</h3>
   <ul>
     <% @boards.each do |board| %>
       <li><%= link_to board.title, board_path(board) %></li>
