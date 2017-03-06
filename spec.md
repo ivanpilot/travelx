@@ -19,7 +19,6 @@ Authorisation
 [X] using pundit in the view for activities
 [ ] using pundit in the view for boards
 
-
 Board
 [X] Create a board index page that will be the landing page once logged in
   [X] Add the possibility to simply add an activity not related to a board from that page
@@ -29,7 +28,6 @@ Board
 [ ] Fix the creation of a board with appropriate actions depending if user or admin
 [ ] Modify create action and helper method so factor in case where admin is creating an activity on behalf of a user
 
-
 Activity
 [X] Create a activity index page
   [X] Add the possibility to create an activity not related to a board from that page
@@ -38,6 +36,12 @@ Activity
 [X] add a button to switch from standard user to an admin user (development phase of the website)
 [ ] Fix the creation of a activity with appropriate actions depending if user or admin
 [ ] Modify create action and helper method so factor in case where admin is creating an activity on behalf of a user
+
+BoardActivity
+[ ] Create authorisation for destroy action within BoardActivity controller
+[ ] Create the appropriate route
+  [ ] Choose if should be only 1 or 2 routes including a nested one
+[ ] Implement helper for deleting a BoardActivity relationship within the show view of a board
 
 Friend
 [X] Create the user / friends model and relationships

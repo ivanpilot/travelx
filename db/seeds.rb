@@ -6,10 +6,10 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-ivan = User.create(username: "Ivan", email: "ivanpilot@gmail.com", password: "password", password_confirmation: "password")
-User.create(username: "James", email: "james@gmail.com", password: "password", password_confirmation: "password")
-pierre = User.create(username: "Pierre", email: "pierre@gmail.com", password: "password", password_confirmation: "password")
-jean = User.create(username: "Jean", email: "jean@gmail.com", password: "password", password_confirmation: "password")
+ivan = User.create(username: "Ivan", email: "ivanpilot@gmail.com", password: "password", password_confirmation: "password") #1
+User.create(username: "James", email: "james@gmail.com", password: "password", password_confirmation: "password") #2
+pierre = User.create(username: "Pierre", email: "pierre@gmail.com", password: "password", password_confirmation: "password") #3
+jean = User.create(username: "Jean", email: "jean@gmail.com", password: "password", password_confirmation: "password") #4
 
 ivan.activities.create(description: "Walk in Hyde Park during summer time", rating:"4") #1
 ivan.activities.create(description: "Winter run for 10km around St Pauls and Trafalgar Square", rating:"5") #2

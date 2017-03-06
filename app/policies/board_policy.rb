@@ -36,7 +36,8 @@ class BoardPolicy < ApplicationPolicy
   end
 
   def edit?
-    is_owner? || (!friend.nil? && user.admin?)
+    true
+    # is_owner? || (!friend.nil? && user.admin?)
   end
 
   # def update?
