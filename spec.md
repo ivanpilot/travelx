@@ -27,6 +27,7 @@ Board
   [X] Add the possibility to view the boards
 [X] Edit and Delete a board
 [ ] Fix the creation of a board with appropriate actions depending if user or admin
+[ ] Modify create action and helper method so factor in case where admin is creating an activity on behalf of a user
 
 
 Activity
@@ -36,6 +37,7 @@ Activity
   [X] Be able to edit and delete an activity
 [X] add a button to switch from standard user to an admin user (development phase of the website)
 [ ] Fix the creation of a activity with appropriate actions depending if user or admin
+[ ] Modify create action and helper method so factor in case where admin is creating an activity on behalf of a user
 
 Friend
 [X] Create the user / friends model and relationships

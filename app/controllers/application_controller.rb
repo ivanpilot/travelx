@@ -19,7 +19,7 @@ class ApplicationController < ActionController::Base
 
   def authenticate_friend
     if params[:user_id] && !User.exists?(params[:user_id])
-      redirect_back(fallback_location: session[:previous_url])
+      redirect_back(fallback_location: root_path)
     end
   end
 

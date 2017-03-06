@@ -19,17 +19,17 @@ class BoardPolicy < ApplicationPolicy
     end
   end
 
-  # attr_reader :user, :board, :friend
-  #
-  # def initialize(context, board)
-  #   @user = context.user
-  #   @friend = context.friend
-  #   @board = board
-  # end
+  attr_reader :user, :board, :friend
 
-  # def create?
-  #   true
-  # end
+  def initialize(context, board)
+    @user = context.user
+    @friend = context.friend
+    @board = board
+  end
+
+  def create?
+    true
+  end
 
   # def edit?
   #   user.admin? || is_owner?

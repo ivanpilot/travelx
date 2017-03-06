@@ -1,6 +1,6 @@
 module ActivitiesHelper
 
-  def display_create_form(object)
+  def display_create_activity_form(object) ####MUST BE MODIFIED IF ADMIN CREATE
     if policy(:display).show? #DisplayPolicy.new(pundit_user, object).show?
       concat content_tag(:h2,"Create a new #{object.wordify.capitalize}")
       form_for object do |f|

@@ -6,10 +6,13 @@ class BoardsController < ApplicationController
       flash[:danger] = "You don't have authorization."
       redirect_back(fallback_location: boards_path)
     else
-      # @activities = policy_scope(Activity) #ActivityPolicy::Scope.new(pundit_user, Activity).resolve
       @boards = policy_scope(Board)
       @board = Board.new
+      @activity = current_user.activities.build### MUST BE MODIFIED IF ADMIN CREATE!!!!
+      @activities = @board.activities.build#(user_id: current_user.id)
       # @user = User.find_by(id: params[:user_id]) if params[:user_id]
+      # @activityy = current_user.activities.build(user_id: current_user.id)
+      # @activities = @b
     end
 
     # if params[:user_id] && User.exists?(params[:user_id])
@@ -22,11 +25,9 @@ class BoardsController < ApplicationController
   end
 
   def create
-    # authorize Board
+    authorize Board
     @board = current_user.boards.build(board_params)
-    # raise params.inspect
     if @board.save
-
       flash[:success] = "New board successfully created."
       redirect_to boards_path
     else
