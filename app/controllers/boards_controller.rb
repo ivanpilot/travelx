@@ -30,7 +30,7 @@ class BoardsController < ApplicationController
       flash[:danger] = "You don't have authorization."
       redirect_back(fallback_location: boards_path)
     else
-      @board = params[:user_id].nil? ? Board.find_by(id: params[:id]) : User.find_by(id: params[:user_id]).boards.find_by(id: params[:id])
+      @board = Board.find_by(id: params[:id])
       if @board
         authorize @board
         @user = User.find_by(id: params[:user_id]) if params[:user_id]
@@ -45,58 +45,26 @@ class BoardsController < ApplicationController
     @board = Board.find_by(id: params[:id])
     if @board
       authorize @board
-      # @user = User.find_by(id: params[:user_id]) if params[:user_id]
+      @user = User.find_by(id: params[:user_id]) if params[:user_id]
       store_previous_url
     else
       flash[:danger] = "Activity not found."
       redirect_to activities_path
     end
-
-
-    #
-    # @board = current_user.boards.find_by(id: params[:id])
-    # if @board.nil?
-    #   flash[:danger] = "Board not found."
-    #   redirect_to boards_path
-    # end
-
-    # if params[:user_id] && correct_user?(params[:user_id])
-    #   @board = current_user.boards.find_by(id: params[:id])
-    #
-    #   if @board.nil?
-    #     flash[:danger] = "Board not found."
-    #     redirect_to user_boards_path(current_user)
-    #   end
-    # else
-    #   redirect_to user_boards_path(current_user)
-    # end
   end
 
   def update
-    @board = current_user.boards.find_by(id: params[:id])
+    @board = Board.find_by(id: params[:id])
     redirect_to boards_path unless @board
+    authorize @board
     if @board.update(board_params)
       flash[:success] = "Board updated."
-      redirect_to board_path(@board)
+      go_to_previous_url
     else
       flash.now[:danger] = "Please try again."
       render :edit
     end
-
-    # if params[:user_id] && correct_user?(params[:user_id])
-    #   if @board = current_user.boards.find_by(id: params[:id])
-    #     @board.update(board_params)
-    #     flash[:success] = "Board updated."
-    #     redirect_to user_board_path(current_user, @board)
-    #   else
-    #     flash[:danger] = "Board not found."
-    #     redirect_to user_boards_path(current_user)
-    #   end
-    # else
-    #   redirect_to user_boards_path(current_user)
-    # end
   end
-
 
   def destroy
     @board = current_user.boards.find_by(id: params[:id])

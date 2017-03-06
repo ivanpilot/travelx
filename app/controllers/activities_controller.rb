@@ -46,7 +46,7 @@ class ActivitiesController < ApplicationController
       flash[:success] = "Activity updated."
       go_to_previous_url
     else
-      flash.now[:danger] = "Activity couldn't be found or updated."
+      flash.now[:danger] = "Please try again."
       render :edit
     end
   end

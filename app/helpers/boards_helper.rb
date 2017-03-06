@@ -42,6 +42,17 @@ module BoardsHelper
     end
   end
 
+  def display_edit_board(object, user_visited)
+    form_for object, :url => url_address(object, user_visited) do |f|
+      concat render :partial => "board", :locals => {board: f}
+      concat f.submit "Update", class: "btn btn-primary"
+    end
+  end
+
+  def url_address(board, user_visited)
+    user_visited.nil? ? board_path(board) : user_board_path(user_visited, board)
+  end
+
   def show_board_link(board, user_visited)
     link_to(board.title, board_link(board, user_visited)) if policy(board).show?
   end
