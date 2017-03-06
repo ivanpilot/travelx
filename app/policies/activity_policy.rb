@@ -41,7 +41,6 @@ class ActivityPolicy < ApplicationPolicy
     edit?
   end
 
-
   private
 
   def is_owner?

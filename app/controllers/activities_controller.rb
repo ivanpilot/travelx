@@ -59,7 +59,7 @@ class ActivitiesController < ApplicationController
       flash[:success] = "Activity deleted."
       @activity = nil
     else
-      flash[:danger] = "Activity couldn't be found or updated."
+      flash[:danger] = "Activity couldn't be found or deleted."
     end
     redirect_back(fallback_location: activities_path)
   end

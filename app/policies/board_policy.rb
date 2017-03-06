@@ -44,9 +44,8 @@ class BoardPolicy < ApplicationPolicy
   end
 
   def destroy?
-    is_owner? || (!friend.nil? && user.admin?)
+    edit?
   end
-
 
   private
 

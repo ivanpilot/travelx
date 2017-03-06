@@ -48,7 +48,7 @@ class BoardsController < ApplicationController
       @user = User.find_by(id: params[:user_id]) if params[:user_id]
       store_previous_url
     else
-      flash[:danger] = "Activity not found."
+      flash[:danger] = "Board not found."
       redirect_to activities_path
     end
   end
@@ -67,30 +67,16 @@ class BoardsController < ApplicationController
   end
 
   def destroy
-    @board = current_user.boards.find_by(id: params[:id])
-    redirect_to boards_path unless @board
-    if !@board.nil?
+    @board = Board.find_by(id: params[:id])
+    if @board
+      authorize @board
       @board.destroy
       flash[:success] = "Board deleted."
       @board = nil
-      redirect_to boards_path
     else
-      flash[:danger] = "Board couldn't be deleted."
-      redirect_to board_path(@board)
+      flash[:danger] = "Board couldn't be found or deleted."
     end
-
-    # if params[:user_id] && correct_user?(params[:user_id])
-    #   @board = current_user.boards.find_by(id: params[:id])
-    #
-    #   if !@board.nil?
-    #     @board.destroy
-    #     flash[:success] = "Board deleted."
-    #     @board = nil
-    #   else
-    #     flash[:danger] = "Board couldn't be found or updated."
-    #   end
-    # end
-    # redirect_to user_boards_path(current_user)
+    redirect_to_boards
   end
 
   private
@@ -103,5 +89,13 @@ class BoardsController < ApplicationController
     @boards = current_user.boards.select {|board| board.id}
   end
 
+  def redirect_to_boards
+    if params[:user_id].nil?
+      redirect_to boards_path
+    else
+      user = User.find_by(id: params[:user_id])
+      redirect_to user_boards_path(user)
+    end
+  end
 
 end
