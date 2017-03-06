@@ -9,19 +9,8 @@ class BoardsController < ApplicationController
       @boards = policy_scope(Board)
       @board = Board.new
       @activity = current_user.activities.build### MUST BE MODIFIED IF ADMIN CREATE!!!!
-      @activities = @board.activities.build#(user_id: current_user.id)
-      # @user = User.find_by(id: params[:user_id]) if params[:user_id]
-      # @activityy = current_user.activities.build(user_id: current_user.id)
-      # @activities = @b
+      @user = User.find_by(id: params[:user_id]) if params[:user_id]
     end
-
-    # if params[:user_id] && User.exists?(params[:user_id])
-    #   @boards = User.find_by(id:params[:user_id]).boards
-    #   @board = Board.new # TO BE DELETED #############
-    # else
-    #   @boards = current_user.boards
-    #   @board = Board.new
-    # end
   end
 
   def create
@@ -34,18 +23,6 @@ class BoardsController < ApplicationController
       flash.now[:danger] = "Board not created. Make sure you provide a title and a description and a rating if you add an activity."
       render :index
     end
-
-    # @board = current_user.boards.build(board_params)
-# raise params.inspect
-    # if @board.save
-#       flash[:success] = "New board successfully created."
-#       redirect_to boards_path
-#     else
-#       flash.now[:danger] = "Board not created. Make sure you provide a title and a description and a rating if you add an activity."
-# # @activity3 = @board.activities.build(user_id: current_user.id)
-# # @activity4 = @board.activities.build(user_id: current_user.id)
-#       render :index
-    # end
   end
 
   def edit
@@ -93,24 +70,19 @@ class BoardsController < ApplicationController
   end
 
   def show
-    # @board = current_user.boards.find_by(id: params[:id])
-    @board = Board.find_by(id: params[:id])
+    if params[:user_id] && !current_user.is_friend_with?(User.find_by(id: params[:user_id])) && !current_user.admin?
+      flash[:danger] = "You don't have authorization."
+      redirect_back(fallback_location: boards_path)
+    else
+      @board = params[:user_id].nil? ? Board.find_by(id: params[:id]) : User.find_by(id: params[:user_id]).boards.find_by(id: params[:id])
 
-    if @board.nil?
-      flash[:danger] = "Board not found."
-      redirect_to boards_path
+      if @board.nil?
+        flash[:danger] = "Board not found."
+        redirect_to boards_path
+      else
+        authorize @board
+      end
     end
-
-    # if params[:user_id] && correct_user?(params[:user_id])
-    #   @board = current_user.boards.find_by(id: params[:id])
-    #
-    #   if @board.nil?
-    #     flash[:danger] = "Board not found."
-    #     redirect_to user_boards_path(current_user)
-    #   end
-    # else
-    #   redirect_to user_boards_path(current_user)
-    # end
   end
 
   def destroy

@@ -42,4 +42,13 @@ module BoardsHelper
     end
   end
 
+  def show_board_link(board, user_visited)
+    link_to(board.title, board_link(board, user_visited)) if policy(board).show?
+  end
+
+  def board_link(board, user_visited)
+    user_visited.nil? ? board_path(board) : user_board_path(user_visited, board)
+  end
+  # link_to board.title, board_path(board)
+
 end

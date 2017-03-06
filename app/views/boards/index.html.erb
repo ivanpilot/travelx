@@ -9,6 +9,6 @@
 <h3>Boards</h3>
 <ul>
   <% @boards.each do |board| %>
-    <li><%= link_to board.title, board_path(board) %></li>
+    <li><%= show_board_link(board, @user) %></li>
   <% end %>
 </ul>
