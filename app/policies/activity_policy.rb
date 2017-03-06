@@ -32,7 +32,8 @@ class ActivityPolicy < ApplicationPolicy
   end
 
   def edit?
-    is_owner? || (!friend.nil? && user.admin?)
+    # is_owner? || user.admin?
+    is_owner? || (!friend.nil? && user.admin?) ###force the route to be /users/:id/activities/:id/edit
   end
 
   def update?

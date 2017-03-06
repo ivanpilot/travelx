@@ -49,6 +49,22 @@ module BoardsHelper
   def board_link(board, user_visited)
     user_visited.nil? ? board_path(board) : user_board_path(user_visited, board)
   end
-  # link_to board.title, board_path(board)
+
+  def show_board_edit_button(board, user_visited)
+    button_to("Edit title", edit_board_link(board, user_visited), :class => "btn btn-info", method: :get) if policy(board).edit?
+  end
+
+  def show_board_delete_button(board, user_visited)
+    button_to("Delete board", delete_board_link(board, user_visited), :class => "btn btn-danger", method: :delete, data: {confirm: "Are you sure?"}) if policy(board).destroy?
+  end
+
+  def edit_board_link(board, user_visited) ###TO BE USED NOT ONLY FOR BOARD
+    user_visited.nil? ? edit_board_path(board) : edit_user_board_path(user_visited, board)
+  end
+
+  def delete_board_link(board, user_visited) ###TO BE USED NOT ONLY FOR BOARD
+    user_visited.nil? ? board_path(board) : user_board_path(user_visited, board)
+  end
+
 
 end

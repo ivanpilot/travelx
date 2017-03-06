@@ -78,6 +78,7 @@ class BoardsController < ApplicationController
 
       if @board
         authorize @board
+        @user = User.find_by(id: params[:user_id]) if params[:user_id]
       else
         flash[:danger] = "Board not found."
         redirect_to boards_path

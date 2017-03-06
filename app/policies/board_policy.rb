@@ -33,24 +33,19 @@ class BoardPolicy < ApplicationPolicy
 
   def show?
     user.admin? || is_owner? || user.is_friend_with?(friend)
-    # if !friend.nil? && (user.admin? || user.is_friend_with?(friend))
-    #   true
-    # else
-    #   false
-    # end
   end
 
-  # def edit?
-  #   user.admin? || is_owner?
-  # end
+  def edit?
+    is_owner? || (!friend.nil? && user.admin?)
+  end
 
   # def update?
   #   user.admin? || is_owner?
   # end
   #
-  # def destroy?
-  #   user.admin? || is_owner?
-  # end
+  def destroy?
+    is_owner? || (!friend.nil? && user.admin?)
+  end
 
 
   private

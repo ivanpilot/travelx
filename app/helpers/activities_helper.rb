@@ -22,19 +22,19 @@ module ActivitiesHelper
     user_visited.nil? ? activity_path(activity) : user_activity_path(user_visited, activity)
   end
 
-  def show_edit_link(activity, user_visited)
-    link_to("| Edit", edit_link(activity, user_visited)) if policy(activity).edit?
+  def show_activity_edit_link(activity, user_visited) ###TO BE USED NOT ONLY FOR ACTIVITY
+    link_to("| Edit", edit_activity_link(activity, user_visited)) if policy(activity).edit?
   end
 
-  def show_delete_link(activity, user_visited)
-    link_to("| Delete", delete_link(activity, user_visited),method: :delete, data: {confirm: 'Are you sure?'}) if policy(activity).destroy?
+  def show_activity_delete_link(activity, user_visited) ###TO BE USED NOT ONLY FOR ACTIVITY
+    link_to("| Delete", delete_activity_link(activity, user_visited),method: :delete, data: {confirm: 'Are you sure?'}) if policy(activity).destroy?
   end
 
-  def edit_link(activity, user_visited)
+  def edit_activity_link(activity, user_visited) ###TO BE USED NOT ONLY FOR ACTIVITY
     user_visited.nil? ? edit_activity_path(activity) : edit_user_activity_path(user_visited, activity)
   end
 
-  def delete_link(activity, user_visited)
+  def delete_activity_link(activity, user_visited) ###TO BE USED NOT ONLY FOR ACTIVITY
     user_visited.nil? ? activity_path(activity) : user_activity_path(user_visited, activity)
   end
 
