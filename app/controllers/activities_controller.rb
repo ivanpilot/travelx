@@ -26,7 +26,7 @@ class ActivitiesController < ApplicationController
   end
 
   def edit
-    @activity = params[:user_id].nil? ? Activity.find_by(id: params[:id]) : User.find_by(id: params[:user_id]).activities.find_by(id: params[:id])
+    @activity = Activity.find_by(id: params[:id])
     if @activity
       authorize @activity #ActivityPolicy
       @boards = policy_scope(Board)
@@ -39,7 +39,7 @@ class ActivitiesController < ApplicationController
   end
 
   def update
-    @activity = params[:user_id].nil? ? Activity.find_by(id: params[:id]) : User.find_by(id: params[:user_id]).activities.find_by(id: params[:id])
+    @activity = Activity.find_by(id: params[:id])
     redirect_to activities_path unless @activity
     authorize @activity
     if @activity.update(activity_params)
@@ -52,8 +52,7 @@ class ActivitiesController < ApplicationController
   end
 
   def destroy
-    # @activity = Activity.find_by(id: params[:id])
-    @activity = params[:user_id].nil? ? Activity.find_by(id: params[:id]) : User.find_by(id: params[:user_id]).activities.find_by(id: params[:id])
+    @activity = Activity.find_by(id: params[:id])
     if @activity
       authorize @activity
       @activity.destroy

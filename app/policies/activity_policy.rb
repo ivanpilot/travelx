@@ -9,8 +9,6 @@ class ActivityPolicy < ApplicationPolicy
     end
 
     def resolve
-      # if user.admin?
-      #   scope.all
       if !friend.nil? && (user.admin? || user.is_friend_with?(friend))
         scope.where(user: friend)
       else
@@ -31,18 +29,16 @@ class ActivityPolicy < ApplicationPolicy
     true
   end
 
-  def edit?
-    # is_owner? || user.admin?
-    is_owner? || (!friend.nil? && user.admin?) ###force the route to be /users/:id/activities/:id/edit
+  def edit?  ###make the route is /users/:id/activities/:id/edit for admin and activity belongs to the right friend
+    is_owner? || (!friend.nil? && friend.activities.include?(activity) && user.admin?)
   end
 
   def update?
-    # is_owner? || user.admin?
-    is_owner? || (!friend.nil? && user.admin?)
+    edit?
   end
 
   def destroy?
-    is_owner? || (!friend.nil? && user.admin?)
+    edit?
   end
 
 
