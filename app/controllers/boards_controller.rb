@@ -76,11 +76,11 @@ class BoardsController < ApplicationController
     else
       @board = params[:user_id].nil? ? Board.find_by(id: params[:id]) : User.find_by(id: params[:user_id]).boards.find_by(id: params[:id])
 
-      if @board.nil?
+      if @board
+        authorize @board
+      else
         flash[:danger] = "Board not found."
         redirect_to boards_path
-      else
-        authorize @board
       end
     end
   end
