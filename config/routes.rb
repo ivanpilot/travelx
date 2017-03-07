@@ -8,9 +8,9 @@ Rails.application.routes.draw do
   get '/friends', to: 'users#friends'
 
   resources :users, only:[:index, :new, :create, :update] do
-    resources :boards, only: [:index, :show, :edit, :update, :destroy]#, :create, :edit, :update, :show,  :destroy]
-    resources :activities, only: [:index, :edit, :update, :destroy]#, :create, :edit, :update, :destroy]
-    # resources :board_activities, only:[:destroy]
+    resources :boards, only: [:index, :show, :edit, :update, :destroy]
+    resources :activities, only: [:index, :edit, :update, :destroy]
+    resources :board_activities, only:[:destroy]
     # member do
     #   get :friends
     # end

@@ -9,11 +9,7 @@ class DisplayPolicy# < Struct.new(:user, :display)
   end
 
   def show?
-    if !friend.nil? && !user.admin?
-      false
-    else
-      true
-    end
+    !friend.nil? && !user.admin? ? false : true
   end
 
 end

@@ -1,16 +1,27 @@
 class BoardActivitiesController < ApplicationController
-  before_action :authenticate_user
+  before_action :authenticate_user, :authenticate_friend
 
   def destroy
-    board_activity = BoardActivity.find_by(id: params[:id])
-    if board_activity.is_correct?(current_user, board_activity.board, board_activity.activity)
-      board_activity.delete
-      flash[:success] = "Activity deleted."
-      redirect_to board_path(board_activity.board)
-      board_activity = nil
+    @board_activity = BoardActivity.find_by(id: params[:id])
+    if @board_activity
+      authorize @board_activity
+      @board_activity.destroy
+      flash[:success] = "Activity deleted from the board."
+      @board_activity = nil
     else
-      flash[:danger] = "Activity couldn't be found or updated."
-      redirect_to boards_path
+      flash[:danger] = "Activity couldn't be found or deleted."
+    end
+    redirect_back(fallback_location: redirect_to_boards)
+  end
+
+  private
+
+  def redirect_to_boards
+    if params[:user_id].nil?
+      boards_path
+    else
+      user = User.find_by(id: params[:user_id])
+      user_boards_path(user)
     end
   end
 

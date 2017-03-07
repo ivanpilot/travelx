@@ -1,3 +1,4 @@
+General
 [X] Generate the resources (models, controllers, views, database tables)
 [X] Create table/ model relationships
 [X] Create the rspec for the models
@@ -15,9 +16,9 @@ Authorisation
 [X] Add a activity policy
 [X] check if activity policy working well
 [X] Add a board policy
-[ ] check if board policy working well
+[X] check if board policy working well
 [X] using pundit in the view for activities
-[ ] using pundit in the view for boards
+[X] using pundit in the view for boards
 
 Board
 [X] Create a board index page that will be the landing page once logged in
@@ -47,8 +48,8 @@ Friend
 [X] Create the user / friends model and relationships
 [X] Add / delete friends
 [X] Visit the boards page of friends
-[ ] Visit the activity page of friends - board
-[X] Visit the activity page of friends - activities
+[X] Visit the activity page of friends - board
+[ ] Visit the activity page of friends - activities
 [ ] Transfer an activity from a friend to your own board (duplicating the activity)
 
 Admin
