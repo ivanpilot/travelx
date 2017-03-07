@@ -18,7 +18,7 @@ module ActivitiesHelper
   #   end
   # end
 
-  def url_address(activity, user_visited)
+  def url_address_activity(activity, user_visited)
     user_visited.nil? ? activity_path(activity) : user_activity_path(user_visited, activity)
   end
 
@@ -26,12 +26,12 @@ module ActivitiesHelper
     link_to("| Edit", edit_activity_link(activity, user_visited)) if policy(activity).edit?
   end
 
-  def show_activity_delete_link(activity, user_visited) ###TO BE USED NOT ONLY FOR ACTIVITY
-    link_to("| Delete", delete_activity_link(activity, user_visited),method: :delete, data: {confirm: 'Are you sure?'}) if policy(activity).destroy?
-  end
-
   def edit_activity_link(activity, user_visited) ###TO BE USED NOT ONLY FOR ACTIVITY
     user_visited.nil? ? edit_activity_path(activity) : edit_user_activity_path(user_visited, activity)
+  end
+
+  def show_activity_delete_link(activity, user_visited) ###TO BE USED NOT ONLY FOR ACTIVITY
+    link_to("| Delete", delete_activity_link(activity, user_visited),method: :delete, data: {confirm: 'Are you sure?'}) if policy(activity).destroy?
   end
 
   def delete_activity_link(activity, user_visited) ###TO BE USED NOT ONLY FOR ACTIVITY

@@ -39,10 +39,10 @@ Activity
 [ ] Modify create action and helper method so factor in case where admin is creating an activity on behalf of a user
 
 BoardActivity
-[ ] Create authorisation for destroy action within BoardActivity controller
-[ ] Create the appropriate route
-  [ ] Choose if should be only 1 or 2 routes including a nested one
-[ ] Implement helper for deleting a BoardActivity relationship within the show view of a board
+[X] Create authorisation for destroy action within BoardActivity controller
+[X] Create the appropriate route
+  [X] Choose if should be only 1 or 2 routes including a nested one
+[X] Implement helper for deleting a BoardActivity relationship within the show view of a board
 
 Friend
 [X] Create the user / friends model and relationships
