@@ -1,5 +1,5 @@
 class BoardsController < ApplicationController
-  before_action :authenticate_user, :reset_boards, :authenticate_friend
+  before_action :authenticate_user, :authenticate_friend, :reset_boards
 
   def index
     if params[:user_id] && !current_user.is_friend_with?(User.find_by(id: params[:user_id])) && !current_user.admin?
@@ -14,15 +14,21 @@ class BoardsController < ApplicationController
   end
 
   def create
+    raise params.inspect
     authorize Board
     @board = current_user.boards.build(board_params)### MUST BE MODIFIED IF ADMIN CREATE!!!!
+
     if @board.save
       flash[:success] = "New board successfully created."
-      redirect_to boards_path
+      # redirect_to boards_path
     else
-      flash.now[:danger] = "Board not created. Make sure you provide a title and a description and a rating if you add an activity."
-      render :index
+      # raise params.inspect
+      flash[:danger] = "Board not created. Make sure you provide a title and a description and a rating if you add an activity."
+      # @activity = current_user.activities.build #must redeclare the variable if using render other @activity in index is nil
+      # render :index
     end
+    # raise params.inspect
+    redirect_to boards_path
   end
 
   def show

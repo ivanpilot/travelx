@@ -19,7 +19,6 @@ module BoardsHelper
       "No board"
     else
       activity.boards.collect do |board|
-        # link_to(board.title, board_path(board))
         show_board_link(board, user_visited)
       end.join(" | ").html_safe
     end
