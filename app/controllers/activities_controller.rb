@@ -14,11 +14,11 @@ class ActivitiesController < ApplicationController
   end
 
   def create ### TBC WITH ADMIN NAMESPACE ### MUST BE MODIFIED !!!!
-    authorize Activity
-    @activity = current_user.activities.build(activity_params) ### MUST BE MODIFIED IF ADMIN CREATE!!!!
+    @activity = params[:user_id].nil? ? current_user.activities.build(activity_params) : User.find_by(id:params[:user_id]).activities.build(activity_params)
+    authorize @activity
     if @activity.save
       flash[:success] = "New activity successfully created."
-      redirect_to activities_path
+      redirect_to_activities
     else
       flash[:danger] = "Activity not created. Make sure you provide a description and a rating."
       redirect_back(fallback_location: session[:previous_url]) ### SHOULD RENDER INDEX?
@@ -72,6 +72,15 @@ class ActivitiesController < ApplicationController
 
   def reset_activities
     @activities = current_user.activities.select {|activity| activity.id}
+  end
+
+  def redirect_to_activities
+    if params[:user_id].nil?
+      redirect_to activities_path
+    else
+      user = User.find_by(id: params[:user_id])
+      redirect_to user_activities_path(user)
+    end
   end
 
 end

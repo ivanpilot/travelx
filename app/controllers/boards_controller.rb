@@ -14,20 +14,16 @@ class BoardsController < ApplicationController
   end
 
   def create
-    raise params.inspect
     authorize Board
     @board = current_user.boards.build(board_params)### MUST BE MODIFIED IF ADMIN CREATE!!!!
 
     if @board.save
       flash[:success] = "New board successfully created."
-      # redirect_to boards_path
     else
-      # raise params.inspect
       flash[:danger] = "Board not created. Make sure you provide a title and a description and a rating if you add an activity."
       # @activity = current_user.activities.build #must redeclare the variable if using render other @activity in index is nil
       # render :index
     end
-    # raise params.inspect
     redirect_to boards_path
   end
 
