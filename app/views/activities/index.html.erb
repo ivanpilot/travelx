@@ -9,6 +9,6 @@
       <%= show_activity_edit_link(activity, @user)  %>
       <%= show_activity_delete_link(activity, @user) %><br>
     </li>
-    Boards: <%=boards_related_to(activity)%><br><br>
+    Boards: <%=boards_related_to(activity, @user)%><br><br>
   <% end %>
 </ul>

@@ -14,6 +14,17 @@ module BoardsHelper
     end
   end
 
+  def boards_related_to(activity, user_visited)
+    if activity.boards.empty?
+      "No board"
+    else
+      activity.boards.collect do |board|
+        # link_to(board.title, board_path(board))
+        show_board_link(board, user_visited)
+      end.join(" | ").html_safe
+    end
+  end
+
   def display_create_activity_form_from_board(object) ####MUST BE MODIFIED IF ADMIN CREATE
     if policy(:display).show? #DisplayPolicy.new(pundit_user, object).show?
       concat content_tag(:h3,"Start by creating an #{object.wordify} or ...")
