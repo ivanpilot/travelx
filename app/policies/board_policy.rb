@@ -28,7 +28,7 @@ class BoardPolicy < ApplicationPolicy
   end
 
   def create?
-    true
+    is_owner? || (!friend.nil? && user.admin?)
   end
 
   def show?

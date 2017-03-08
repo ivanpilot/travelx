@@ -14,9 +14,8 @@ class BoardsController < ApplicationController
   end
 
   def create
-    authorize Board
-    @board = current_user.boards.build(board_params)### MUST BE MODIFIED IF ADMIN CREATE!!!!
-
+    @board = params[:user_id].nil? ? current_user.boards.build(board_params) : User.find_by(id:params[:user_id]).boards.build(board_params)
+    authorize @board
     if @board.save
       flash[:success] = "New board successfully created."
     else
@@ -24,7 +23,7 @@ class BoardsController < ApplicationController
       # @activity = current_user.activities.build #must redeclare the variable if using render other @activity in index is nil
       # render :index
     end
-    redirect_to boards_path
+    redirect_to to_boards
   end
 
   def show
@@ -91,7 +90,7 @@ class BoardsController < ApplicationController
     @boards = current_user.boards.select {|board| board.id}
   end
 
-  def redirect_to_boards
+  def to_boards
     if params[:user_id].nil?
       boards_path
     else

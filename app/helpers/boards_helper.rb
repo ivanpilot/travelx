@@ -24,10 +24,10 @@ module BoardsHelper
     end
   end
 
-  def display_create_activity_form_from_board(object) ####MUST BE MODIFIED IF ADMIN CREATE
+  def display_create_activity_form_from_board(object, user_visited) ####MUST BE MODIFIED IF ADMIN CREATE
     if policy(:display).show? #DisplayPolicy.new(pundit_user, object).show?
       concat content_tag(:h3,"Start by creating an #{object.wordify} or ...")
-      form_for object, :url => activities_path do |f|
+      form_for object, :url => url_address_create_activity(object, user_visited) do |f|
         concat render :partial => "activities/activity_inline", :locals => {activity: f}
         concat f.submit "Create Activity", class:"btn btn-primary"
       end
@@ -36,11 +36,11 @@ module BoardsHelper
     end
   end
 
-  def display_create_board_form(object)
+  def display_create_board_form(object, user_visited)
     if policy(:display).show? #DisplayPolicy.new(pundit_user, object).show?
       concat content_tag(:h3,"... Create a #{object.wordify}")
       concat content_tag(:h5,"Create your #{object.wordify} and add somes activities to it!")
-      form_for object do |f|
+      form_for object, :url => url_address_create_board(object, user_visited) do |f|
         concat render :partial => "board", :locals => {board: f}
         concat render :partial => "fields_for", :locals => {f: f, wrapper: @board.activities.build(user_id:current_user.id)}
         # fields_for(@activities, object.activities.build(user_id:current_user.id)) do |ff|
@@ -57,6 +57,10 @@ module BoardsHelper
       concat render :partial => "board", :locals => {board: f}
       concat f.submit "Update", class: "btn btn-primary"
     end
+  end
+
+  def url_address_create_board(object, user_visited)
+    user_visited.nil? ? boards_path : user_boards_path(user_visited)
   end
 
   def url_address_board(board, user_visited)
