@@ -26,7 +26,7 @@ class ActivityPolicy < ApplicationPolicy
   end
 
   def create?
-    is_owner? || !friend.nil? && user.admin?
+    is_owner? || (!friend.nil? && user.admin?)
   end
 
   def edit?  ###make the route is /users/:id/activities/:id/edit for admin and activity belongs to the right friend

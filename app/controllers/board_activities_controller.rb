@@ -11,12 +11,12 @@ class BoardActivitiesController < ApplicationController
     else
       flash[:danger] = "Activity couldn't be found or deleted."
     end
-    redirect_back(fallback_location: redirect_to_boards)
+    redirect_back(fallback_location: to_boards)
   end
 
   private
 
-  def redirect_to_boards
+  def to_boards
     if params[:user_id].nil?
       boards_path
     else

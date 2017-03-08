@@ -78,7 +78,7 @@ class BoardsController < ApplicationController
     else
       flash[:danger] = "Board couldn't be found or deleted."
     end
-    redirect_to_boards
+    redirect_to to_boards
   end
 
   private
@@ -93,10 +93,10 @@ class BoardsController < ApplicationController
 
   def redirect_to_boards
     if params[:user_id].nil?
-      redirect_to boards_path
+      boards_path
     else
       user = User.find_by(id: params[:user_id])
-      redirect_to user_boards_path(user)
+      user_boards_path(user)
     end
   end
 
