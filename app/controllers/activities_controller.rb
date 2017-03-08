@@ -1,5 +1,5 @@
 class ActivitiesController < ApplicationController
-  before_action :authenticate_user, :reset_activities, :authenticate_friend
+  before_action :authenticate_user, :authenticate_friend#, :reset_activities
 
   def index
     if params[:user_id] && !current_user.is_friend_with?(User.find_by(id: params[:user_id])) && !current_user.admin?
@@ -71,9 +71,9 @@ class ActivitiesController < ApplicationController
     params.require(:activity).permit(:user_id, :description, :rating, :board_ids => [])
   end
 
-  def reset_activities
-    @activities = current_user.activities.select {|activity| activity.id}
-  end
+  # def reset_activities
+  #   @activities = current_user.activities.select {|activity| activity.id}
+  # end
 
   def to_activities
     if params[:user_id].nil?

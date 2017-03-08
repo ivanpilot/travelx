@@ -27,7 +27,7 @@ module BoardsHelper
   def display_create_activity_form_from_board(object, user_visited) ####MUST BE MODIFIED IF ADMIN CREATE
     if policy(:display).show? #DisplayPolicy.new(pundit_user, object).show?
       concat content_tag(:h3,"Start by creating an #{object.wordify} or ...")
-      form_for object, :url => url_address_create_activity(object, user_visited) do |f|
+      form_for object, :url => url_address_create_activity(user_visited) do |f|
         concat render :partial => "activities/activity_inline", :locals => {activity: f}
         concat f.submit "Create Activity", class:"btn btn-primary"
       end
@@ -40,9 +40,9 @@ module BoardsHelper
     if policy(:display).show? #DisplayPolicy.new(pundit_user, object).show?
       concat content_tag(:h3,"... Create a #{object.wordify}")
       concat content_tag(:h5,"Create your #{object.wordify} and add somes activities to it!")
-      form_for object, :url => url_address_create_board(object, user_visited) do |f|
+      form_for object, :url => url_address_create_board(user_visited) do |f|
         concat render :partial => "board", :locals => {board: f}
-        concat render :partial => "fields_for", :locals => {f: f, wrapper: @board.activities.build(user_id:current_user.id)}
+        concat render :partial => "fields_for", :locals => {f: f, wrapper: @board.activities.build(user_id:right_user_id(user_visited))}
         # fields_for(@activities, object.activities.build(user_id:current_user.id)) do |ff|
         #   # concat ff.hidden_field :user_id
         #   render(partial: "activities/activity_inline", :locals => {activity: ff})
@@ -59,7 +59,11 @@ module BoardsHelper
     end
   end
 
-  def url_address_create_board(object, user_visited)
+  def right_user_id(user_visited)
+    user_visited.nil? ? current_user.id : user_visited.id
+  end
+
+  def url_address_create_board(user_visited)
     user_visited.nil? ? boards_path : user_boards_path(user_visited)
   end
 

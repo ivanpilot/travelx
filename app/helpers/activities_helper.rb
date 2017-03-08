@@ -3,7 +3,7 @@ module ActivitiesHelper
   def display_create_activity_form(object,user_visited) ####MUST BE MODIFIED IF ADMIN CREATE
     if policy(:display).show? #DisplayPolicy.new(pundit_user, object).show?
       concat content_tag(:h2,"Create a new #{object.wordify.capitalize}")
-      form_for object, :url => url_address_create_activity(object, user_visited) do |f|
+      form_for object, :url => url_address_create_activity(user_visited) do |f|
         concat render :partial => "#{object.wordify}", :locals => {object.wordify.to_sym => f}
         concat f.submit "Create #{object.wordify.capitalize}", class:"btn btn-primary"
       end
@@ -18,7 +18,7 @@ module ActivitiesHelper
   #   end
   # end
 
-  def url_address_create_activity(activity, user_visited)
+  def url_address_create_activity(user_visited)
     user_visited.nil? ? activities_path : user_activities_path(user_visited)
   end
 

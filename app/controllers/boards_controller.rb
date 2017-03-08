@@ -1,5 +1,5 @@
 class BoardsController < ApplicationController
-  before_action :authenticate_user, :authenticate_friend, :reset_boards
+  before_action :authenticate_user, :authenticate_friend#, :reset_boards
 
   def index
     if params[:user_id] && !current_user.is_friend_with?(User.find_by(id: params[:user_id])) && !current_user.admin?
@@ -8,19 +8,20 @@ class BoardsController < ApplicationController
     else
       @boards = policy_scope(Board)
       @board = Board.new
-      @activity = current_user.activities.build### MUST BE MODIFIED IF ADMIN CREATE!!!!
+      @activity = Activity.new
       @user = User.find_by(id: params[:user_id]) if params[:user_id]
     end
   end
 
   def create
+    # raise params.inspect
     @board = params[:user_id].nil? ? current_user.boards.build(board_params) : User.find_by(id:params[:user_id]).boards.build(board_params)
     authorize @board
     if @board.save
       flash[:success] = "New board successfully created."
     else
       flash[:danger] = "Board not created. Make sure you provide a title and a description and a rating if you add an activity."
-      # @activity = current_user.activities.build #must redeclare the variable if using render other @activity in index is nil
+      # @activity = Activity.new #must redeclare the variable if using render other @activity in index is nil
       # render :index
     end
     redirect_to to_boards
@@ -86,9 +87,9 @@ class BoardsController < ApplicationController
     params.require(:board).permit(:title, activities_attributes:[:description, :rating, :user_id])
   end
 
-  def reset_boards
-    @boards = current_user.boards.select {|board| board.id}
-  end
+  # def reset_boards
+  #   @boards = current_user.boards.select {|board| board.id}
+  # end
 
   def to_boards
     if params[:user_id].nil?
