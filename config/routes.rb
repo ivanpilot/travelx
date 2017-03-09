@@ -6,7 +6,6 @@ Rails.application.routes.draw do
   post '/sign_in', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
   get '/friends', to: 'users#friends'
-  # post '/users/:id/activities/:id'
 
   resources :users, only:[:index, :new, :create, :update] do
     resources :boards, only: [:index, :create, :show, :edit, :update, :destroy]
@@ -14,9 +13,6 @@ Rails.application.routes.draw do
       post 'import', on: :member
     end
     resources :board_activities, only:[:destroy]
-    # member do
-    #   get :friends
-    # end
   end
 
   resources :boards, only: [:index, :create, :show, :edit, :update, :destroy] ### TO BE CHANGEDDDD
