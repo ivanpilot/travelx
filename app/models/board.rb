@@ -11,13 +11,12 @@ class Board < ApplicationRecord
   # accepts_nested_attributes_for :activities, reject_if: :reject_activities
 
   def activities_attributes=(attributes)
-    # raise params.inspect
     attributes.values.each do |attribute|
-      # activity = Activity.find_or_create_by(attribute)
-      # user = User.find(attribute[:user_id])
-      activity = Activity.find_by_activtiy_des_and_user_id(attribute[:description], attribute[:user_id])
-      new_activity = activity.nil? ? Activity.create_by(attribute) : activity
-      self.activities << new_activity
+      if attribute.values.none? {|att| att.blank?}
+        activity = Activity.find_by_activtiy_des_and_user_id(attribute[:description], attribute[:user_id])
+        new_activity = activity.nil? ? Activity.create!(attribute) : activity
+        self.activities << new_activity
+      end
     end
   end
 

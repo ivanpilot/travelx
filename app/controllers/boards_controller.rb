@@ -16,10 +16,11 @@ class BoardsController < ApplicationController
   def create
     @board = params[:user_id].nil? ? current_user.boards.build(board_params) : User.find_by(id:params[:user_id]).boards.build(board_params)
     authorize @board
+    # raise params.inspect
     if @board.save
       flash[:success] = "New board successfully created."
     else
-      flash[:danger] = "Board not created. Make sure you provide a title and a description and a rating if you add an activity."
+      flash[:danger] = "Board not created - make sure you provide a title, and a description and a rating if you add an activity."
       # @activity = Activity.new #must redeclare the variable if using render other @activity in index is nil
       # render :index
     end
