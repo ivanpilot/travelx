@@ -13,11 +13,15 @@ class Board < ApplicationRecord
   def activities_attributes=(attributes)
     attributes.values.each do |attribute|
       if attribute.values.none? {|att| att.blank?}
-        activity = Activity.find_by_activtiy_des_and_user_id(attribute[:description], attribute[:user_id])
+        activity = Activity.find_by_activity_des_and_user_id(attribute[:description], attribute[:user_id])
         new_activity = activity.nil? ? Activity.create!(attribute) : activity
         self.activities << new_activity
       end
     end
+  end
+
+  def self.find_by_board_title_and_user_id(board_title, user_id)
+    self.where('user_id = ? AND lower(title) = lower(?)', user_id, board_title.downcase).first
   end
 
   # def reject_activities(attributes)

@@ -49,8 +49,6 @@ class User < ApplicationRecord
     self.all_friends.include?(friend)
   end
 
-
-
   private
 
   def email_downcase

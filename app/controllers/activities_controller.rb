@@ -16,7 +16,7 @@ class ActivitiesController < ApplicationController
   def create
     user = params[:user_id].nil? ? current_user : User.find_by(id:params[:user_id])
     @activity = user.activities.build(activity_params)
-    if Activity.find_by_activtiy_des_and_user_id(@activity.description, user.id)
+    if Activity.find_by_activity_des_and_user_id(@activity.description, user.id)
       flash[:info] = "This activity already exists."
       redirect_to to_activities
       return

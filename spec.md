@@ -38,7 +38,7 @@ Different user can have the same activity (only the user_id attributes will vary
   [X] Add the possibility to create an activity not related to a board from that page
   [X] Add the possibility to view the activities and to which boards each of them is related
   [X] Be able to edit and delete an activity
-[ ] When creating an activity, make sure a same user can't have 2 times the same activity
+[X] When creating an activity, make sure a same user can't have 2 times the same activity
 [X] add a button to switch from standard user to an admin user (development phase of the website)
 [X] Fix the creation of a activity with appropriate actions depending if user or admin
 [X] Modify create action and helper method so factor in case where admin is creating an activity on behalf of a user

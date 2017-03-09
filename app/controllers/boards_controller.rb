@@ -14,9 +14,14 @@ class BoardsController < ApplicationController
   end
 
   def create
-    @board = params[:user_id].nil? ? current_user.boards.build(board_params) : User.find_by(id:params[:user_id]).boards.build(board_params)
+    user = params[:user_id].nil? ? current_user : User.find_by(id:params[:user_id])
+    @board = user.boards.build(board_params)
     authorize @board
-    # raise params.inspect
+    if Board.find_by_board_title_and_user_id(@board.title, user.id)
+      flash[:info] = "This board already exists."
+      redirect_to to_boards
+      return
+    end
     if @board.save
       flash[:success] = "New board successfully created."
     else
