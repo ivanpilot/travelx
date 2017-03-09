@@ -29,6 +29,9 @@
               <li><%= link_to "Sign In", sign_in_path unless current_user %></li>
               <li><%= link_to "My Activities", activities_path if current_user %></li>
               <li><%= link_to "My Friends", friends_path if current_user %></li>
+              <li class="navbar-text"><%= "| Visiting #{current_friend.username}" if current_friend %></li>
+              <li><%= link_to " | Boards", user_boards_path(current_friend) if current_friend %></li>
+              <li><%= link_to " | Activities", user_activities_path(current_friend) if current_friend %></li>
             </ul>
           </div>
           <div class="navbar-right">
