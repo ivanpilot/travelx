@@ -9,6 +9,7 @@
       <%= show_activity_edit_link(activity, @user)  %>
       <%= show_activity_delete_link(activity, @user) %><br>
     </li>
-    Boards: <%=boards_related_to(activity, @user)%><br><br>
+    Boards: <%=boards_related_to(activity, @user)%><br>
+    <%= button_to "Import", import_user_activity_path(@user, activity), class:"btn btn-success" if current_friend %><br>
   <% end %>
 </ul>

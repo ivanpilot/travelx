@@ -37,6 +37,10 @@ class ActivityPolicy < ApplicationPolicy
     edit?
   end
 
+  def import?
+    (!friend.nil? && user.is_friend_with?(friend))
+  end
+
   def destroy?
     edit?
   end

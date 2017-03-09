@@ -8,5 +8,6 @@
     <li>Description: <%= activity.description %> | Rating: <%= activity.rating %></li>
     <%= show_activity_edit_link(activity, @user) %>
     <%= show_boardactivity_delete_link(@board, activity, @user)%>
+    <%= button_to "Import", import_user_activity_path(@user, activity), class:"btn btn-success" if current_friend %><br>
   <% end %>
 </ol>

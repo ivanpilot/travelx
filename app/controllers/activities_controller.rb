@@ -57,6 +57,28 @@ class ActivitiesController < ApplicationController
     end
   end
 
+  def import
+    activity = Activity.find_by(id: params[:id])
+    redirect_to to_activities unless activity
+    @new_activity = current_user.activities.build(
+      description: activity.description,
+      rating: activity.rating
+    )
+    if Activity.find_by_activity_des_and_user_id(@new_activity.description, current_user.id)
+      flash[:info] = "This activity already exists."
+      redirect_to to_activities
+      return
+    end
+
+    authorize @new_activity
+    if @new_activity.save
+      flash[:success] = "New activity added to your activities."
+    else
+      flash[:danger] = "Activity not added. Make sure you ."
+    end
+    redirect_to to_activities
+  end
+
   def destroy
     @activity = Activity.find_by(id: params[:id])
     if @activity
