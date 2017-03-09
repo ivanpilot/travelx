@@ -13,9 +13,14 @@ class ActivitiesController < ApplicationController
     end
   end
 
-  def create ### TBC WITH ADMIN NAMESPACE ### MUST BE MODIFIED !!!!
-    @activity = params[:user_id].nil? ? current_user.activities.build(activity_params) : User.find_by(id:params[:user_id]).activities.build(activity_params)
-    # test = URI(request.referer).path.include?(params[:user_id])
+  def create
+    user = params[:user_id].nil? ? current_user : User.find_by(id:params[:user_id])
+    @activity = user.activities.build(activity_params)
+    if Activity.find_by_activtiy_des_and_user_id(@activity.description, user.id)
+      flash[:info] = "This activity already exists."
+      redirect_to to_activities
+      return
+    end
     authorize @activity
     if @activity.save
       flash[:success] = "New activity successfully created."

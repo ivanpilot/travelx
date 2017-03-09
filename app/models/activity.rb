@@ -28,4 +28,8 @@ class Activity < ApplicationRecord
     end
   end
 
+  def self.find_by_activtiy_des_and_user_id(activity_description, user_id)
+    self.where('user_id = ? AND lower(description) = lower(?)', user_id, activity_description.downcase).first
+  end
+
 end
