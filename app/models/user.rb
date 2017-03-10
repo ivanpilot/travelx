@@ -16,6 +16,15 @@ class User < ApplicationRecord
   has_many :inversed_friendships, :class_name => "Friendship", :foreign_key => "friend_id", dependent: :destroy
   has_many :inversed_friends, through: :inversed_friendships, source: :user
 
+  def self.find_or_create_by_omniauth(auth_hash)
+    self.where(email:auth_hash[:info][:email]).first_or_create do |user|
+      new_password = SecureRandom.hex
+      user.username = "New member"
+      user.password = new_password
+      user.password_confirmation = new_password
+    end
+  end
+
   def all_friends
     self.friends + self.inversed_friends
   end

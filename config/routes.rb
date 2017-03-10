@@ -2,6 +2,7 @@ Rails.application.routes.draw do
 
   root to: 'welcome#index'
   get '/sign_up', to: 'users#new'
+  get '/auth/facebook/callback', to: 'sessions#create'
   get '/sign_in', to: 'sessions#new'
   post '/sign_in', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
