@@ -54,8 +54,8 @@ Friend
 [X] Add / delete friends
 [X] Visit the boards page of friends
 [X] Visit the activity page of friends - board
-[ ] Visit the activity page of friends - activities
-[ ] Transfer an activity from a friend to your own board (duplicating the activity)
+[X] Visit the activity page of friends - activities
+[X] Transfer an activity from a friend to your own board (duplicating the activity)
 
 Admin
 [ ] Create admin resources with namespace routes
