@@ -42,4 +42,8 @@ module ActivitiesHelper
     user_visited.nil? ? activity_path(activity) : user_activity_path(user_visited, activity)
   end
 
+  def show_button_to_import_activity(text, activity, user_visited)
+    button_to(text, import_user_activity_path(user_visited, activity), class:"btn btn-success") if current_friend
+  end
+
 end
