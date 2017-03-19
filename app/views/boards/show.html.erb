@@ -1,13 +1,13 @@
 <h1><%= @board.title %></h1>
-<%= show_board_edit_button(@board, @user)%><br>
-<%= show_board_delete_button(@board, @user)%>
+<%= button_to("Edit title", edit_board_link(@board, @user), :class => "btn btn-info", method: :get) if policy(@board).edit? %><br>
+<%= button_to("Delete board", delete_board_link(@board, @user), :class => "btn btn-danger", method: :delete, data: {confirm: "Are you sure?"}) if policy(@board).destroy?%>
 
 <h3>Activities</h3><br>
 <ol>
   <% @board.activities.each do |activity| %>
     <li>Description: <%= activity.description %> | Rating: <%= activity.rating %></li>
-    <%= show_activity_edit_link(activity, @user) %>
+    <%= link_to("| Edit", edit_activity_link(activity, @user)) if policy(activity).edit?%>
     <%= show_boardactivity_delete_link(@board, activity, @user)%>
-    <%=show_button_to_import_activity("Import", activity, @user)%><br>
+    <%= button_to("Import", import_user_activity_path(@user, activity), class:"btn btn-success") if current_friend %><br>
   <% end %>
 </ol>

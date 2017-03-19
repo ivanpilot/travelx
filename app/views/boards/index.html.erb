@@ -1,14 +1,32 @@
 <%= errors_messages(@board)%>
 
-<%= display_create_activity_form_from_board(@activity, @user) %>
+<% if policy(:display).show? %>
+  <h3>Start by creating an activity or ...</h3>
+  <%= form_for @activity, :url => url_address_create_activity(@user) do |f| %>
+    <%= render :partial => "activities/activity_inline", :locals => {activity: f}%>
+    <%= f.submit "Create Activity", class:"btn btn-primary" %>
+  <% end %>
+<% end %>
 <br>
 
-<%= display_create_board_form(@board, @user)%>
+<% if policy(:display).show? %>
+  <h3>... Create a Board</h3>
+  <h5>Create your activities and add somes activities to it!</h5>
+
+  <%= form_for @board, :url => url_address_create_board(@user) do |f|%>
+    <%= render :partial => "board", :locals => {board: f} %>
+    <%= f.fields_for :activities, @board.activities.build(user_id:right_user_id(@user)) do |ff| %>
+      <%= ff.hidden_field :user_id %>
+      <%= render partial: "activities/activity_inline", :locals => {activity: ff}%>
+    <% end %>
+    <%= f.submit "Create Board", class:"btn btn-primary" %>
+  <%end%>
+<% end %>
 <br>
 
 <h3>Boards</h3>
 <ul>
   <% @boards.each do |board| %>
-    <li><%= show_board_link(board, @user) %></li>
+    <li><%= link_to board.title, board_link(board, @user) if policy(board).show?%></li>
   <% end %>
 </ul>

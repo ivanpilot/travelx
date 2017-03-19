@@ -1,4 +1,10 @@
-<%= display_create_activity_form(@activity, @user) %>
+<% if policy(:display).show? %>
+  <h2>Create a new Activity</h2>
+  <%= form_for @activity, :url => url_address_create_activity(@user) do |f|%>
+    <%= render :partial => "activity", :locals => {:activity => f}%>
+    <%= f.submit "Create Activity", class:"btn btn-primary"%>
+  <% end %>
+<% end %>
 <br><br>
 
 <h2>Activities</h2><br>
@@ -6,10 +12,10 @@
   <% @activities.each do |activity|%>
     <li>
       Description: <%= activity.description %> | Rating: <%= activity.rating %>
-      <%= show_activity_edit_link(activity, @user)  %>
-      <%= show_activity_delete_link(activity, @user) %><br>
+      <%= link_to("| Edit", edit_activity_link(activity, @user)) if policy(activity).edit?%>
+      <%=link_to("| Delete", delete_activity_link(activity, @user), method: :delete, data: {confirm: 'Are you sure?'}) if policy(activity).destroy?%><br>
     </li>
     Boards: <%=boards_related_to(activity, @user)%><br>
-    <%=show_button_to_import_activity("Import", activity, @user)%><br>
+    <%= button_to("Import", import_user_activity_path(@user, activity), class:"btn btn-success") if current_friend %><br>
   <% end %>
 </ul>

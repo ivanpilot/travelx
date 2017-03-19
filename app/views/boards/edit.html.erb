@@ -1,1 +1,4 @@
-<%= display_edit_board(@board, @user) %>
+<%= form_for @board, :url => url_address_board(@board, @user) do |f|%>
+  <%= render :partial => "board", :locals => {board: f}%>
+  <%= f.submit "Update", class: "btn btn-primary"%>
+<% end %>
