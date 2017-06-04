@@ -1,12 +1,36 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
-    <title>Travelx</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <%= csrf_meta_tags %>
+    <title>Travelx</title>
 
-    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet"></link>
+    <%= stylesheet_link_tag "application", media: 'all', 'data-turbolinks-track' => true %>
+    <!-- <%= stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => "reload" %> -->
+
+    <!-- FAVICON -->
+  	<!-- <link rel="shortcut icon" href="img/favicon.png"> -->
+
+    <!-- Google Font -->
+    <script src="https://use.fontawesome.com/32cdf19471.js"></script>
+  	<link href="https://fonts.googleapis.com/css?family=Lato:100,300,300i,400,400i,700,900" rel="stylesheet">
+    <!-- <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
+    <!-- <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet"></link> -->
+
+
+
+
+    <!-- <link href="css/icons/style.css" rel="stylesheet" type="text/css"> -->
+
+    <!-- Core CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  	<!-- <link rel="stylesheet" href="js/slick/slick.css">
+  	<link rel="stylesheet" href="css/gradients.css"> -->
+
+      <!-- Theme CSS -->
+      <!-- <link href="css/style.css" rel="stylesheet"> -->
   </head>
 
   <body>
@@ -52,6 +76,8 @@
       <% end %>
       <%= yield %>
     </div>
-
+    <%= javascript_include_tag "application", 'data-turbolinks-track' => true %>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   </body>
 </html>
