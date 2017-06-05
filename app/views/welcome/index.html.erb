@@ -1,1 +1,50 @@
-  <h1>Welcome to Travelx</h1><br>
+	<!-- HERO -->
+	<div class="intro intro4 overlay gradient6">
+		<div class="container">
+			<div class="row center-flex">
+				<div class="col-md-6">
+					<h2><b>Maximise</b> your travel experience! </h2>
+					<p>Share useful tips with your friends and enjoy your travelling</p>
+				</div>
+
+				<div class="col-md-5 col-md-push-1">
+
+					
+					<%=form_for User.new, :url => users_path, :method => "post", html: { class: "intro-form", id: "signup" } do |f|%>
+			      <!-- <div class="field <%#="field_with_errors" if @user.errors[:username].any?%>"> -->
+
+			        <%= f.text_field :username, placeholder: "Username", autocomplete:"off" %><br>
+			      <!-- </div> -->
+
+			      <!-- <div class="field <%#="field_with_errors" if @user.errors[:email].any?%>"> -->
+			      	<%= f.text_field :email, placeholder: "Email", autocomplete:"off" %><br>
+			      <!-- </div> -->
+
+			      <!-- <div class="field <%#="field_with_errors" if @user.errors[:password].any?%>"> -->
+			      	<%= f.password_field :password, placeholder: "Password" %><br>
+			      <!-- </div> -->
+
+			      <!-- <div class="field <%#="field_with_errors" if @user.errors[:password_confirmation].any?%>"> -->
+			      	<%= f.password_field :password_confirmation, placeholder: "Password again" %><br>
+			      <!-- </div> -->
+
+			      <%= f.button 'Create account', class: 'buttons btn btn-primary btn-lg btn-block text-center'%>
+						<span>By pressing the get started button i agree to the terms and conditions of the mack theme.</span>
+			    <% end %>
+					<!-- <form class="intro-form" action="php/subscribe.php" id="signup" method="POST">
+
+						<h4>Sign up <b>Now</b></h4>
+
+						<input name="fname" id="fname" placeholder="First Name" type="text">
+						<input name="lname" id="lname" placeholder="Last Name" type="text">
+						<input name="email" id="email" placeholder="Email address">
+
+						<button type="submit" class="btn btn-primary btn-lg btn-block text-center">Get Started Now</button>
+						<span>By pressing the get started button i agree to the terms and conditions of the mack theme.</span>
+					</form> -->
+					<div id="response"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- HERO END -->

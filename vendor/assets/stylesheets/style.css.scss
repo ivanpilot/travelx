@@ -7,12 +7,12 @@ Version:	2.0
 [TABLE OF CONTENTS]
 
 	1. GLOBAL STYLES
-	2. HEADER STYLES 
+	2. HEADER STYLES
 	3. INTRO STYLES
-	4. ICON BOX / SERVICES STYLES 
+	4. ICON BOX / SERVICES STYLES
 	5. INFO CONTENT
 	6. COMMON STYLES
-	7. FEATURE CONTENT 
+	7. FEATURE CONTENT
 	8. TEAM
 	9. PRICING
 	10. APP FEATURES
@@ -20,12 +20,12 @@ Version:	2.0
 	12. SERVICE FEATURES
 	13. NEWSLETTER
 	14. FOOTER
-	15. RESPONSIVENESS 
-	
+	15. RESPONSIVENESS
+
 -------------------------------------------------------------------*/
 
 /* =============================
-   1. GLOBAL STYLES 
+   1. GLOBAL STYLES
 ================================ */
 
 html,
@@ -159,7 +159,7 @@ a, .btn, button {
 }
 
 /* =============================
-   2. HEADER STYLES 
+   2. HEADER STYLES
 ================================ */
 
 .navbar-inverse {
@@ -373,9 +373,9 @@ a, .btn, button {
 /* INTRO / 4 */
 
 .intro4 {
-	background: url(../img/intro/bg/4.jpg) no-repeat top center;
+	background: url("4.jpg") no-repeat top center;
 	background-size: cover;
-	padding: 180px 0 120px;
+	padding: 100px 0 80px;
 }
 
 /* INTRO / 5 */
@@ -431,7 +431,7 @@ a, .btn, button {
 /* INTRO / 6 */
 
 .intro6 {
-	background: url(../img/intro/bg/6.jpg) no-repeat top center;
+	background: url("6.jpg") no-repeat top center;
 	background-size: cover;
 }
 
@@ -596,7 +596,7 @@ a, .btn, button {
 }
 
 /* =============================
-   4. SERVICES STYLES 
+   4. SERVICES STYLES
 ================================ */
 
 .services {
@@ -813,7 +813,7 @@ a, .btn, button {
 }
 
 /* =============================
-   7. FEATURE CONTENT 
+   7. FEATURE CONTENT
 ================================ */
 
 .features {
@@ -1020,7 +1020,7 @@ a, .btn, button {
 	margin-left: 10px;
 }
 
-/* ================================== 
+/* ==================================
    10. APP FEATURES STYLES
 ==================================== */
 
@@ -1492,7 +1492,7 @@ footer h4 {
 }
 
 /* =============================
-   15. RESPONSIVENESS 
+   15. RESPONSIVENESS
 ================================ */
 
 @media only screen and (min-width: 768px) and (max-width: 4000px) {

@@ -7,8 +7,8 @@
     <%= csrf_meta_tags %>
     <title>Travelx</title>
 
-    <%= stylesheet_link_tag "application", media: 'all', 'data-turbolinks-track' => true %>
-    <!-- <%= stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => "reload" %> -->
+    <!-- <%#= stylesheet_link_tag "application", media: 'all', 'data-turbolinks-track' => true %> -->
+    <%= stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => "reload" %>
 
     <!-- FAVICON -->
   	<!-- <link rel="shortcut icon" href="img/favicon.png"> -->
@@ -23,19 +23,11 @@
 
 
     <!-- <link href="css/icons/style.css" rel="stylesheet" type="text/css"> -->
-
-    <!-- Core CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  	<!-- <link rel="stylesheet" href="js/slick/slick.css">
-  	<link rel="stylesheet" href="css/gradients.css"> -->
-
-      <!-- Theme CSS -->
-      <!-- <link href="css/style.css" rel="stylesheet"> -->
   </head>
 
   <body>
     <!--  navbar -->
-    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <!-- <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -49,35 +41,69 @@
         <div class="navbar-collapse collapse">
           <div class="navbar-left">
             <ul class="nav navbar-nav">
-              <li><%= link_to "Sign Up", sign_up_path unless current_user %></li>
-              <li><%= link_to "Sign In", sign_in_path unless current_user %></li>
-              <li><%= link_to "My Activities", activities_path if current_user %></li>
-              <li><%= link_to "My Friends", friends_path if current_user %></li>
-              <li class="navbar-text"><%= "| Visiting #{current_friend.username}" if current_friend %></li>
-              <li><%= link_to " | Boards", user_boards_path(current_friend) if current_friend %></li>
-              <li><%= link_to " | Activities", user_activities_path(current_friend) if current_friend %></li>
+              <li><%#= link_to "Sign Up", sign_up_path unless current_user %></li>
+              <li><%#= link_to "Sign In", sign_in_path unless current_user %></li>
+              <li><%#= link_to "My Activities", activities_path if current_user %></li>
+              <li><%#= link_to "My Friends", friends_path if current_user %></li>
+              <li class="navbar-text"><%#= "| Visiting #{current_friend.username}" if current_friend %></li>
+              <li><%#= link_to " | Boards", user_boards_path(current_friend) if current_friend %></li>
+              <li><%#= link_to " | Activities", user_activities_path(current_friend) if current_friend %></li>
             </ul>
           </div>
           <div class="navbar-right">
             <ul class="nav navbar-nav">
-              <li><p><%= button_to current_user.role, user_path(current_user), class:"btn btn-success",method: :put if current_user %></p></li>
-              <li><p class="navbar-text"><%= current_user.username if current_user %></p></li>
-              <li><p><%= button_to 'Log Out', logout_path, class:"btn btn-warning",method: :delete if current_user %></p></li>
+              <li><p><%#= button_to current_user.role, user_path(current_user), class:"btn btn-success",method: :put if current_user %></p></li>
+              <li><p class="navbar-text"><%#= current_user.username if current_user %></p></li>
+              <li><p><%#= button_to 'Log Out', logout_path, class:"btn btn-warning",method: :delete if current_user %></p></li>
             </ul>
           </div>
-        </div><!--/.nav-collapse -->
+        </div> nav-collapse
       </div>
-    </div>
+    </div>-->
 
     <!-- content -->
-    <div class="container"  role="main">
-      <% flash.each do |message_type, message| %>
-        <div class="alert alert-<%= message_type %>"><%= message %></div>
-      <% end %>
-      <%= yield %>
-    </div>
-    <%= javascript_include_tag "application", 'data-turbolinks-track' => true %>
+    <!-- <div class="container"  role="main">
+      <#% flash.each do |message_type, message| %>
+        <div class="alert alert-<%#= message_type %>"><%#= message %></div>
+      <%# end %> -->
+
+      <!-- CODE WRAP -->
+      <div class="outer-wrapper" id="top">
+
+      	<!-- NAVIGATION -->
+      	<nav class="navbar navbar-inverse navbar-fixed-top" data-spy="affix" data-offset-top="100">
+      		<div class="container">
+      			<div class="navbar-header">
+      				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+      				<span class="sr-only">Toggle navigation</span>
+      				<span class="icon-bar"></span>
+      				<span class="icon-bar"></span>
+      				<span class="icon-bar"></span>
+      				</button>
+
+      				<!-- LOGO -->
+      				<a class="navbar-brand" href="<%=root_path%>"><i class="fa fa-globe" aria-hidden="true"></i> Travelx</a>
+      			</div>
+      			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      				<ul class="nav navbar-nav navbar-right">
+      					</li>
+      					<li><%= link_to "My Activities", activities_path if current_user %></li>
+      					<li><%= link_to "My Friends", friends_path if current_user %></li>
+      					<li><%= button_to 'Log Out', logout_path, class:"btn btn-warning",method: :delete if current_user %></li>
+      					<!-- <li><a class="page-scroll" href="#team">Team</a></li>
+      					<li><a class="page-scroll" href="#footer">Contact</a></li> -->
+      				</ul>
+      			</div>
+      		</div>
+      	</nav>
+      	<!-- NAVIGATION END -->
+
+        <%= yield %>
+
+        <a href="#top" class="back-to-top page-scroll"><i class="fa fa-angle-up"></i></a>
+
+      </div>
+    <%= javascript_include_tag "application", 'data-turbolinks-track' => "reload" %>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   </body>
 </html>
