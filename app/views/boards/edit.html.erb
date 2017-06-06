@@ -1,4 +1,14 @@
-<%= form_for @board, :url => url_address_board(@board, @user) do |f|%>
-  <%= render :partial => "board", :locals => {board: f}%>
-  <%= f.submit "Update", class: "btn btn-primary"%>
-<% end %>
+<div class="info-content">
+  <div class="container">
+    <div class="row center-flex">
+      <div class="general-container">
+
+        <%= form_for @board, :url => url_address_board(@board, @user) do |f|%>
+          <%= render :partial => "board", :locals => {board: f}%>
+          <%= f.submit "Update", class: "btn btn-primary"%>
+        <% end %>
+
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,40 +1,62 @@
-<div class="intro intro4 ">
+<div class="info-content">
   <div class="container">
     <div class="row center-flex">
+      <div class="general-container">
 
-<%= errors_messages(@board)%>
+        <div class="col-md-6">
+          <h2><b>Create</b> and <b>Manage</b> your boards</h2>
+          <p>You can add activities when you create your boards or do it later. It is up to you!</p>
 
-<% if policy(:display).show? %>
-  <h3>Start by creating an activity or ...</h3>
-  <%= form_for @activity, :url => url_address_create_activity(@user) do |f| %>
-    <%= render :partial => "activities/activity_inline", :locals => {activity: f}%>
-    <%= f.submit "Create Activity", class:"btn btn-primary" %>
-  <% end %>
-<% end %>
-<br>
+          <%= errors_messages(@board)%>
 
-<% if policy(:display).show? %>
-  <h3>... Create a Board</h3>
-  <h5>Create your activities and add somes activities to it!</h5>
+          <% if policy(:display).show? %>
+            <h3>Start by creating an activity or ...</h3>
+            <%= form_for @activity, :url => url_address_create_activity(@user) do |f| %>
+              <%= render :partial => "activities/activity_inline", :locals => {activity: f}%>
+              <%= f.submit "Create Activity", class:"btn btn-primary" %>
+            <% end %>
+          <% end %>
+          <br>
 
-  <%= form_for @board, :url => url_address_create_board(@user) do |f|%>
-    <%= render :partial => "board", :locals => {board: f} %>
-    <%= f.fields_for :activities, @board.activities.build(user_id:right_user_id(@user)) do |ff| %>
-      <%= ff.hidden_field :user_id %>
-      <%= render partial: "activities/activity_inline", :locals => {activity: ff}%>
-    <% end %>
-    <%= f.submit "Create Board", class:"btn btn-primary" %>
-  <%end%>
-<% end %>
-<br>
+          <% if policy(:display).show? %>
+            <h3>... Create a Board</h3>
+            <h5>Create your activities and add somes activities to it!</h5>
 
-<h3>Boards</h3>
-<ul>
-  <% @boards.each do |board| %>
-    <li><%= link_to board.title, board_link(board, @user) if policy(board).show?%></li>
-  <% end %>
-</ul>
+            <%= form_for @board, :url => url_address_create_board(@user) do |f|%>
+              <%= render :partial => "board", :locals => {board: f} %>
+              <%= f.fields_for :activities, @board.activities.build(user_id:right_user_id(@user)) do |ff| %>
+                <%= ff.hidden_field :user_id %>
+                <%= render partial: "activities/activity_inline", :locals => {activity: ff}%>
+              <% end %>
+              <%= f.submit "Create Board", class:"btn btn-primary" %>
+            <%end%>
+          <% end %>
+          </div>
 
-</div>
-</div>
+          <div class="col-md-6 gallery">
+            <div class="col-md-4"><%= image_tag("boatsunset", class: "img-responsive gallery-board")%></div>
+            <div class="col-md-4"><%= image_tag("beach", class: "img-responsive gallery-board")%></div>
+            <div class="col-md-4"><%= image_tag("bridge3", class: "img-responsive gallery-board")%></div>
+            <div class="col-md-4"><%= image_tag("boat1", class: "img-responsive gallery-board")%></div>
+            <div class="col-md-4"><%= image_tag("bridge4", class: "img-responsive gallery-board")%></div>
+            <div class="col-md-4"><%= image_tag("beachpeople", class: "img-responsive gallery-board")%></div>
+
+            <div class="col-md-12">
+              <div class="btn-more">
+                <p><h2><b>Boards</b></h2></p>
+              </div>
+              <!-- <h2><b>Boards</b></h2> -->
+              <ul class="list">
+                <% @boards.each do |board| %>
+                <div class="col-md-6">
+                  <li><i class="fa fa-circle"></i><%= link_to board.title, board_link(board, @user) if policy(board).show?%></li>
+                </div>
+                <% end %>
+              </ul>
+            </div>
+          </div>
+
+      </div>
+    </div>
+  </div>
 </div>

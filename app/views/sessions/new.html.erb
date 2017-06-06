@@ -1,15 +1,15 @@
-<h1>Sign In</h1>
+<div class="intro intro4 overlay gradient6">
+  <div class="container">
+    <div class="row center welcome">
 
-<div class="row">
-  <div class="col-md-6 col-md-offset-3">
-    <%= form_for User.new, :url => sign_in_path do |f|%>
-      <%= f.label :email, class: "form-group" %>
-      <%= f.text_field :email, class: "form-control", autocomplete:"off" %><br>
+        <%= form_for User.new, :url => sign_in_path, html: { class: "intro-form"} do |f|%>
+          <h4><b>Sign in</b> first</h4>
+          <%= f.text_field :email, placeholder: "Email", autocomplete:"off" %><br>
+          <%= f.password_field :password, placeholder: "Password" %><br>
+          <%= f.button 'Sign In', class: 'buttons btn btn-primary btn-lg btn-block text-center'%>
+        <% end %>
 
-      <%= f.label :password, class: "form-group" %>
-      <%= f.password_field :password, class: "form-control" %><br>
 
-      <%= f.submit 'Sign In', class: "btn btn-primary"%>
-    <% end %>
+    </div>
   </div>
 </div>
