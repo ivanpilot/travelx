@@ -309,7 +309,10 @@ a, .btn, button {
 	text-align: center;
 	background: #fff;
 	padding: 43px 40px;
-	border-radius: 2px;
+	border-top-left-radius: 0px;
+	border-top-right-radius: 0px;
+	border-bottom-left-radius: 2px;
+	border-bottom-right-radius: 2px;
 }
 
 .intro-form h4 {
@@ -1691,9 +1694,9 @@ footer h4 {
 		position: relative;
 	}
 
-	.intro4 .intro-form {
-		margin-top: 50px;
-	}
+	// .intro4 .intro-form {
+	// 	margin-top: 50px;
+	// }
 
 	.intro5 .intro-form {
 		margin-top: 30px;
