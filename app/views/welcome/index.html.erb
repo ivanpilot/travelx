@@ -1,7 +1,7 @@
 	<!-- HERO -->
 	<div class="intro intro4 overlay gradient6">
 		<div class="container">
-			<div class="row center-flex">
+			<div class="row center-flex welcome">
 				<div class="col-md-6">
 					<h2><b>Maximise</b> your travel experience! </h2>
 					<p>Share useful tips with your friends and enjoy your travelling</p>
@@ -21,7 +21,7 @@
 					      <%= f.text_field :email, placeholder: "Email", autocomplete:"off" %><br>
 					      <%= f.password_field :password, placeholder: "Password" %><br>
 					      <%= f.button 'Login', class: 'buttons btn btn-primary btn-lg btn-block text-center'%>
-								<span>By pressing the get started button i agree to the terms and conditions of the mack theme.</span>
+								<span>Login with your <%=link_to 'Facebook', '/auth/facebook' %> account</span>
 					    <% end %>
 						</div>
 
@@ -32,7 +32,7 @@
 					      <%= f.password_field :password, placeholder: "Password" %><br>
 					      <%= f.password_field :password_confirmation, placeholder: "Password again" %><br>
 					      <%= f.button 'Create account', class: 'buttons btn btn-primary btn-lg btn-block text-center'%>
-								<span>By pressing the get started button i agree to the terms and conditions of the mack theme.</span>
+								<span>Login with your <%=link_to 'Facebook', '/auth/facebook' %> account</span>
 					    <% end %>
 						</div>
 						</div>
