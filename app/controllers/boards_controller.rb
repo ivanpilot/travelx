@@ -8,13 +8,12 @@ class BoardsController < ApplicationController
     else
       @boards = policy_scope(Board)
       @board = Board.new
-      @activity = Activity.new
       @user = User.find_by(id: params[:user_id]) if params[:user_id]
     end
   end
 
   def create
-    raise param.inspect
+    # raise param.inspect
     user = params[:user_id].nil? ? current_user : User.find_by(id:params[:user_id])
     @board = user.boards.build(board_params)
     authorize @board

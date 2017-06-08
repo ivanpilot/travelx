@@ -26,10 +26,14 @@
                   </div>
 
                   <div class="col-sm-12 add-activity" id="js-add-activity">
-                    <%= f.fields_for :activities, @board.activities.build(user_id:right_user_id(@user)) do |ff| %>
-                      <%= ff.hidden_field :user_id %>
-                      <%= render partial: "activities/activity_inline", :locals => {activity: ff}%>
-                    <% end %>
+                    <%#= f.fields_for :activities, @board.activities.build(user_id:right_user_id(@user)) do |ff| %>
+                    <%= render :partial => "activities/activity_form", :locals => {f: f} %>
+                    <%= render :partial => "activities/activity_form", :locals => {f: f} %>
+                    <%#= raise @board.inspect%>
+                    <!-- <%#= f.fields_for :activities, @board.activities.build(user_id:right_user_id(@user)) do |ff| %>
+                      <%#= ff.hidden_field :user_id %>
+                      <%#= render partial: "activities/activity_inline", :locals => {activity: ff}%>
+                    <%# end %> -->
                   </div>
                   <%= f.button "Create", :class => "btn btn-primary-board btn-lg btn-block text-center", :id => "js-button"%>
                 <%end%>
