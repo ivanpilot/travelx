@@ -6,8 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <%= csrf_meta_tags %>
     <title>Travelx</title>
-
-    <!-- <%#= stylesheet_link_tag "application", media: 'all', 'data-turbolinks-track' => true %> -->
     <%= stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => "reload" %>
 
     <!-- FAVICON -->
@@ -16,60 +14,10 @@
     <!-- Google Font -->
     <script src="https://use.fontawesome.com/32cdf19471.js"></script>
   	<link href="https://fonts.googleapis.com/css?family=Lato:100,300,300i,400,400i,700,900" rel="stylesheet">
-    <!-- <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
-    <!-- <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet"></link> -->
-
-
-
-
-    <!-- <link href="css/icons/style.css" rel="stylesheet" type="text/css"> -->
   </head>
 
   <body>
-    <!--  navbar YEAAHHHH-->
-    <!-- <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-        <a class="navbar-brand" href="<%= home %>"/>Home</a>
-        </div>
-        <div class="navbar-collapse collapse">
-          <div class="navbar-left">
-            <ul class="nav navbar-nav">
-              <li><%#= link_to "Sign Up", sign_up_path unless current_user %></li>
-              <li><%#= link_to "Sign In", sign_in_path unless current_user %></li>
-              <li><%#= link_to "My Activities", activities_path if current_user %></li>
-              <li><%#= link_to "My Friends", friends_path if current_user %></li>
-              <li class="navbar-text"><%#= "| Visiting #{current_friend.username}" if current_friend %></li>
-              <li><%#= link_to " | Boards", user_boards_path(current_friend) if current_friend %></li>
-              <li><%#= link_to " | Activities", user_activities_path(current_friend) if current_friend %></li>
-            </ul>
-          </div>
-          <div class="navbar-right">
-            <ul class="nav navbar-nav">
-              <li><p><%#= button_to current_user.role, user_path(current_user), class:"btn btn-success",method: :put if current_user %></p></li>
-              <li><p class="navbar-text"><%#= current_user.username if current_user %></p></li>
-              <li><p><%#= button_to 'Log Out', logout_path, class:"btn btn-warning",method: :delete if current_user %></p></li>
-            </ul>
-          </div>
-        </div> nav-collapse
-      </div>
-    </div>-->
-
-    <!-- content -->
-    <!-- <div class="container"  role="main">
-      <#% flash.each do |message_type, message| %>
-        <div class="alert alert-<%#= message_type %>"><%#= message %></div>
-      <%# end %> -->
-
-      <!-- CODE WRAP -->
       <div class="outer-wrapper" id="top">
-
       	<!-- NAVIGATION -->
       	<nav class="navbar navbar-inverse navbar-fixed-top general" data-spy="affix" data-offset-top="100">
       		<div class="container">

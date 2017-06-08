@@ -14,6 +14,7 @@ class BoardsController < ApplicationController
   end
 
   def create
+    raise param.inspect
     user = params[:user_id].nil? ? current_user : User.find_by(id:params[:user_id])
     @board = user.boards.build(board_params)
     authorize @board
