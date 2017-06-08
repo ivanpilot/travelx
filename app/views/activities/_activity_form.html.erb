@@ -1,5 +1,5 @@
 <%#= raise @board.inspect%>
-<%= f.fields_for :activities, @board.activities.build(user_id:right_user_id(@user)) do |ff| %>
+<%= board.fields_for :activities, board_activity do |ff| %>
   <%= ff.hidden_field :user_id %>
   <%= render partial: "activities/activity_inline", :locals => {activity: ff}%>
 <% end %>

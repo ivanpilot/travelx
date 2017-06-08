@@ -13,6 +13,11 @@ $(function(){
     console.log($(this));
   });
 
+  // $("#circle").on("click", function(event){
+  //   console.log($(this))
+  //   $("js-add-activity").html()
+  // })
+
 
 })
 // $( ":button#js-button" ).submit(function( event ) {
