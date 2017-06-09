@@ -10,9 +10,24 @@ class Board < ApplicationRecord
 
   # accepts_nested_attributes_for :activities, reject_if: :reject_activities
 
+  #RAILS HELPER VERSION WITHOUT AJAX IMPLEMENTED
+  # def activities_attributes=(attributes)
+  #   attributes.values.each do |attribute|
+  #     if attribute.values.none? {|att| att.blank?}
+  #       activity = Activity.find_by_activity_des_and_user_id(attribute[:description], attribute[:user_id])
+  #       new_activity = activity.nil? ? Activity.create!(attribute) : activity
+  #       self.activities << new_activity
+  #     end
+  #   end
+  # end
+
+  #VERSION WITH AJAX
   def activities_attributes=(attributes)
-    attributes.values.each do |attribute|
+    # binding.pry
+    attributes.each do |attribute|
       if attribute.values.none? {|att| att.blank?}
+        # binding.pry
+        # attribute[:user_id] = self.user_id
         activity = Activity.find_by_activity_des_and_user_id(attribute[:description], attribute[:user_id])
         new_activity = activity.nil? ? Activity.create!(attribute) : activity
         self.activities << new_activity

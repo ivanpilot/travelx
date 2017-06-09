@@ -1,5 +1,14 @@
 <%#= raise @board.inspect%>
-<%= board.fields_for :activities, board_activity do |ff| %>
+<%= board.fields_for :activities, @board.activities.build(user_id:right_user_id(@user)) do |ff| %>
   <%= ff.hidden_field :user_id %>
   <%= render partial: "activities/activity_inline", :locals => {activity: ff}%>
 <% end %>
+
+
+
+  <!-- <div class="col-sm-9 description">
+    <input placeholder="Description" autocomplete="off" class="description-field" type="text" name="board[activities_attributes][][description]">
+  </div>
+  <div class="col-sm-3 rating">
+    <input placeholder="Rating" autocomplete="off" class="rating-field" type="text" name="board[activities_attributes][][rating]">
+  </div> -->

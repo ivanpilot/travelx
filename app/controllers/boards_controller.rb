@@ -13,8 +13,9 @@ class BoardsController < ApplicationController
   end
 
   def create
-    # raise param.inspect
+    # raise params.inspect
     user = params[:user_id].nil? ? current_user : User.find_by(id:params[:user_id])
+# raise params.inspect
     @board = user.boards.build(board_params)
     authorize @board
     if Board.find_by_board_title_and_user_id(@board.title, user.id)

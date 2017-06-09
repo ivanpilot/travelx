@@ -13,10 +13,15 @@ $(function(){
     console.log($(this));
   });
 
-  // $("#circle").on("click", function(event){
-  //   console.log($(this))
-  //   $("js-add-activity").html()
-  // })
+  $("#circle").on("click", function(event){
+    // console.log($(this))
+    var source = $("#js_add_activity_template").html();
+    var template = Handlebars.compile(source);
+
+    $("#add-activity-field").append(template())
+
+
+  })
 
 
 })
