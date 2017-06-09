@@ -8,7 +8,7 @@
             <%= errors_messages(@board)%>
 
             <% if policy(:display).show? %>
-              <%= form_for @board, :url => url_address_create_board(@user), html: { class: "board-form"} do |f|%>
+              <%= form_for @board, :url => url_address_create_board(@user), html: { id: "board-form"} do |f|%>
                 <h2><b>Create</b> board</h2>
                 <div class="col-sm-12 add-board">
                   <%= render :partial => "board", :locals => {board: f} %>
@@ -28,13 +28,12 @@
                   <%#= render :partial => "activities/activity_form", :locals => {board: f, board_activity: @board.activities.build(user_id:right_user_id(@user))} %>
                   <%#= render :partial => "activities/activity_form", :locals => {board: f, board_activity: @board.activities.build(user_id:right_user_id(@user))} %>
 
-                  <!-- <input type="hidden" value="1" name="board[activities_attributes][0][user_id]" id="board_activities_attributes_0_user_id"> -->
                   <%#= f.fields_for :activities, @board.activities.build(user_id:right_user_id(@user)) do |ff| %>
                     <%#= ff.hidden_field :user_id %>
                     <%#= render partial: "activities/activity_inline", :locals => {activity: ff}%>
                   <%# end %>
-
                 <!-- </div> -->
+
                 <%= f.button "Create", :class => "btn btn-primary-board btn-lg btn-block text-center", :id => "js-button"%>
               <%end%>
             <% end %>

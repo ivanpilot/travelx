@@ -4,26 +4,36 @@
 
 $(function(){
 
-  // console.log("hi")
+  $("form#board-form").submit(function(e){
+    e.preventDefault();
 
-  $(":button#js-button").click(function(e){
-    // e.preventDefault();
-    // alert("stop")
+    // $.post()
+    // console.log("this is ...", $(this));
+    // console.log($(this).attr("action"))
+    // console.log($(this).serialize())
 
-    console.log($(this));
+    var $form = $(this);
+    var action = $form.attr("action");
+    var params = $form.serialize();
+    // var data = $(this)[0].form;
+
+    $.ajax({
+      type: "POST",
+      url: action,
+      data: params,
+    }).done(function(response){
+      console.log(response)
+      alert("it is working")
+    });
+    // console.log($(this)[0].form.action);
+    // console.log($(this)[0].form.method);
   });
 
   $("#circle").on("click", function(event){
-    // console.log($(this))
     var source = $("#js_add_activity_template").html();
     var template = Handlebars.compile(source);
-
     $("#add-activity-field").append(template())
-
-
   })
-
-
 })
 // $( ":button#js-button" ).submit(function( event ) {
 //   alert( "Handler for .submit() called." );
