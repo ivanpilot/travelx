@@ -23,11 +23,8 @@ class Board < ApplicationRecord
 
   #VERSION WITH AJAX
   def activities_attributes=(attributes)
-    # binding.pry
     attributes.each do |attribute|
       if attribute.values.none? {|att| att.blank?}
-        # binding.pry
-        # attribute[:user_id] = self.user_id
         activity = Activity.find_by_activity_des_and_user_id(attribute[:description], attribute[:user_id])
         new_activity = activity.nil? ? Activity.create!(attribute) : activity
         self.activities << new_activity

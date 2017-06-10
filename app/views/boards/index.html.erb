@@ -52,7 +52,7 @@
             <div class="btn-more">
               <h2><b>Boards</b></h2>
             </div>
-            <ul class="list">
+            <ul id="list-of-boards" class="list">
               <% @boards.each do |board| %>
               <div class="col-xs-6">
                 <li><i class="fa fa-circle"></i><%= link_to board.title, board_link(board, @user) if policy(board).show?%></li>
@@ -68,12 +68,20 @@
 </div>
 
 
-<script id="js_add_activity_template" type="text/x-handlebars-template">
+<script id="js-add-activity-template" type="text/x-handlebars-template">
   <input type="hidden" value="<%=right_user_id(@user)%>" name="board[activities_attributes][][user_id]">
   <div class="col-sm-9 description">
     <input placeholder="Description" autocomplete="off" class="description-field" type="text" name="board[activities_attributes][][description]">
   </div>
   <div class="col-sm-3 rating">
     <input placeholder="Rating" autocomplete="off" class="rating-field" type="text" name="board[activities_attributes][][rating]">
+  </div>
+</script>
+
+
+<script id="js-board-list-template" type="text/x-handlebars-template">
+  <div class="col-xs-6">
+    <li><i class="fa fa-circle"></i>{{list}}</li>
+    <!-- <li><i class="fa fa-circle"></i><%#= link_to board.title, board_link(board, @user) if policy(board).show?%></li> -->
   </div>
 </script>

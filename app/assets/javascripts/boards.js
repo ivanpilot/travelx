@@ -6,25 +6,29 @@ $(function(){
 
   $("form#board-form").submit(function(e){
     e.preventDefault();
-
     var $form = $(this);
     var action = $form.attr("action");
     var params = $form.serialize();
-
-    // $.post(action, params)
 
     $.ajax({
       type: "POST",
       url: action,
       data: params,
+      dataType: "json"
     }).done(function(response){
-      // console.log(response)
-      // alert("it is working")
+      var board = {
+        list: response
+      }
+      console.log(board.list)
+      var source = $("#js-board-list-template").html();
+      var template = Handlebars.compile(source);
+      var result = template(board)
+      $("ul#list-of-boards").append(result)
     });
   });
 
   $("#circle").on("click", function(event){
-    var source = $("#js_add_activity_template").html();
+    var source = $("#js-add-activity-template").html();
     var template = Handlebars.compile(source);
     $("#add-activity-field").append(template())
   })

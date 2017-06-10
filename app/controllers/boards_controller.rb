@@ -2,6 +2,7 @@ class BoardsController < ApplicationController
   before_action :authenticate_user, :authenticate_friend#, :reset_boards
 
   def index
+    # raise params.inspect
     if params[:user_id] && !current_user.is_friend_with?(User.find_by(id: params[:user_id])) && !current_user.admin?
       flash[:danger] = "You don't have authorization."
       redirect_back(fallback_location: boards_path)
@@ -13,9 +14,8 @@ class BoardsController < ApplicationController
   end
 
   def create
-    # raise params.inspect
+    # binding.pry
     user = params[:user_id].nil? ? current_user : User.find_by(id:params[:user_id])
-# raise params.inspect
     @board = user.boards.build(board_params)
     authorize @board
     if Board.find_by_board_title_and_user_id(@board.title, user.id)
@@ -30,7 +30,13 @@ class BoardsController < ApplicationController
       # @activity = Activity.new #must redeclare the variable if using render other @activity in index is nil
       # render :index
     end
-    redirect_to to_boards
+    # redirect_to to_boards
+    render json: @board.title.to_json
+    # respond_to do |f|
+    #   # binding.pry
+    #   f.html {redirect_to to_boards}
+    #   f.json {render json: @board.title}
+    # end
   end
 
   def show
