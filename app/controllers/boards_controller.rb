@@ -14,7 +14,6 @@ class BoardsController < ApplicationController
   end
 
   def create
-    # binding.pry
     user = params[:user_id].nil? ? current_user : User.find_by(id:params[:user_id])
     @board = user.boards.build(board_params)
     authorize @board
@@ -33,9 +32,8 @@ class BoardsController < ApplicationController
     # redirect_to to_boards
     render json: @board.title.to_json
     # respond_to do |f|
-    #   # binding.pry
     #   f.html {redirect_to to_boards}
-    #   f.json {render json: @board.title}
+    #   f.json {render json: @board.title.to_json}
     # end
   end
 

@@ -16,14 +16,22 @@ $(function(){
       data: params,
       dataType: "json"
     }).done(function(response){
-      var board = {
-        list: response
+      if(board !== undefined){
+        console.log("WORKING")
+        var board = {
+          list: response
+        }
+        var source = $("#js-board-list-template").html();
+        var template = Handlebars.compile(source);
+        var result = template(board);
+        $("ul#list-of-boards").append(result);
       }
-      console.log(board.list)
-      var source = $("#js-board-list-template").html();
-      var template = Handlebars.compile(source);
-      var result = template(board)
-      $("ul#list-of-boards").append(result)
+    // }).fail(function(message){
+    //   console.log(message)
+    //   console.log("fail")
+    // }).always(function(message){
+    //   console.log(message)
+    //   console.log("always")
     });
   });
 
