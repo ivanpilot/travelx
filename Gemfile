@@ -38,6 +38,7 @@ gem 'pundit'
 gem 'omniauth'
 gem 'omniauth-facebook'
 gem 'handlebars_assets', '~> 0.23.2'
+gem 'active_model_serializers'
 
 # gem "better_errors"
 # gem "sprockets_better_errors"
