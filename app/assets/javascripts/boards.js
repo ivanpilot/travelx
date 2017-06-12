@@ -32,7 +32,26 @@ $(function(){
     var template = Handlebars.compile(source);
     $("#add-activity-field").append(template())
   })
+
+  $("button#previous-board").on("click", function(event){
+    console.log("you clicked")
+    var $boardId = $(this).data("id")
+    loadBoardIds();
+
+
+
+  });
+
 })
+
+function loadBoardIds(){
+  $.get('/boards.json', function(response){
+    var boardIds = response.map( element => element.id )
+    return boardIds
+  })
+}
+
+
 
 function displayList(board){
   var templateList = Handlebars.compile($("#js-board-list-template").html());

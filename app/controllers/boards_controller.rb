@@ -11,6 +11,11 @@ class BoardsController < ApplicationController
       @board = Board.new
       @user = User.find_by(id: params[:user_id]) if params[:user_id]
     end
+
+    respond_to do |f|
+      f.html
+      f.json {render json: @boards}
+    end
   end
 
   def create

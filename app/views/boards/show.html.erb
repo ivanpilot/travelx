@@ -1,12 +1,33 @@
 <div class="info-content">
   <div class="container">
+
     <div class="row center-flex">
       <div class="general-container">
+        <div class="col-xs-6">
+          <h2><%= @board.title %></h2>
+        </div>
+        <div class="col-xs-3">
+          <button id="previous-board" name="button" data-id="<%=@board.id%>" type="submit" class="buttons btn btn-primary btn-lg btn-block text-center">Previous Board</button>
+        </div>
+        <div class="col-xs-3">
+          <button id="next-board" name="button" data-id="<%=@board.id%>" type="submit" class="buttons btn btn-primary btn-lg btn-block text-center">Next Board</button>
+        </div>
+      </div>
+    </div>
 
-        <h1><%= @board.title %></h1>
-        <%= button_to("Edit title", edit_board_link(@board, @user), :class => "btn btn-info", method: :get) if policy(@board).edit? %><br>
-        <%= button_to("Delete board", delete_board_link(@board, @user), :class => "btn btn-danger", method: :delete, data: {confirm: "Are you sure?"}) if policy(@board).destroy?%>
 
+    <div class="row center-flex">
+      <div class="col-xs-12">
+        <%= link_to("Edit title", edit_board_link(@board, @user), method: :get) if policy(@board).edit? %> |
+        <%= link_to("Delete board", delete_board_link(@board, @user), method: :delete, data: {confirm: "Are you sure?"}) if policy(@board).destroy?%>
+        <%#= button_to 'next board', :class => "buttons btn btn-primary btn-lg btn-block text-center"%>
+      </div>
+
+      </div>
+
+
+    <div class="row center-flex">
+      <div class="general-container col-xs-12">
         <h3>Activities</h3><br>
         <ol>
           <% @board.activities.each do |activity| %>
@@ -16,8 +37,8 @@
             <%= button_to("Import", import_user_activity_path(@user, activity), class:"btn btn-success") if current_friend %><br>
           <% end %>
         </ol>
-
       </div>
     </div>
+
   </div>
 </div>
