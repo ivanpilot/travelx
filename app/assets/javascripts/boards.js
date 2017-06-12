@@ -20,6 +20,7 @@ $(function(){
       if(board.title !== ""){
         displayList(board)
         displayLatestBoard(board)
+        resetFormFields()
       }
     }).fail(function(message){
       console.log("there was an error: ", message)
@@ -45,6 +46,15 @@ function displayLatestBoard(board){
   $("#latest-board").html(displayLatestBoard);
 }
 
-function clearFormFields(){
-  
+function resetFormFields(){
+  var descriptionField = $("input.description-field")
+  var ratingField = $("input.rating-field")
+
+  $("input.title-field")[0].value = ""
+  for (let i = 0, l = descriptionField.length; i < l; i++){
+    descriptionField[i].value = ""
+  }
+  for (let i = 0, l = ratingField.length; i < l; i++){
+    ratingField[i].value = ""
+  }
 }
