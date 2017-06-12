@@ -7,7 +7,7 @@ $(function(){
   $("form#board-form").submit(function(e){
     e.preventDefault();
     var $form = $(this);
-    var action = $form.attr("action");
+    var action = $form.attr("action") + ".json";
     var params = $form.serialize();
 
     $.ajax({
@@ -16,22 +16,13 @@ $(function(){
       data: params,
       dataType: "json"
     }).done(function(response){
-      if(board !== undefined){
-        console.log("WORKING")
-        var board = {
-          list: response
-        }
-        var source = $("#js-board-list-template").html();
-        var template = Handlebars.compile(source);
-        var result = template(board);
-        $("ul#list-of-boards").append(result);
+      var board = response
+      if(board.title !== ""){
+        displayList(board)
+        displayLatestBoard(board)
       }
-    // }).fail(function(message){
-    //   console.log(message)
-    //   console.log("fail")
-    // }).always(function(message){
-    //   console.log(message)
-    //   console.log("always")
+    }).fail(function(message){
+      console.log("there was an error: ", message)
     });
   });
 
@@ -41,3 +32,19 @@ $(function(){
     $("#add-activity-field").append(template())
   })
 })
+
+function displayList(board){
+  var templateList = Handlebars.compile($("#js-board-list-template").html());
+  var displayList = templateList(board);
+  $("ul#list-of-boards").append(displayList);
+}
+
+function displayLatestBoard(board){
+  var templateLatestBoard = Handlebars.compile($("#js-latestboard-template").html());
+  var displayLatestBoard = templateLatestBoard(board);
+  $("#latest-board").html(displayLatestBoard);
+}
+
+function clearFormFields(){
+  
+}

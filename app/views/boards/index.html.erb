@@ -61,9 +61,15 @@
             </ul>
           </div>
         </div>
-
       </div>
     </div>
+
+    <div class="row center-flex">
+      <div class="general-container">
+        <div class="col-sm-12" id="latest-board"></div>
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -81,7 +87,18 @@
 
 <script id="js-board-list-template" type="text/x-handlebars-template">
   <div class="col-xs-6">
-    <li><i class="fa fa-circle"></i>{{list}}</li>
-    <!-- <li><i class="fa fa-circle"></i><%#= link_to board.title, board_link(board, @user) if policy(board).show?%></li> -->
+    <li><i class="fa fa-circle"></i><a href="/boards/{{id}}">{{title}}</a></li>
+    <!-- <li><i class="fa fa-circle"></i><%#= link_to {{title}}, board_link(board, @user) if policy(board).show?%></li> -->
   </div>
+</script>
+
+<script id="js-latestboard-template" type="text/x-handlebars-template">
+  <h3>Congrats! You just added a new board</h3>
+  <h3><b>{{title}}</b></h3>
+  <h4>Activities included</h4>
+  <ul>
+    {{#each this.activities}}
+      <li>Description: {{description}} | Rating: {{rating}}</li>
+    {{/each}}
+  </ul>
 </script>

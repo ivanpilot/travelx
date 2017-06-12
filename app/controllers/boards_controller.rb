@@ -30,17 +30,19 @@ class BoardsController < ApplicationController
       # render :index
     end
     # redirect_to to_boards
-    render json: @board.title.to_json
-    # respond_to do |f|
-    #   f.html {redirect_to to_boards}
-    #   f.json {render json: @board.title.to_json}
-    # end
+    # render json: @board.to_json
+    respond_to do |f|
+      # binding.pry
+      f.html {redirect_to to_boards}
+      f.json {render json: @board.to_json(only: [:id, :title, :user_id], include: [activities: {only: [:description, :rating]}])}
+    end
   end
 
   def show
     if params[:user_id] && !current_user.is_friend_with?(User.find_by(id: params[:user_id])) && !current_user.admin?
       flash[:danger] = "You don't have authorization."
       redirect_back(fallback_location: boards_path)
+      return
     else
       @board = Board.find_by(id: params[:id])
       if @board
@@ -49,8 +51,13 @@ class BoardsController < ApplicationController
       else
         flash[:danger] = "Board not found."
         redirect_to boards_path
+        return
       end
     end
+    # respond_to do |f|
+    #   f.html {redirect_to board_path(@board)}
+    #   f.json {render json: @board}
+    # end
   end
 
   def edit
