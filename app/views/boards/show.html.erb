@@ -7,10 +7,10 @@
           <h2><%= @board.title %></h2>
         </div>
         <div class="col-xs-3">
-          <button id="previous-board" name="button" data-id="<%=@board.id - 1%>" type="submit" class="buttons btn btn-primary btn-lg btn-block text-center">Previous Board</button>
+          <button id="previous-board" name="button" data-id="<%=@board.id - 1%>" type="submit" class="buttons btn btn-primary btn-lg btn-block text-center is-not-visible">Previous Board</button>
         </div>
         <div class="col-xs-3">
-          <button id="next-board" name="button" data-id="<%=@board.id + 1%>" type="submit" class="buttons btn btn-primary btn-lg btn-block text-center">Next Board</button>
+          <button id="next-board" name="button" data-id="<%=@board.id + 1%>" type="submit" class="buttons btn btn-primary btn-lg btn-block text-center is-not-visible">Next Board</button>
         </div>
       </div>
     </div>

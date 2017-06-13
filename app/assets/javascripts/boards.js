@@ -6,11 +6,9 @@ $(function(){
 
   // ********** JS FUNCTION FOR BOARDS CONTROLLER INDEX VIEW ONLY **********
   $(document).on("turbolinks:load", function() {
-    // debugger
     if (!($(".boards-index").length > 0)) {
       return;
     }
-    console.log ("this is the indexxxxx")
 
     $("form#board-form").submit(function(e){
       e.preventDefault();
@@ -48,7 +46,7 @@ $(function(){
       return;
     }
     // debugger
-    console.log("this is board show")
+    // console.log("this is board show")
     loadBoardIds();
 
 // isCurrentBoardFirstBoard(currentBoardId, akal)
@@ -67,27 +65,28 @@ function loadBoardIds(){
   $.get('/boards.json', function(data){
     var boardIds = data.map( element => element.id )
     var currentBoardId = $("#board-title").data("id")
-    if(isCurrentBoardFirstBoard(currentBoardId, boardIds)){
-      // debugger
-      console.log("yes first one")
-    }
-    // debugger
+    displayPreviousNextBoard(currentBoardId, boardIds)
   });
 }
 
-// function sendBoardIds(data){
-//   woke = data;
-//   // debugger
-// }
+function displayPreviousNextBoard(currentBoard, boards){
+  // debugger
+  if(!isCurrentBoardFirstBoard(currentBoard, boards)){
+    $("button#previous-board").removeClass("is-not-visible")
+  }
+  if(!isCurrentBoardLastBoard(currentBoard, boards)){
+    $("button#next-board").removeClass("is-not-visible")
+  }
+}
 
 function isCurrentBoardFirstBoard(currentBoard, boards){
-  // debugger
   return currentBoard === boards[0] ? true : false;
 }
 
-// function isCurrentBoardLastBoard(currentBoardId, boardIds){
-//   return currentBoardId === boardIds[-1] ? true : false;
-// }
+function isCurrentBoardLastBoard(currentBoardId, boards){
+  // debugger
+  return currentBoardId === boards[boards.length - 1] ? true : false;
+}
 
 
 function displayList(board){
