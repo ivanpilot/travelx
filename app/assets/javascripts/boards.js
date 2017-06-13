@@ -45,29 +45,55 @@ $(function(){
     if (!($(".boards-show").length > 0)) {
       return;
     }
-    // debugger
-    // console.log("this is board show")
-    loadBoardIds();
+    // var currentBoardId = $("#board-title").data("id")
+    // checkIfCurrentBoardIsFirstOrLast(currentBoardId);
+    // showNextBoard(currentBoardId);
 
-// isCurrentBoardFirstBoard(currentBoardId, akal)
+    var currentBoardId = $("#board-title").data("id")
+    $.get('/boards.json', function(data){
+      var boardIds = data.map( element => element.id )
+      displayPreviousNextBoard(currentBoardId, boardIds)
 
-    // $("button#previous-board").on("click", function(event){
-    //   console.log("you clicked")
-    //   var $boardId = $(this).data("id")
-    //   // loadBoardIds();
-    // });
 
+
+    });
   });
 });
 
 
-function loadBoardIds(){
-  $.get('/boards.json', function(data){
-    var boardIds = data.map( element => element.id )
-    var currentBoardId = $("#board-title").data("id")
-    displayPreviousNextBoard(currentBoardId, boardIds)
-  });
+function showNextBoard(currentBoardId){
+  var nextBoardId = currentBoardId + 1
+  debugger
+  $.get("/boards/" + nextBoardId + ".json", function(data){
+    console.log(data)
+  })
 }
+
+function CurrentBoardPosition(currentBoardId, boards){
+  for (let i = 0, l = boards.length; i < l; i++){
+    if(currentBoardId === boards[i]){
+      return i;
+    }
+  }
+}
+
+function nextBoardId(currentBoardId, boards){
+  var position = CurrentBoardPosition(currentBoardId, boards)
+  return boards[position + 1]
+}
+
+function previousBoardId(currentBoardId, boards){
+  var position = CurrentBoardPosition(currentBoardId, boards)
+  return boards[position - 1]
+}
+
+
+// function checkIfCurrentBoardIsFirstOrLast(currentBoardId){
+//   $.get('/boards.json', function(data){
+//     var boardIds = data.map( element => element.id )
+//     displayPreviousNextBoard(currentBoardId, boardIds)
+//   });
+// }
 
 function displayPreviousNextBoard(currentBoard, boards){
   // debugger
