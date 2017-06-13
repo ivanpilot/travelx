@@ -7,10 +7,10 @@
           <h2><%= @board.title %></h2>
         </div>
         <div class="col-xs-3">
-          <button id="previous-board" name="button" data-id="<%=@board.id - 1%>" type="submit" class="buttons btn btn-primary btn-lg btn-block text-center is-not-visible">Previous Board</button>
+          <button id="previous-board" name="button" type="submit" class="buttons btn btn-primary btn-lg btn-block text-center is-not-visible">Previous Board</button>
         </div>
         <div class="col-xs-3">
-          <button id="next-board" name="button" data-id="<%=@board.id + 1%>" type="submit" class="buttons btn btn-primary btn-lg btn-block text-center is-not-visible">Next Board</button>
+          <button id="next-board" name="button" type="submit" class="buttons btn btn-primary btn-lg btn-block text-center is-not-visible">Next Board</button>
         </div>
       </div>
     </div>
@@ -29,16 +29,29 @@
     <div class="row center-flex">
       <div class="general-container col-xs-12">
         <h3>Activities</h3><br>
-        <ol>
-          <% @board.activities.each do |activity| %>
-            <li>Description: <%= activity.description %> | Rating: <%= activity.rating %></li>
-            <%= link_to("| Edit", edit_activity_link(activity, @user)) if policy(activity).edit?%>
-            <%= show_boardactivity_delete_link(@board, activity, @user)%>
-            <%= button_to("Import", import_user_activity_path(@user, activity), class:"btn btn-success") if current_friend %><br>
-          <% end %>
-        </ol>
+        <div id="display-activities">
+          <ol>
+            <% @board.activities.each do |activity| %>
+              <li>Description: <%= activity.description %> | Rating: <%= activity.rating %></li>
+              <%= link_to("| Edit", edit_activity_link(activity, @user)) if policy(activity).edit?%>
+              <%= show_boardactivity_delete_link(@board, activity, @user)%>
+              <%= button_to("Import", import_user_activity_path(@user, activity), class:"btn btn-success") if current_friend %><br>
+            <% end %>
+          </ol>
+        </div>
       </div>
     </div>
 
   </div>
 </div>
+
+<script id="js-activities-template" type="text/x-handlebars-template">
+  <ol>
+    {{#each this.activities}}
+    <li>Description: {{description}} | Rating: {{rating}}</li>
+    <a href="/activities/{{id}}/edit">| Edit</a>
+    <a data-confirm="This will delete the activity from the board only. Are you sure?" rel="nofollow" data-method="delete" href="/board_activities/{{board_activities.id}}">| Delete</a>
+    
+    {{/each}}
+  </ol>
+</script>
