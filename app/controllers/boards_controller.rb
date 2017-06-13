@@ -59,10 +59,10 @@ class BoardsController < ApplicationController
         return
       end
     end
-    # respond_to do |f|
-    #   f.html {redirect_to board_path(@board)}
-    #   f.json {render json: @board}
-    # end
+    respond_to do |f|
+      f.html {render :show}
+      f.json {render json: @board}
+    end
   end
 
   def edit

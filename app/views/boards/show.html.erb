@@ -3,14 +3,14 @@
 
     <div class="row center-flex">
       <div class="general-container">
-        <div class="col-xs-6">
+        <div id="board-title" data-id="<%=@board.id%>" class="col-xs-6">
           <h2><%= @board.title %></h2>
         </div>
         <div class="col-xs-3">
-          <button id="previous-board" name="button" data-id="<%=@board.id%>" type="submit" class="buttons btn btn-primary btn-lg btn-block text-center">Previous Board</button>
+          <button id="previous-board" name="button" data-id="<%=@board.id - 1%>" type="submit" class="buttons btn btn-primary btn-lg btn-block text-center">Previous Board</button>
         </div>
         <div class="col-xs-3">
-          <button id="next-board" name="button" data-id="<%=@board.id%>" type="submit" class="buttons btn btn-primary btn-lg btn-block text-center">Next Board</button>
+          <button id="next-board" name="button" data-id="<%=@board.id + 1%>" type="submit" class="buttons btn btn-primary btn-lg btn-block text-center">Next Board</button>
         </div>
       </div>
     </div>

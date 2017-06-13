@@ -2,55 +2,92 @@
 // # All this logic will automatically be available in application.js.
 // # You can use CoffeeScript in this file: http://coffeescript.org/
 
+
+let akal;
+// debugger
 $(function(){
 
-  $("form#board-form").submit(function(e){
-    e.preventDefault();
-    var $form = $(this);
-    var action = $form.attr("action") + ".json";
-    var params = $form.serialize();
+  // ********** JS FUNCTION FOR BOARDS CONTROLLER INDEX VIEW ONLY **********
+  if($("body").has(".boards-index")){
+    $("form#board-form").submit(function(e){
+      e.preventDefault();
+      var $form = $(this);
+      var action = $form.attr("action") + ".json";
+      var params = $form.serialize();
 
-    $.ajax({
-      type: "POST",
-      url: action,
-      data: params,
-      dataType: "json"
-    }).done(function(response){
-      var board = response
-      if(board.title !== ""){
-        displayList(board)
-        displayLatestBoard(board)
-        resetFormFields()
-      }
-    }).fail(function(message){
-      console.log("there was an error: ", message)
+      $.ajax({
+        type: "POST",
+        url: action,
+        data: params,
+        dataType: "json"
+      }).done(function(response){
+        var board = response
+        if(board.title !== ""){
+          displayList(board)
+          displayLatestBoard(board)
+          resetFormFields()
+        }
+      }).fail(function(message){
+        console.log("there was an error: ", message)
+      });
     });
-  });
 
-  $("#circle").on("click", function(event){
-    var source = $("#js-add-activity-template").html();
-    var template = Handlebars.compile(source);
-    $("#add-activity-field").append(template())
-  })
+    $("#circle").on("click", function(event){
+      var source = $("#js-add-activity-template").html();
+      var template = Handlebars.compile(source);
+      $("#add-activity-field").append(template())
+    })
+  }
 
-  $("button#previous-board").on("click", function(event){
-    console.log("you clicked")
-    var $boardId = $(this).data("id")
+  // ********** JS FUNCTION FOR BOARDS CONTROLLER SHOW VIEW ONLY **********
+  if($("body").has(".boards-show")){
+
     loadBoardIds();
 
+    var currentBoardId = $("#board-title").data("id")
+    // debugger
+    // if(isCurrentBoardFirstBoard(currentBoardId, akal)){
+    //   // debugger
+    //   console.log("yes first one")
+    // }
+// isCurrentBoardFirstBoard(currentBoardId, akal)
 
+    // $("button#previous-board").on("click", function(event){
+    //   console.log("you clicked")
+    //   var $boardId = $(this).data("id")
+    //   // loadBoardIds();
+    //
+    //
+    // });
 
-  });
+  }
 
-})
+});
+
 
 function loadBoardIds(){
-  $.get('/boards.json', function(response){
-    var boardIds = response.map( element => element.id )
-    return boardIds
-  })
+  $.get('/boards.json', function(data){
+    var ids = data.map( element => element.id )
+    // debugger
+    akal = ids
+    // sendBoardIds(ids);
+    // debugger
+  });
 }
 
+// function sendBoardIds(data){
+//   woke = data;
+//   // debugger
+// }
+
+function isCurrentBoardFirstBoard(currentBoard, boards){
+  debugger
+  return currentBoard === boards[0] ? true : false;
+}
+
+// function isCurrentBoardLastBoard(currentBoardId, boardIds){
+//   return currentBoardId === boardIds[-1] ? true : false;
+// }
 
 
 function displayList(board){
