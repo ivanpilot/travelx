@@ -2,13 +2,16 @@
 // # All this logic will automatically be available in application.js.
 // # You can use CoffeeScript in this file: http://coffeescript.org/
 
-
-let boards;
-// debugger
 $(function(){
 
   // ********** JS FUNCTION FOR BOARDS CONTROLLER INDEX VIEW ONLY **********
-  if($("body").has(".boards-index")){
+  $(document).on("turbolinks:load", function() {
+    // debugger
+    if (!($(".boards-index").length > 0)) {
+      return;
+    }
+    console.log ("this is the indexxxxx")
+
     $("form#board-form").submit(function(e){
       e.preventDefault();
       var $form = $(this);
@@ -36,14 +39,17 @@ $(function(){
       var source = $("#js-add-activity-template").html();
       var template = Handlebars.compile(source);
       $("#add-activity-field").append(template())
-    })
-  }
+    });
+  });
 
   // ********** JS FUNCTION FOR BOARDS CONTROLLER SHOW VIEW ONLY **********
-  if($("body").has(".boards-show")){
-
+  $(document).on("turbolinks:load", function() {
+    if (!($(".boards-show").length > 0)) {
+      return;
+    }
+    // debugger
+    console.log("this is board show")
     loadBoardIds();
-
 
 // isCurrentBoardFirstBoard(currentBoardId, akal)
 
@@ -51,28 +57,21 @@ $(function(){
     //   console.log("you clicked")
     //   var $boardId = $(this).data("id")
     //   // loadBoardIds();
-    //
-    //
     // });
 
-  }
-
+  });
 });
 
 
 function loadBoardIds(){
   $.get('/boards.json', function(data){
-    var ids = data.map( element => element.id )
-    // debugger
-    boards = ids
-    // sendBoardIds(ids);
-    // debugger
+    var boardIds = data.map( element => element.id )
     var currentBoardId = $("#board-title").data("id")
-    // debugger
-    if(isCurrentBoardFirstBoard(currentBoardId, boards)){
+    if(isCurrentBoardFirstBoard(currentBoardId, boardIds)){
       // debugger
       console.log("yes first one")
     }
+    // debugger
   });
 }
 

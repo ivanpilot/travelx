@@ -34,10 +34,7 @@ class BoardsController < ApplicationController
       # @activity = Activity.new #must redeclare the variable if using render other @activity in index is nil
       # render :index
     end
-    # redirect_to to_boards
-    # render json: @board.to_json
     respond_to do |f|
-      # binding.pry
       f.html {redirect_to to_boards}
       f.json {render json: @board}#(only: [:id, :title, :user_id], include: [activities: {only: [:description, :rating]}])}
     end
