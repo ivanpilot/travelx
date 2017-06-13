@@ -39,7 +39,7 @@ class BoardsController < ApplicationController
     respond_to do |f|
       # binding.pry
       f.html {redirect_to to_boards}
-      f.json {render json: @board.to_json(only: [:id, :title, :user_id], include: [activities: {only: [:description, :rating]}])}
+      f.json {render json: @board}#(only: [:id, :title, :user_id], include: [activities: {only: [:description, :rating]}])}
     end
   end
 

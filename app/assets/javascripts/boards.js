@@ -3,7 +3,7 @@
 // # You can use CoffeeScript in this file: http://coffeescript.org/
 
 
-let akal;
+let boards;
 // debugger
 $(function(){
 
@@ -44,12 +44,7 @@ $(function(){
 
     loadBoardIds();
 
-    var currentBoardId = $("#board-title").data("id")
-    // debugger
-    // if(isCurrentBoardFirstBoard(currentBoardId, akal)){
-    //   // debugger
-    //   console.log("yes first one")
-    // }
+
 // isCurrentBoardFirstBoard(currentBoardId, akal)
 
     // $("button#previous-board").on("click", function(event){
@@ -69,9 +64,15 @@ function loadBoardIds(){
   $.get('/boards.json', function(data){
     var ids = data.map( element => element.id )
     // debugger
-    akal = ids
+    boards = ids
     // sendBoardIds(ids);
     // debugger
+    var currentBoardId = $("#board-title").data("id")
+    // debugger
+    if(isCurrentBoardFirstBoard(currentBoardId, boards)){
+      // debugger
+      console.log("yes first one")
+    }
   });
 }
 
@@ -81,7 +82,7 @@ function loadBoardIds(){
 // }
 
 function isCurrentBoardFirstBoard(currentBoard, boards){
-  debugger
+  // debugger
   return currentBoard === boards[0] ? true : false;
 }
 
