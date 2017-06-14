@@ -45,91 +45,91 @@ $(function(){
     if (!($(".boards-show").length > 0)) {
       return;
     }
-    // var currentBoardId = $("#board-title").data("id")
-    // checkIfCurrentBoardIsFirstOrLast(currentBoardId);
-    // displayNextBoard(currentBoardId);
-
-    var currentBoardId = $("#board-title").data("id")
 
     $.get('/boards.json', function(data){
-      var boardIds = data.map( element => element.id )
-      var firstBoardId = isCurrentBoardFirstBoard(currentBoardId, boardIds)
-      var lastBoardId = isCurrentBoardLastBoard(currentBoardId, boardIds)
-      displayPreviousNextBoardButtons(currentBoardId, boardIds)
+      var listBoards = data.map( board => board.id )
+      var initBoard = $("#board-title").data("id")
+      var firstBoardId = isCurrentBoardFirstBoard(initBoard, listBoards)
+      var lastBoardId = isCurrentBoardLastBoard(initBoard, listBoards)
+      displayPreviousNextBoardButtons(initBoard, listBoards)
 
       if(!firstBoardId){
+        console.log("initial init board ", initBoard);
         $("button#previous-board").click(function(e){
           e.preventDefault;
-          displayPreviousBoard(currentBoardId, boardIds);
-        })
+          displayBoard(initBoard, listBoards, getPreviousBoardId);
+          initBoard = getPreviousBoardId(initBoard, listBoards);
+          displayPreviousNextBoardButtons(initBoard, listBoards)
+          console.log("upadated init board ", initBoard);
+        });
       }
 
       if(!lastBoardId){
+        console.log("initial init board ", initBoard);
         $("button#next-board").click(function(e){
           e.preventDefault;
-          displayNextBoard(currentBoardId, boardIds);
-        })
+          displayBoard(initBoard, listBoards, getNextBoardId);
+          initBoard = getNextBoardId(initBoard, listBoards);
+          displayPreviousNextBoardButtons(initBoard, listBoards)
+          console.log("upadated init board ", initBoard);
+        });
       }
-
     });
   });
+
 });
 
 
 
-function displayNextBoard(currentBoardId, boards){
-  var id = nextBoardId(currentBoardId, boards);
-  $.get("/boards/" + id + ".json", function(data){
-    var board = data
-    $("#board-title").html("<h2>" + board.title + "</h2>")
+function displayBoard(currentBoard, boards, callback){
+  var id = callback(currentBoard, boards);
+  retrieveBoardInfo(id);
+}
+
+
+function retrieveBoardInfo(boardId){
+  $.get("/boards/" + boardId + ".json", function(data){
+    $("#board-title").html("<h2>" + data.title + "</h2>")
     var template = Handlebars.compile($("#js-activities-template").html());
-    $("#display-activities").html(template(board))
-    // debugger
+    $("#display-activities").text("")
+    $("#display-activities").html(template(data))
   });
 }
 
-function displayPreviousBoard(currentBoardId, boards){
-  var id = previousBoardId(currentBoardId, boards);
-  $.get("/boards/" + id + ".json", function(data){
-    console.log(data)
-  });
-}
-
-function CurrentBoardPosition(currentBoardId, boards){
-  for (let i = 0, l = boards.length; i < l; i++){
-    if(currentBoardId === boards[i]){
+function CurrentBoardPosition(currentBoardId, boardIds){
+  for (let i = 0, l = boardIds.length; i < l; i++){
+    if(currentBoardId === boardIds[i]){
       return i;
     }
   }
 }
 
-function nextBoardId(currentBoardId, boards){
-  var position = CurrentBoardPosition(currentBoardId, boards)
-  return boards[position + 1]
+function getNextBoardId(currentBoardId, boardIds){
+  var position = CurrentBoardPosition(currentBoardId, boardIds)
+  return boardIds[position + 1]
 }
 
-function previousBoardId(currentBoardId, boards){
-  var position = CurrentBoardPosition(currentBoardId, boards)
-  return boards[position - 1]
+function getPreviousBoardId(currentBoardId, boardIds){
+  var position = CurrentBoardPosition(currentBoardId, boardIds)
+  return boardIds[position - 1]
 }
 
-function displayPreviousNextBoardButtons(currentBoard, boards){
-  if(!isCurrentBoardFirstBoard(currentBoard, boards)){
+function displayPreviousNextBoardButtons(currentBoardId, boardIds){
+  if(!isCurrentBoardFirstBoard(currentBoardId, boardIds)){
     $("button#previous-board").removeClass("is-not-visible")
   }
-  if(!isCurrentBoardLastBoard(currentBoard, boards)){
+  if(!isCurrentBoardLastBoard(currentBoardId, boardIds)){
     $("button#next-board").removeClass("is-not-visible")
   }
 }
 
-function isCurrentBoardFirstBoard(currentBoard, boards){
-  return currentBoard === boards[0] ? true : false;
+function isCurrentBoardFirstBoard(currentBoardId, boardIds){
+  return currentBoardId === boardIds[0] ? true : false;
 }
 
-function isCurrentBoardLastBoard(currentBoardId, boards){
-  return currentBoardId === boards[boards.length - 1] ? true : false;
+function isCurrentBoardLastBoard(currentBoardId, boardIds){
+  return currentBoardId === boardIds[boardIds.length - 1] ? true : false;
 }
-
 
 function displayList(board){
   var templateList = Handlebars.compile($("#js-board-list-template").html());
