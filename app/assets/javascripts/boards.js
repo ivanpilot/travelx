@@ -49,31 +49,30 @@ $(function(){
     $.get('/boards.json', function(data){
       var listBoards = data.map( board => board.id )
       var initBoard = $("#board-title").data("id")
-      var firstBoardId = isCurrentBoardFirstBoard(initBoard, listBoards)
-      var lastBoardId = isCurrentBoardLastBoard(initBoard, listBoards)
       displayPreviousNextBoardButtons(initBoard, listBoards)
 
-      if(!firstBoardId){
-        console.log("initial init board ", initBoard);
-        $("button#previous-board").click(function(e){
-          e.preventDefault;
+      $("button#previous-board").click(function(e){
+        // console.log("initial init board ", initBoard);
+        e.preventDefault;
+        if(!isCurrentBoardFirstBoard(initBoard, listBoards)){
           displayBoard(initBoard, listBoards, getPreviousBoardId);
           initBoard = getPreviousBoardId(initBoard, listBoards);
-          displayPreviousNextBoardButtons(initBoard, listBoards)
-          console.log("upadated init board ", initBoard);
-        });
-      }
+          displayPreviousNextBoardButtons(initBoard, listBoards);
+          // console.log("upadated init board ", initBoard);
+        }
+      });
 
-      if(!lastBoardId){
-        console.log("initial init board ", initBoard);
-        $("button#next-board").click(function(e){
-          e.preventDefault;
+      $("button#next-board").click(function(e){
+        // console.log("initial init board ", initBoard);
+        e.preventDefault;
+        if(!isCurrentBoardLastBoard(initBoard, listBoards)){
           displayBoard(initBoard, listBoards, getNextBoardId);
           initBoard = getNextBoardId(initBoard, listBoards);
-          displayPreviousNextBoardButtons(initBoard, listBoards)
-          console.log("upadated init board ", initBoard);
-        });
-      }
+          displayPreviousNextBoardButtons(initBoard, listBoards);
+          // console.log("upadated init board ", initBoard);
+        }
+      });
+
     });
   });
 
