@@ -52,24 +52,20 @@ $(function(){
       displayPreviousNextBoardButtons(initBoard, listBoards)
 
       $("button#previous-board").click(function(e){
-        // console.log("initial init board ", initBoard);
         e.preventDefault;
         if(!isCurrentBoardFirstBoard(initBoard, listBoards)){
           displayBoard(initBoard, listBoards, getPreviousBoardId);
           initBoard = getPreviousBoardId(initBoard, listBoards);
           displayPreviousNextBoardButtons(initBoard, listBoards);
-          // console.log("upadated init board ", initBoard);
         }
       });
 
       $("button#next-board").click(function(e){
-        // console.log("initial init board ", initBoard);
         e.preventDefault;
         if(!isCurrentBoardLastBoard(initBoard, listBoards)){
           displayBoard(initBoard, listBoards, getNextBoardId);
           initBoard = getNextBoardId(initBoard, listBoards);
           displayPreviousNextBoardButtons(initBoard, listBoards);
-          // console.log("upadated init board ", initBoard);
         }
       });
 
@@ -116,9 +112,13 @@ function getPreviousBoardId(currentBoardId, boardIds){
 function displayPreviousNextBoardButtons(currentBoardId, boardIds){
   if(!isCurrentBoardFirstBoard(currentBoardId, boardIds)){
     $("button#previous-board").removeClass("is-not-visible")
+  } else {
+    $("button#previous-board").addClass("is-not-visible")
   }
   if(!isCurrentBoardLastBoard(currentBoardId, boardIds)){
     $("button#next-board").removeClass("is-not-visible")
+  } else {
+    $("button#next-board").addClass("is-not-visible")
   }
 }
 
