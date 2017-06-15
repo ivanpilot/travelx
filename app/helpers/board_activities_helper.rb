@@ -2,7 +2,7 @@ module BoardActivitiesHelper
 
   def show_boardactivity_delete_link(board, activity, user_visited)
     board_activity = board_activity_instance(board, activity)
-    link_to("| Delete", delete_boardactivity_link(board_activity, user_visited),method: :delete, data: {confirm: 'This will delete the activity from the board only. Are you sure?'}) if policy(board_activity).destroy?
+    link_to("| Delete", delete_boardactivity_link(board_activity, user_visited), class: "delete-board-activity", method: :delete, data: {confirm: 'This will delete the activity from the board only. Are you sure?'}) if policy(board_activity).destroy?
   end
 
   def board_activity_instance(board, activity)

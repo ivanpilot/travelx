@@ -18,12 +18,12 @@
 
     <div class="row center-flex">
       <div class="col-xs-12">
-        <%= link_to("Edit title", edit_board_link(@board, @user), method: :get) if policy(@board).edit? %> |
-        <%= link_to("Delete board", delete_board_link(@board, @user), method: :delete, data: {confirm: "Are you sure?"}) if policy(@board).destroy?%>
-        <%#= button_to 'next board', :class => "buttons btn btn-primary btn-lg btn-block text-center"%>
+        <div id="board-edit-delete">
+          <%= link_to("Edit title", edit_board_link(@board, @user), method: :get) if policy(@board).edit? %> |
+          <%= link_to("Delete board", delete_board_link(@board, @user), method: :delete, data: {confirm: "Are you sure?"}) if policy(@board).destroy?%>
+        </div>
       </div>
-
-      </div>
+    </div>
 
 
     <div class="row center-flex">
@@ -45,13 +45,18 @@
   </div>
 </div>
 
+<script id="js-board-edit-delete-template" type="text/x-handlebars-template">
+  <a data-method="get" href="/boards/{{id}}/edit">Edit title</a>
+  <a data-confirm="Are you sure?" rel="nofollow" data-method="delete" href="/boards/{{1}}">Delete board</a>
+</script>
+
 <script id="js-activities-template" type="text/x-handlebars-template">
   <ol>
     {{#each this.activities}}
     <li>Description: {{description}} | Rating: {{rating}}</li>
     <a href="/activities/{{id}}/edit">| Edit</a>
     <a data-confirm="This will delete the activity from the board only. Are you sure?" rel="nofollow" data-method="delete" href="/board_activities/{{board_activities.id}}">| Delete</a>
-    
+
     {{/each}}
   </ol>
 </script>

@@ -5,10 +5,10 @@
 $(function(){
 
   // ********** JS FUNCTION FOR BOARDS CONTROLLER INDEX VIEW ONLY **********
-  $(document).on("turbolinks:load", function() {
-    if (!($(".boards-index").length > 0)) {
-      return;
-    }
+  // $(document).on("turbolinks:load", function() {
+  //   if (!($(".boards-index").length > 0)) {
+  //     return;
+  //   }
 
     $("form#board-form").submit(function(e){
       e.preventDefault();
@@ -38,13 +38,18 @@ $(function(){
       var template = Handlebars.compile(source);
       $("#add-activity-field").append(template())
     });
-  });
+  // });
 
   // ********** JS FUNCTION FOR BOARDS CONTROLLER SHOW VIEW ONLY **********
-  $(document).on("turbolinks:load", function() {
-    if (!($(".boards-show").length > 0)) {
-      return;
-    }
+  // $(document).on("turbolinks:load", function() {
+  //   if (!($(".boards-show").length > 0)) {
+  //     return;
+  //   }
+
+    window.addEventListener('popstate', function(event) {
+      loadHandlebarsTemplate(event.state)
+    });
+
 
     $.get('/boards.json', function(data){
       var listBoards = data.map( board => board.id )
@@ -52,43 +57,47 @@ $(function(){
       displayPreviousNextBoardButtons(initBoard, listBoards)
 
       $("button#previous-board").click(function(e){
-        e.preventDefault;
-        if(!isCurrentBoardFirstBoard(initBoard, listBoards)){
-          displayBoard(initBoard, listBoards, getPreviousBoardId);
-          initBoard = getPreviousBoardId(initBoard, listBoards);
-          displayPreviousNextBoardButtons(initBoard, listBoards);
-        }
+        e.preventDefault();
+        initBoard = getPreviousBoardId(initBoard, listBoards);
+        loadBoardInfo(initBoard);
+        displayPreviousNextBoardButtons(initBoard, listBoards);
       });
 
       $("button#next-board").click(function(e){
-        e.preventDefault;
-        if(!isCurrentBoardLastBoard(initBoard, listBoards)){
-          displayBoard(initBoard, listBoards, getNextBoardId);
-          initBoard = getNextBoardId(initBoard, listBoards);
-          displayPreviousNextBoardButtons(initBoard, listBoards);
-        }
+        e.preventDefault();
+        initBoard = getNextBoardId(initBoard, listBoards);
+        loadBoardInfo(initBoard);
+        displayPreviousNextBoardButtons(initBoard, listBoards);
       });
 
+      // $(".delete-board-activity").click(function(e){
+      //   e.preventDefault;
+      //   console.log($(this).attr("href"))
+      //
+      // })
     });
-  });
+  // });
 
 });
 
 
-
-function displayBoard(currentBoard, boards, callback){
-  var id = callback(currentBoard, boards);
-  retrieveBoardInfo(id);
+function loadBoardInfo(boardId){
+  $.get("/boards/" + boardId + ".json", function(data){
+    history.pushState(data, null, boardId)
+    loadHandlebarsTemplate(data);
+  });
 }
 
+function loadHandlebarsTemplate(object){
+  $("#board-title").html("<h2>" + object.title + "</h2>")
 
-function retrieveBoardInfo(boardId){
-  $.get("/boards/" + boardId + ".json", function(data){
-    $("#board-title").html("<h2>" + data.title + "</h2>")
-    var template = Handlebars.compile($("#js-activities-template").html());
-    $("#display-activities").text("")
-    $("#display-activities").html(template(data))
-  });
+  var boardEditDeleteTemplate = Handlebars.compile($("#js-board-edit-delete-template").html());
+  $("#board-edit-delete").text("")
+  $("#board-edit-delete").html(boardEditDeleteTemplate(object))
+
+  var activitiesTemplate = Handlebars.compile($("#js-activities-template").html());
+  $("#display-activities").text("")
+  $("#display-activities").html(activitiesTemplate(object))
 }
 
 function CurrentBoardPosition(currentBoardId, boardIds){

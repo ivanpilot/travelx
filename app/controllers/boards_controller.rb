@@ -89,6 +89,7 @@ class BoardsController < ApplicationController
 
   def destroy
     @board = Board.find_by(id: params[:id])
+    # binding.pry
     if @board
       authorize @board
       @board.destroy

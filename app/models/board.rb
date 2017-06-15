@@ -36,6 +36,10 @@ class Board < ApplicationRecord
     self.where('user_id = ? AND lower(title) = lower(?)', user_id, board_title.downcase).first
   end
 
+  def authorize?
+    binding.pry
+  end
+
   # def reject_activities(attributes)
   #   attributes['description'].blank? && attributes['rating'].blank?
   # end
