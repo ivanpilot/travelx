@@ -55,8 +55,10 @@
     {{#each this.activities}}
     <li>Description: {{description}} | Rating: {{rating}}</li>
     <a href="/activities/{{id}}/edit">| Edit</a>
-    <a data-confirm="This will delete the activity from the board only. Are you sure?" rel="nofollow" data-method="delete" href="/board_activities/{{board_activities.id}}">| Delete</a>
-
     {{/each}}
+    {{#each this.board_activities}}
+    <a data-confirm="This will delete the activity from the board only. Are you sure?" rel="nofollow" data-method="delete" href="/board_activities/{{id}}">| Delete</a>
+    {{/each}}
+
   </ol>
 </script>
