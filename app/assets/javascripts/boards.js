@@ -1,82 +1,67 @@
-// # Place all the behaviors and hooks related to the matching controller here.
-// # All this logic will automatically be available in application.js.
-// # You can use CoffeeScript in this file: http://coffeescript.org/
-
 $(function(){
 
   // ********** JS FUNCTION FOR BOARDS CONTROLLER INDEX VIEW ONLY **********
-  // $(document).on("turbolinks:load", function() {
-  //   if (!($(".boards-index").length > 0)) {
-  //     return;
-  //   }
+  $("form#board-form").submit(function(e){
+    e.preventDefault();
+    var $form = $(this);
+    var action = $form.attr("action") + ".json";
+    var params = $form.serialize();
 
-    $("form#board-form").submit(function(e){
-      e.preventDefault();
-      var $form = $(this);
-      var action = $form.attr("action") + ".json";
-      var params = $form.serialize();
-
-      $.ajax({
-        type: "POST",
-        url: action,
-        data: params,
-        dataType: "json"
-      }).done(function(response){
-        var board = response
-        if(board.title !== ""){
-          displayList(board)
-          displayLatestBoard(board)
-          resetFormFields()
-        }
-      }).fail(function(message){
-        console.log("there was an error: ", message)
-      });
+    $.ajax({
+      type: "POST",
+      url: action,
+      data: params,
+      dataType: "json"
+    }).done(function(response){
+      var board = response
+      if(board.title !== ""){
+        displayList(board)
+        displayLatestBoard(board)
+        resetFormFields()
+      }
+    }).fail(function(message){
+      console.log("there was an error: ", message)
     });
+  });
 
-    $("#circle").on("click", function(event){
-      var source = $("#js-add-activity-template").html();
-      var template = Handlebars.compile(source);
-      $("#add-activity-field").append(template())
-    });
-  // });
+  $("#circle").on("click", function(event){
+    var source = $("#js-add-activity-template").html();
+    var template = Handlebars.compile(source);
+    $("#add-activity-field").append(template())
+  });
 
   // ********** JS FUNCTION FOR BOARDS CONTROLLER SHOW VIEW ONLY **********
-  // $(document).on("turbolinks:load", function() {
-  //   if (!($(".boards-show").length > 0)) {
-  //     return;
-  //   }
+  window.addEventListener('popstate', function(event) {
+    loadHandlebarsTemplate(event.state)
+  });
 
-    window.addEventListener('popstate', function(event) {
-      loadHandlebarsTemplate(event.state)
+
+  $.get('/boards.json', function(data){
+    var listBoards = data.map( board => board.id )
+    var initBoard = $("#board-title").data("id")
+    displayPreviousNextBoardButtons(initBoard, listBoards)
+
+    $("button#previous-board").click(function(e){
+      e.preventDefault();
+      initBoard = getPreviousBoardId(initBoard, listBoards);
+      loadBoardInfo(initBoard);
+      displayPreviousNextBoardButtons(initBoard, listBoards);
     });
 
-
-    $.get('/boards.json', function(data){
-      var listBoards = data.map( board => board.id )
-      var initBoard = $("#board-title").data("id")
-      displayPreviousNextBoardButtons(initBoard, listBoards)
-
-      $("button#previous-board").click(function(e){
-        e.preventDefault();
-        initBoard = getPreviousBoardId(initBoard, listBoards);
-        loadBoardInfo(initBoard);
-        displayPreviousNextBoardButtons(initBoard, listBoards);
-      });
-
-      $("button#next-board").click(function(e){
-        e.preventDefault();
-        initBoard = getNextBoardId(initBoard, listBoards);
-        loadBoardInfo(initBoard);
-        displayPreviousNextBoardButtons(initBoard, listBoards);
-      });
-
-      // $(".delete-board-activity").click(function(e){
-      //   e.preventDefault;
-      //   console.log($(this).attr("href"))
-      //
-      // })
+    $("button#next-board").click(function(e){
+      e.preventDefault();
+      initBoard = getNextBoardId(initBoard, listBoards);
+      loadBoardInfo(initBoard);
+      displayPreviousNextBoardButtons(initBoard, listBoards);
     });
-  // });
+
+    // $(".delete-board-activity").click(function(e){
+    //   e.preventDefault;
+    //   console.log($(this).attr("href"))
+    //
+    // })
+  });
+
 
 });
 
@@ -95,7 +80,7 @@ function loadHandlebarsTemplate(object){
   $("#board-edit-delete").text("")
   $("#board-edit-delete").html(boardEditDeleteTemplate(object))
 
-  var activitiesTemplate = Handlebars.compile($("#js-activities-template").html());
+  var activitiesTemplate = Handlebars.compile($("#js-display-activities-template").html());
   $("#display-activities").text("")
   $("#display-activities").html(activitiesTemplate(object))
 }

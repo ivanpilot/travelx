@@ -47,10 +47,10 @@
 
 <script id="js-board-edit-delete-template" type="text/x-handlebars-template">
   <a data-method="get" href="/boards/{{id}}/edit">Edit title</a>
-  <a data-confirm="Are you sure?" rel="nofollow" data-method="delete" href="/boards/{{1}}">Delete board</a>
+  <a data-confirm="Are you sure?" rel="nofollow" data-method="delete" href="/boards/{{id}}">Delete board</a>
 </script>
 
-<script id="js-activities-template" type="text/x-handlebars-template">
+<script id="js-display-activities-template" type="text/x-handlebars-template">
   <ol>
     {{#each this.activities}}
     <li>Description: {{description}} | Rating: {{rating}}</li>
