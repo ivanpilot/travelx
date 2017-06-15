@@ -32,7 +32,7 @@ $(function(){
 
   // ********** JS FUNCTION FOR BOARDS CONTROLLER SHOW VIEW ONLY **********
   window.addEventListener('popstate', function(event) {
-    loadHandlebarsTemplate(event.state)
+    loadTemplate(event.state)
   });
 
 
@@ -54,14 +54,7 @@ $(function(){
       loadBoardInfo(initBoard);
       displayPreviousNextBoardButtons(initBoard, listBoards);
     });
-
-    // $(".delete-board-activity").click(function(e){
-    //   e.preventDefault;
-    //   console.log($(this).attr("href"))
-    //
-    // })
   });
-
 
 });
 
@@ -69,20 +62,27 @@ $(function(){
 function loadBoardInfo(boardId){
   $.get("/boards/" + boardId + ".json", function(data){
     history.pushState(data, null, boardId)
-    loadHandlebarsTemplate(data);
+    loadTemplate(data);
   });
 }
 
-function loadHandlebarsTemplate(object){
+function loadTemplate(object){
   $("#board-title").html("<h2>" + object.title + "</h2>")
 
   var boardEditDeleteTemplate = Handlebars.compile($("#js-board-edit-delete-template").html());
   $("#board-edit-delete").text("")
   $("#board-edit-delete").html(boardEditDeleteTemplate(object))
 
-  var activitiesTemplate = Handlebars.compile($("#js-display-activities-template").html());
+  var string = '<ol>'
+  var boardActivity = object.board_activities[0]
+  var activity;
+  for (let i = 0, l = object.activities.length; i < l; i ++){
+    activity = object.activities[i]
+    string += `<li>Description: ${activity.description} | Rating: ${activity.rating}</li><a href="/activities/${activity.id}/edit">| Edit</a><a data-confirm="This will delete the activity from the board only. Are you sure?" rel="nofollow" data-method="delete" href="/board_activities/${boardActivity.id}">| Delete</a>`
+  }
+  string += '</ol>'
   $("#display-activities").text("")
-  $("#display-activities").html(activitiesTemplate(object))
+  $("#display-activities").html(string)
 }
 
 function CurrentBoardPosition(currentBoardId, boardIds){

@@ -49,16 +49,3 @@
   <a data-method="get" href="/boards/{{id}}/edit">Edit title</a>
   <a data-confirm="Are you sure?" rel="nofollow" data-method="delete" href="/boards/{{id}}">Delete board</a>
 </script>
-
-<script id="js-display-activities-template" type="text/x-handlebars-template">
-  <ol>
-    {{#each this.activities}}
-    <li>Description: {{description}} | Rating: {{rating}}</li>
-    <a href="/activities/{{id}}/edit">| Edit</a>
-    {{/each}}
-    {{#each this.board_activities}}
-    <a data-confirm="This will delete the activity from the board only. Are you sure?" rel="nofollow" data-method="delete" href="/board_activities/{{id}}">| Delete</a>
-    {{/each}}
-
-  </ol>
-</script>
