@@ -1,49 +1,57 @@
-<h2>Add a new friend</h2><br>
-<div class="form-inline">
-  <div class="form-group">
-    <%= form_for current_user.friendships.build do |f|%>
-      <%= f.hidden_field :user_id%>
-      <%= f.label :friend, 'New Friend'%>
-      <%= f.text_field :friend, placeholder: "Username", list:"friends_autocomplete", autocomplete:"off", class: "form-control"%>
-      <datalist id="friends_autocomplete">
-        <% current_user.potential_friends.each do |friend| %>
-          <option value="<%= friend.username %>"></option>
-        <% end %>
-      </datalist>
-      <%= f.submit "Add friend", class: "btn btn-primary"%>
-    <% end %>
-  </div>
-</div>
+<div class="info-content">
+  <div class="container">
+    <div class="row center-flex">
+      <div class="general-container">
+        <div class="col-sm-12">
 
-
-<h2>My friends</h2>
-<p>You have <%= current_user.all_relationships.count %> friend(s) in your network</p><br>
-<div class="row">
-  <div class="col-md-9">
-      <%= content_tag :table, :class =>"table table-striped" do %>
-
-        <%= content_tag(:thead) do %>
-          <%= content_tag(:th, "Friends") %>
-          <%= content_tag(:th, "Since") %>
-          <%= content_tag(:th, "Not Friend?") %>
-        <% end %>
-
-        <%= content_tag(:body) do %>
-          <% current_user.all_relationships.collect do |friendship| %>
-            <%= content_tag(:tr) do %>
-
-              <%= content_tag(:td) do %>
-                <%= link_to friendship.friend_name_of(current_user), user_boards_path(friendship.friend_of(current_user))%>
+          <h2>Add a new friend</h2><br>
+          <div class="form-inline">
+            <div class="form-group">
+              <%= form_for current_user.friendships.build do |f|%>
+                <%= f.hidden_field :user_id%>
+                <%= f.label :friend, 'New Friend'%>
+                <%= f.text_field :friend, placeholder: "Username", list:"friends_autocomplete", autocomplete:"off", class: "form-control"%>
+                <datalist id="friends_autocomplete">
+                  <% current_user.potential_friends.each do |friend| %>
+                    <option value="<%= friend.username %>"></option>
+                  <% end %>
+                </datalist>
+                <%= f.submit "Add friend", class: "btn btn-primary"%>
               <% end %>
-              <%= content_tag(:td, friendship.created_at.strftime('%v')) %>
-              <%= content_tag(:td) do %>
-                <%= link_to "Delete", friendship_path(friendship), method: :delete %>
-              <% end %>
+            </div>
+          </div>
 
+          <h2>My friends</h2>
+          <p>You have <%= current_user.all_relationships.count %> friend(s) in your network</p><br>
+          <%= content_tag :table, :class =>"table table-striped" do %>
+
+            <%= content_tag(:thead) do %>
+              <%= content_tag(:th, "Friends") %>
+              <%= content_tag(:th, "Since") %>
+              <%= content_tag(:th, "Not Friend?") %>
             <% end %>
-          <% end %>
-        <% end %>
 
-      <% end %>
+            <%= content_tag(:body) do %>
+              <% current_user.all_relationships.collect do |friendship| %>
+                <%= content_tag(:tr) do %>
+
+                  <%= content_tag(:td) do %>
+                    <%= link_to friendship.friend_name_of(current_user), user_boards_path(friendship.friend_of(current_user))%>
+                  <% end %>
+                  <%= content_tag(:td, friendship.created_at.strftime('%v')) %>
+                  <%= content_tag(:td) do %>
+                    <%= link_to "Delete", friendship_path(friendship), method: :delete %>
+                  <% end %>
+
+                <% end %>
+              <% end %>
+            <% end %>
+
+          <% end %>
+
+
+        </div>
+      </div>
+    </div>
   </div>
 </div>

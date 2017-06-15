@@ -35,6 +35,13 @@
       			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       				<ul class="nav navbar-nav navbar-right">
 
+                <!-- <div id="visiting"> -->
+
+                <li class="navbar-text visiting"><%= "Visiting #{current_friend.username}" if current_friend %></li>
+                <li><%= link_to "Boards", user_boards_path(current_friend), :class => "visiting" if current_friend %></li>
+                <li><%= link_to "Activities", user_activities_path(current_friend), :class => "visiting" if current_friend %></li>
+              <!-- </div> -->
+
       					<li><%= link_to "Activities", activities_path if current_user %></li>
       					<li><%= link_to "Friends", friends_path if current_user %></li>
       					<li><%= link_to 'Log Out', logout_path, method: :delete if current_user %></li>
