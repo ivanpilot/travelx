@@ -33,20 +33,17 @@
       				<a class="navbar-brand" href="<%=root_path%>"><i class="fa fa-globe" aria-hidden="true"></i> Travelx</a>
       			</div>
       			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      				<ul class="nav navbar-nav navbar-right">
-
-                <!-- <div id="visiting"> -->
-
+              <ul class="nav navbar-nav navbar-left frame <%="is-not-visible" if !current_friend%>" style="border: 1px solid #00fd5e; border-radius: 20px;">
                 <li class="navbar-text visiting"><%= "Visiting #{current_friend.username}" if current_friend %></li>
                 <li><%= link_to "Boards", user_boards_path(current_friend), :class => "visiting" if current_friend %></li>
                 <li><%= link_to "Activities", user_activities_path(current_friend), :class => "visiting" if current_friend %></li>
-              <!-- </div> -->
+              </ul>
 
+              <ul class="nav navbar-nav navbar-right">
+                <li><p><%= button_to current_user.role, user_path(current_user),method: :put if current_user %></p></li>
       					<li><%= link_to "Activities", activities_path if current_user %></li>
       					<li><%= link_to "Friends", friends_path if current_user %></li>
       					<li><%= link_to 'Log Out', logout_path, method: :delete if current_user %></li>
-      					<!-- <li><a class="page-scroll" href="#team">Team</a></li>
-      					<li><a class="page-scroll" href="#footer">Contact</a></li> -->
       				</ul>
       			</div>
       		</div>
@@ -54,8 +51,6 @@
       	<!-- NAVIGATION END -->
 
         <%= yield %>
-
-        <a href="#top" class="back-to-top page-scroll"><i class="fa fa-angle-up"></i></a>
 
       </div>
     <%= javascript_include_tag "application"%>

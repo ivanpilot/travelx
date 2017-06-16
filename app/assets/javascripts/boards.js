@@ -39,6 +39,7 @@ $(function(){
   $.get('/boards.json', function(data){
     var listBoards = data.map( board => board.id )
     var initBoard = $("#board-title").data("id")
+    // debugger
     displayPreviousNextBoardButtons(initBoard, listBoards)
 
     $("button#previous-board").click(function(e){
@@ -50,9 +51,11 @@ $(function(){
 
     $("button#next-board").click(function(e){
       e.preventDefault();
+      // debugger
       initBoard = getNextBoardId(initBoard, listBoards);
       loadBoardInfo(initBoard);
       displayPreviousNextBoardButtons(initBoard, listBoards);
+
     });
   });
 
