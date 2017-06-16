@@ -1,63 +1,68 @@
 $(function(){
 
   // ********** JS FUNCTION FOR BOARDS CONTROLLER INDEX VIEW ONLY **********
-  $("form#board-form").submit(function(e){
-    e.preventDefault();
-    var $form = $(this);
-    var action = $form.attr("action") + ".json";
-    var params = $form.serialize();
+  if($(".boards-index").length == 1){
+    $("form#board-form").submit(function(e){
+      e.preventDefault();
+      var $form = $(this);
+      var action = $form.attr("action") + ".json";
+      var params = $form.serialize();
 
-    $.ajax({
-      type: "POST",
-      url: action,
-      data: params,
-      dataType: "json"
-    }).done(function(response){
-      var board = response
-      if(board.title !== ""){
-        displayList(board)
-        displayLatestBoard(board)
-        resetFormFields()
-      }
-    }).fail(function(message){
-      console.log("there was an error: ", message)
+      $.ajax({
+        type: "POST",
+        url: action,
+        data: params,
+        dataType: "json"
+      }).done(function(response){
+        var board = response
+        if(board.title !== ""){
+          displayList(board)
+          displayLatestBoard(board)
+          resetFormFields()
+        }
+      }).fail(function(message){
+        console.log("there was an error: ", message)
+      });
     });
-  });
 
-  $("#circle").on("click", function(event){
-    var source = $("#js-add-activity-template").html();
-    var template = Handlebars.compile(source);
-    $("#add-activity-field").append(template())
-  });
+    $("#circle").on("click", function(event){
+      var source = $("#js-add-activity-template").html();
+      var template = Handlebars.compile(source);
+      $("#add-activity-field").append(template())
+    });
+  }
 
   // ********** JS FUNCTION FOR BOARDS CONTROLLER SHOW VIEW ONLY **********
-  window.addEventListener('popstate', function(event) {
-    loadTemplate(event.state)
-  });
+  if($(".boards-show").length == 1){
+    console.log("hello")
 
-
-  $.get('/boards.json', function(data){
-    var listBoards = data.map( board => board.id )
-    var initBoard = $("#board-title").data("id")
-    // debugger
-    displayPreviousNextBoardButtons(initBoard, listBoards)
-
-    $("button#previous-board").click(function(e){
-      e.preventDefault();
-      initBoard = getPreviousBoardId(initBoard, listBoards);
-      loadBoardInfo(initBoard);
-      displayPreviousNextBoardButtons(initBoard, listBoards);
+    window.addEventListener('popstate', function(event) {
+      loadTemplate(event.state)
     });
 
-    $("button#next-board").click(function(e){
-      e.preventDefault();
+    $.get('/boards.json', function(data){
+      var listBoards = data.map( board => board.id )
+      var initBoard = $("#board-title").data("id")
       // debugger
-      initBoard = getNextBoardId(initBoard, listBoards);
-      loadBoardInfo(initBoard);
-      displayPreviousNextBoardButtons(initBoard, listBoards);
+      displayPreviousNextBoardButtons(initBoard, listBoards)
 
+      $("button#previous-board").click(function(e){
+        e.preventDefault();
+        initBoard = getPreviousBoardId(initBoard, listBoards);
+        loadBoardInfo(initBoard);
+        displayPreviousNextBoardButtons(initBoard, listBoards);
+      });
+
+      $("button#next-board").click(function(e){
+        e.preventDefault();
+        // debugger
+        initBoard = getNextBoardId(initBoard, listBoards);
+        loadBoardInfo(initBoard);
+        displayPreviousNextBoardButtons(initBoard, listBoards);
+
+      });
     });
-  });
+  }
 
 });
 
