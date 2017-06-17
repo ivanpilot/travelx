@@ -35,7 +35,7 @@
               <li>Description: <%= activity.description %> | Rating: <%= activity.rating %></li>
               <%= link_to("| Edit", edit_activity_link(activity, @user)) if policy(activity).edit?%>
               <%= show_boardactivity_delete_link(@board, activity, @user)%>
-              <%= button_to("Import", import_user_activity_path(@user, activity), class:"btn btn-success") if current_friend %><br>
+              <%= link_to("Import", import_user_activity_path(@user, activity), method: :post) if current_friend %><br>
             <% end %>
           </ol>
         </div>

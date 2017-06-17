@@ -22,7 +22,7 @@
                 <%=link_to("| Delete", delete_activity_link(activity, @user), method: :delete, data: {confirm: 'Are you sure?'}) if policy(activity).destroy?%><br>
               </li>
               Boards: <%=boards_related_to(activity, @user)%><br>
-              <%= button_to("Import", import_user_activity_path(@user, activity), class:"btn btn-success") if current_friend %><br>
+              <%= link_to("Import", import_user_activity_path(@user, activity), method: :post) if current_friend %><br><br>
             <% end %>
           </ul>
 

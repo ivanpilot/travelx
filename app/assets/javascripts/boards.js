@@ -109,7 +109,6 @@ function loadBoardInfo(path, boardId, userVisited){
 
 function loadTemplate(object, userVisited){
   $("#board-title").html("<h2>" + object.title + "</h2>")
-  // debugger
   var boardEditDeleteTemplate = Handlebars.compile($("#js-board-edit-delete-template").html());
   $("#board-edit-delete").text("")
   $("#board-edit-delete").html(boardEditDeleteTemplate(object))
