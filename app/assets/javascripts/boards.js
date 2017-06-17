@@ -55,7 +55,7 @@ $(function(){
           e.preventDefault();
           initBoard = getPreviousBoardId(initBoard, listBoards);
           newPath = "/users/" + userId + "/boards/" + initBoard + ".json"
-          loadBoardInfo(newPath, initBoard);
+          loadBoardInfo(newPath, initBoard, userId);
           displayPreviousNextBoardButtons(initBoard, listBoards);
         });
 
@@ -63,7 +63,7 @@ $(function(){
           e.preventDefault();
           initBoard = getNextBoardId(initBoard, listBoards);
           newPath = "/users/" + userId + "/boards/" + initBoard + ".json"
-          loadBoardInfo(newPath, initBoard);
+          loadBoardInfo(newPath, initBoard, userId);
           displayPreviousNextBoardButtons(initBoard, listBoards);
         });
       });
@@ -100,17 +100,16 @@ function isUserNestedPath(path){
   return path == "users" ? true : false
 }
 
-function loadBoardInfo(path, boardId){
+function loadBoardInfo(path, boardId, userVisited){
   $.get(path, function(data){
     history.pushState(data, null, boardId)
-    // debugger
-    loadTemplate(data);
+    loadTemplate(data, userVisited);
   });
 }
 
-function loadTemplate(object){
+function loadTemplate(object, userVisited){
   $("#board-title").html("<h2>" + object.title + "</h2>")
-
+  // debugger
   var boardEditDeleteTemplate = Handlebars.compile($("#js-board-edit-delete-template").html());
   $("#board-edit-delete").text("")
   $("#board-edit-delete").html(boardEditDeleteTemplate(object))
@@ -118,10 +117,14 @@ function loadTemplate(object){
   var string = '<ol>'
   var boardActivity = object.board_activities[0]
   var activity;
+  var importLink;
   for (let i = 0, l = object.activities.length; i < l; i ++){
     activity = object.activities[i]
-    string += `<li>Description: ${activity.description} | Rating: ${activity.rating}</li><a href="/activities/${activity.id}/edit">| Edit</a><a data-confirm="This will delete the activity from the board only. Are you sure?" rel="nofollow" data-method="delete" href="/board_activities/${boardActivity.id}">| Delete</a>`
+    importLink = userVisited ? `<a data-method="post" href="/users/${object.user_id}/activities/${activity.id}/import">| Import</a>` : ""
+    string += `<li>Description: ${activity.description} | Rating: ${activity.rating}</li><a href="/activities/${activity.id}/edit">| Edit </a><a data-confirm="This will delete the activity from the board only. Are you sure?" rel="nofollow" data-method="delete" href="/board_activities/${boardActivity.id}">| Delete </a>`
+    string += importLink
   }
+
   string += '</ol>'
   $("#display-activities").text("")
   $("#display-activities").html(string)

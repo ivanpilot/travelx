@@ -60,10 +60,7 @@ class ActivitiesController < ApplicationController
   def import
     activity = Activity.find_by(id: params[:id])
     redirect_to to_activities unless activity
-    @new_activity = current_user.activities.build(
-      description: activity.description,
-      rating: activity.rating
-    )
+    @new_activity = current_user.activities.build(description: activity.description, rating: activity.rating)
     if Activity.find_by_activity_des_and_user_id(@new_activity.description, current_user.id)
       flash[:info] = "This activity already exists."
       redirect_to to_activities
