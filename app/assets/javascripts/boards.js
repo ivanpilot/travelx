@@ -40,36 +40,70 @@ $(function(){
       loadTemplate(event.state)
     });
 
-    $.get('/boards.json', function(data){
-      var listBoards = data.map( board => board.id )
-      var initBoard = $("#board-title").data("id")
-      // debugger
-      displayPreviousNextBoardButtons(initBoard, listBoards)
+    var pathSection = window.location.pathname.split("/").slice(1,2)
 
-      $("button#previous-board").click(function(e){
-        e.preventDefault();
-        initBoard = getPreviousBoardId(initBoard, listBoards);
-        loadBoardInfo(initBoard);
-        displayPreviousNextBoardButtons(initBoard, listBoards);
+    if(isUserNestedPath(pathSection)){
+      var userId = window.location.pathname.split("/").slice(2,3)
+
+      $.get('/users/' + userId + '/boards.json', function(data){
+        var listBoards = data.map( board => board.id )
+        var initBoard = $("#board-title").data("id")
+        var newPath;
+        displayPreviousNextBoardButtons(initBoard, listBoards)
+
+        $("button#previous-board").click(function(e){
+          e.preventDefault();
+          initBoard = getPreviousBoardId(initBoard, listBoards);
+          newPath = "/users/" + userId + "/boards/" + initBoard + ".json"
+          loadBoardInfo(newPath, initBoard);
+          displayPreviousNextBoardButtons(initBoard, listBoards);
+        });
+
+        $("button#next-board").click(function(e){
+          e.preventDefault();
+          initBoard = getNextBoardId(initBoard, listBoards);
+          newPath = "/users/" + userId + "/boards/" + initBoard + ".json"
+          loadBoardInfo(newPath, initBoard);
+          displayPreviousNextBoardButtons(initBoard, listBoards);
+        });
       });
+    } else {
+      $.get('/boards.json', function(data){
+        var listBoards = data.map( board => board.id )
+        var initBoard = $("#board-title").data("id")
+        var newPath;
+        displayPreviousNextBoardButtons(initBoard, listBoards)
 
-      $("button#next-board").click(function(e){
-        e.preventDefault();
-        // debugger
-        initBoard = getNextBoardId(initBoard, listBoards);
-        loadBoardInfo(initBoard);
-        displayPreviousNextBoardButtons(initBoard, listBoards);
+        $("button#previous-board").click(function(e){
+          e.preventDefault();
+          initBoard = getPreviousBoardId(initBoard, listBoards);
+          newPath = "/boards/" + initBoard + ".json"
+          loadBoardInfo(newPath, initBoard);
+          displayPreviousNextBoardButtons(initBoard, listBoards);
+        });
 
+        $("button#next-board").click(function(e){
+          e.preventDefault();
+          initBoard = getNextBoardId(initBoard, listBoards);
+          newPath = "/boards/" + initBoard + ".json"
+          loadBoardInfo(newPath, initBoard);
+          displayPreviousNextBoardButtons(initBoard, listBoards);
+        });
       });
-    });
+    }
   }
 
 });
 
 
-function loadBoardInfo(boardId){
-  $.get("/boards/" + boardId + ".json", function(data){
+function isUserNestedPath(path){
+  return path == "users" ? true : false
+}
+
+function loadBoardInfo(path, boardId){
+  $.get(path, function(data){
     history.pushState(data, null, boardId)
+    // debugger
     loadTemplate(data);
   });
 }
