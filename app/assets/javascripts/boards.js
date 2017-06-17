@@ -108,25 +108,35 @@ function loadBoardInfo(path, boardId, userVisited){
 }
 
 function loadTemplate(object, userVisited){
-  $("#board-title").html("<h2>" + object.title + "</h2>")
-  var boardEditDeleteTemplate = Handlebars.compile($("#js-board-edit-delete-template").html());
-  $("#board-edit-delete").text("")
-  $("#board-edit-delete").html(boardEditDeleteTemplate(object))
+  console.log("THIS IS THE OBJECT.... ", object)
 
-  var string = '<ol>'
+  //display the board based on authorization from Pundit (see board serializer)
+  $("#board-title").html("<h2>" + object.title + "</h2>")
+  var stringBoard = "";
+  if(object.is_authorized_edit_board){
+    stringBoard += `<a data-method="get" href="/boards/${object.id}/edit">Edit title</a>`
+  }
+  if(object.is_authorized_destroy_board){
+    stringBoard += `<a data-confirm="Are you sure?" rel="nofollow" data-method="delete" href="/boards/${object.id}">Delete board</a>`
+  }
+  $("#board-edit-delete").text("")
+  $("#board-edit-delete").html(stringBoard)
+
+
+  //display the activities based on authorization from Pundit (see activity serializer)
+  var stringActivity = '<ol>'
   var boardActivity = object.board_activities[0]
   var activity;
   var importLink;
   for (let i = 0, l = object.activities.length; i < l; i ++){
     activity = object.activities[i]
     importLink = userVisited ? `<a data-method="post" href="/users/${object.user_id}/activities/${activity.id}/import">| Import</a>` : ""
-    string += `<li>Description: ${activity.description} | Rating: ${activity.rating}</li><a href="/activities/${activity.id}/edit">| Edit </a><a data-confirm="This will delete the activity from the board only. Are you sure?" rel="nofollow" data-method="delete" href="/board_activities/${boardActivity.id}">| Delete </a>`
-    string += importLink
+    stringActivity += `<li>Description: ${activity.description} | Rating: ${activity.rating}</li><a href="/activities/${activity.id}/edit">| Edit </a><a data-confirm="This will delete the activity from the board only. Are you sure?" rel="nofollow" data-method="delete" href="/board_activities/${boardActivity.id}">| Delete </a>`
+    stringActivity += importLink
   }
-
-  string += '</ol>'
+  stringActivity += '</ol>'
   $("#display-activities").text("")
-  $("#display-activities").html(string)
+  $("#display-activities").html(stringActivity)
 }
 
 function CurrentBoardPosition(currentBoardId, boardIds){
