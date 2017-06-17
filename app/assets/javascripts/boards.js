@@ -108,8 +108,6 @@ function loadBoardInfo(path, boardId, userVisited){
 }
 
 function loadTemplate(object, userVisited){
-  console.log("THIS IS THE OBJECT.... ", object)
-
   //display the board based on authorization from Pundit (see board serializer)
   $("#board-title").html("<h2>" + object.title + "</h2>")
   var stringBoard = "";
@@ -122,16 +120,19 @@ function loadTemplate(object, userVisited){
   $("#board-edit-delete").text("")
   $("#board-edit-delete").html(stringBoard)
 
-
   //display the activities based on authorization from Pundit (see activity serializer)
+  var activity, activityEditLink, activityDeleteLink, importLink;
   var stringActivity = '<ol>'
   var boardActivity = object.board_activities[0]
-  var activity;
-  var importLink;
   for (let i = 0, l = object.activities.length; i < l; i ++){
     activity = object.activities[i]
     importLink = userVisited ? `<a data-method="post" href="/users/${object.user_id}/activities/${activity.id}/import">| Import</a>` : ""
-    stringActivity += `<li>Description: ${activity.description} | Rating: ${activity.rating}</li><a href="/activities/${activity.id}/edit">| Edit </a><a data-confirm="This will delete the activity from the board only. Are you sure?" rel="nofollow" data-method="delete" href="/board_activities/${boardActivity.id}">| Delete </a>`
+    activityEditLink = activity.is_authorized_edit_activity ? `<a href="/activities/${activity.id}/edit">| Edit </a>` : ""
+    activityDeleteLink = activity.is_authorized_destroy_activity ? `<a data-confirm="This will delete the activity from the board only. Are you sure?" rel="nofollow" data-method="delete" href="/board_activities/${boardActivity.id}">| Delete </a>` : ""
+
+    stringActivity += `<li>Description: ${activity.description} | Rating: ${activity.rating}</li>`
+    stringActivity += activityEditLink
+    stringActivity += activityDeleteLink
     stringActivity += importLink
   }
   stringActivity += '</ol>'
