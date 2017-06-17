@@ -36,8 +36,12 @@ class Board < ApplicationRecord
     self.where('user_id = ? AND lower(title) = lower(?)', user_id, board_title.downcase).first
   end
 
-  def authorize?
-    binding.pry
+  def authorized_board?
+    # BoardPolicy::Scope.new(UserContext.new(self.user, nil), Board).resolve
+    # binding.pry
+    show_me_policy = BoardPolicy.new(UserContext.new(self.user, User.all[2]), self).show?
+    # show_me_scope = BoardPolicy::Scope.new(UserContext.new(self.user, User.all[2]), self.class).resolve
+    
   end
 
   # def reject_activities(attributes)

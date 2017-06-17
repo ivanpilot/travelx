@@ -32,4 +32,10 @@ class Activity < ApplicationRecord
     self.where('user_id = ? AND lower(description) = lower(?)', user_id, activity_description.downcase).first
   end
 
+  def authorized_activity?
+    # show_me_policy = Pundit.policy(self.user_id, self)
+    # show_me_scope = Pundit.policy_scope(self.user_id, self)
+    # "policy is #{show_me_policy} and scope is #{show_me_scope}"
+  end
+
 end
