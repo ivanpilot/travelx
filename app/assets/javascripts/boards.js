@@ -95,7 +95,6 @@ $(function(){
 
 });
 
-
 function isUserNestedPath(path){
   return path == "users" ? true : false
 }
@@ -103,8 +102,46 @@ function isUserNestedPath(path){
 function loadBoardInfo(path, boardId, userVisited){
   $.get(path, function(data){
     history.pushState(data, null, boardId)
+    $("#display-activities").text("")
+    var board = new Board(data)
+    for (let i = 0, l = board.activities.length; i < l; i++){
+      let activity = new Activity(board.activities[i])
+      let activityString = activity.renderActivityTemplate(board, userVisited);
+      $("#display-activities").append(activityString)
+    }
     loadTemplate(data, userVisited);
   });
+}
+
+function Board(attributes){
+  this.id = attributes.id;
+  this.title = attributes.title;
+  this.userId = attributes.user_id;
+  this.canBeDestroyed = attributes.is_authorized_destroy_board;
+  this.canBeEdited = attributes.is_authorized_edit_board;
+  this.activities = attributes.activities;
+  this.boardActivities = attributes.board_activities;
+}
+
+function Activity(attributes){
+  this.id = attributes.id;
+  this.description = attributes.description;
+  this.rating = attributes.rating;
+  this.canBeDestroyed = attributes.is_authorized_destroy_activity;
+  this.canBeEdited = attributes.is_authorized_edit_activity;
+}
+
+Activity.prototype.renderActivityTemplate = function(board, userVisited){
+  return Activity.template.bind(this, board, userVisited)
+}
+
+Activity.template = function(board, userVisited){
+  var boardActivityId = board.boardActivities.find( element => element.activity_id == this.id).id
+  var importLink = userVisited ? `<a data-method="post" href="/users/${board.id}/activities/${this.id}/import">| Import</a>` : ""
+  var activityEditLink = this.canBeEdited ? `<a href="/activities/${this.id}/edit">| Edit </a>` : ""
+  var activityDeleteLink = this.canBeDestroyed ? `<a data-confirm="This will delete the activity from the board only. Are you sure?" rel="nofollow" data-method="delete" href="/board_activities/${boardActivityId}">| Delete </a>` : ""
+
+  return `<ol><li>Description: ${this.description} | Rating: ${this.rating}</li>${activityEditLink}${activityDeleteLink}${importLink}</ol>`
 }
 
 function loadTemplate(object, userVisited){
@@ -119,25 +156,6 @@ function loadTemplate(object, userVisited){
   }
   $("#board-edit-delete").text("")
   $("#board-edit-delete").html(stringBoard)
-
-  //display the activities based on authorization from Pundit (see activity serializer)
-  var activity, activityEditLink, activityDeleteLink, importLink;
-  var stringActivity = '<ol>'
-  var boardActivity = object.board_activities[0]
-  for (let i = 0, l = object.activities.length; i < l; i ++){
-    activity = object.activities[i]
-    importLink = userVisited ? `<a data-method="post" href="/users/${object.user_id}/activities/${activity.id}/import">| Import</a>` : ""
-    activityEditLink = activity.is_authorized_edit_activity ? `<a href="/activities/${activity.id}/edit">| Edit </a>` : ""
-    activityDeleteLink = activity.is_authorized_destroy_activity ? `<a data-confirm="This will delete the activity from the board only. Are you sure?" rel="nofollow" data-method="delete" href="/board_activities/${boardActivity.id}">| Delete </a>` : ""
-
-    stringActivity += `<li>Description: ${activity.description} | Rating: ${activity.rating}</li>`
-    stringActivity += activityEditLink
-    stringActivity += activityDeleteLink
-    stringActivity += importLink
-  }
-  stringActivity += '</ol>'
-  $("#display-activities").text("")
-  $("#display-activities").html(stringActivity)
 }
 
 function CurrentBoardPosition(currentBoardId, boardIds){
@@ -203,3 +221,43 @@ function resetFormFields(){
     ratingField[i].value = ""
   }
 }
+
+// function loadBoardInfo(path, boardId, userVisited){
+//   $.get(path, function(data){
+//     history.pushState(data, null, boardId)
+//     loadTemplate(data, userVisited);
+//   });
+// }
+
+// function loadTemplate(object, userVisited){
+//   //display the board based on authorization from Pundit (see board serializer)
+//   $("#board-title").html("<h2>" + object.title + "</h2>")
+//   var stringBoard = "";
+//   if(object.is_authorized_edit_board){
+//     stringBoard += `<a data-method="get" href="/boards/${object.id}/edit">Edit title</a>`
+//   }
+//   if(object.is_authorized_destroy_board){
+//     stringBoard += `<a data-confirm="Are you sure?" rel="nofollow" data-method="delete" href="/boards/${object.id}">Delete board</a>`
+//   }
+//   $("#board-edit-delete").text("")
+//   $("#board-edit-delete").html(stringBoard)
+//
+//   // display the activities based on authorization from Pundit (see activity serializer)
+//   var activity, activityEditLink, activityDeleteLink, importLink;
+//   var stringActivity = '<ol>'
+//   var boardActivity = object.board_activities[0]
+//   for (let i = 0, l = object.activities.length; i < l; i ++){
+//     activity = object.activities[i]
+//     importLink = userVisited ? `<a data-method="post" href="/users/${object.user_id}/activities/${activity.id}/import">| Import</a>` : ""
+//     activityEditLink = activity.is_authorized_edit_activity ? `<a href="/activities/${activity.id}/edit">| Edit </a>` : ""
+//     activityDeleteLink = activity.is_authorized_destroy_activity ? `<a data-confirm="This will delete the activity from the board only. Are you sure?" rel="nofollow" data-method="delete" href="/board_activities/${boardActivity.id}">| Delete </a>` : ""
+//
+//     stringActivity += `<li>Description: ${activity.description} | Rating: ${activity.rating}</li>`
+//     stringActivity += activityEditLink
+//     stringActivity += activityDeleteLink
+//     stringActivity += importLink
+//   }
+//   stringActivity += '</ol>'
+//   $("#display-activities").text("")
+//   $("#display-activities").html(stringActivity)
+// }
