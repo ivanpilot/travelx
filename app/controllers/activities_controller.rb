@@ -63,8 +63,6 @@ class ActivitiesController < ApplicationController
     @new_activity = current_user.activities.build(description: activity.description, rating: activity.rating)
     if Activity.find_by_activity_des_and_user_id(@new_activity.description, current_user.id)
       flash[:info] = "This activity already exists."
-      redirect_to to_activities
-      return
     end
 
     authorize @new_activity
@@ -73,7 +71,6 @@ class ActivitiesController < ApplicationController
     else
       flash[:danger] = "Activity not added. Make sure you ."
     end
-    redirect_to to_activities
   end
 
   def destroy
