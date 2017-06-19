@@ -132,12 +132,8 @@ function Activity(attributes){
 }
 
 Activity.prototype.renderActivityTemplate = function(board, userVisited){
-  return Activity.template.bind(this, board, userVisited)
-}
-
-Activity.template = function(board, userVisited){
   var boardActivityId = board.boardActivities.find( element => element.activity_id == this.id).id
-  var importLink = userVisited ? `<a data-method="post" href="/users/${board.id}/activities/${this.id}/import">| Import</a>` : ""
+  var importLink = userVisited ? `<a data-method="post" href="/users/${board.userId}/activities/${this.id}/import">| Import</a>` : ""
   var activityEditLink = this.canBeEdited ? `<a href="/activities/${this.id}/edit">| Edit </a>` : ""
   var activityDeleteLink = this.canBeDestroyed ? `<a data-confirm="This will delete the activity from the board only. Are you sure?" rel="nofollow" data-method="delete" href="/board_activities/${boardActivityId}">| Delete </a>` : ""
 
