@@ -40,3 +40,4 @@ BoardsController #show
 
 Login with oauth facebook
 [X] make sure it is still working
+[X] install Dotenv gem and created a '.env' file and added that file to gitignore
